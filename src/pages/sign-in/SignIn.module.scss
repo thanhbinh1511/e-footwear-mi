@@ -1,4 +1,5 @@
 .main {
+  display: block;
   padding: 0;
   margin: 0;
   width: 100%;
@@ -20,6 +21,7 @@
     border-radius: 16px;
     display: flex;
     background-color: azure;
+    height: auto;
 
     .background-image {
       flex-basis: 50%;
@@ -63,17 +65,8 @@
           font-size: 16px;
           color: #333;
           padding-bottom: 10px;
-
         }
-
-        .input {
-          width: 100%;
-          border-radius: 4px;
-          outline: none;
-          font-size: 16px;
-          color: #333;
-          box-sizing: border-box;
-        }
+     
       }
 
       .button {
