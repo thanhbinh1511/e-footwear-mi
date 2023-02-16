@@ -20,7 +20,7 @@ function App() {
                             exact={route.exact}
                             element={
                                 <Layout>
-                                    <Page />
+                                    <Page/>
                                 </Layout>
                             }
                         />

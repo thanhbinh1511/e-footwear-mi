@@ -1,17 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import GlobleStyle from "~/components/globle-styles/GlobleStyle";
+
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import GlobalStyle from "~/components/globle-styles";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <GlobleStyle>
+            <GlobalStyle>
                 <App />
-            </GlobleStyle>
+            </GlobalStyle>
         </BrowserRouter>
     </React.StrictMode>
 );
