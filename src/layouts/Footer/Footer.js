@@ -1,6 +1,10 @@
+import style from "./Footer.module.scss";
+import classNames from "classnames/bind";
+const cx = classNames.bind(style);
 function Footer({}) {
     return(
-        <h1>Day la footer</h1>
+        <div className={cx("footer")}>
+            </div>
     )
 
 }

@@ -1,6 +1,10 @@
+import style from "./Header.module.scss";
+import classNames from "classnames/bind";
+const cx = classNames.bind(style);
 function Header({}) {
    return (
-   <h1>Day la Header</h1>
+        <div className={cx("header")}>
+            </div>
        );
     
 }
