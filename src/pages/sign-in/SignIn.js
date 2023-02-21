@@ -1,10 +1,69 @@
 import style from "./SignIn.module.scss";
 import classNames from "classnames/bind";
 import TextField from "@mui/material/TextField";
+import { Form, useForm } from "~/hooks/useForm";
 
 const cx = classNames.bind(style);
 
 function SignIn() {
+  const initialFormValue = {
+    username: "",
+    password: "",
+  };
+
+  function validate(fieldValue = values) {
+    console.log(fieldValue, values);
+    let temp = { ...errors };
+    let tempEnabled = { ...errorsEnabled };
+    if ("username" in fieldValue) {
+      if (fieldValue.username === "") {
+        temp.username = "This field is required.";
+        tempEnabled.username = true;
+      } else {
+        temp.username = "";
+        tempEnabled.username = false;
+      }
+    }
+    if ("password" in fieldValue) {
+      if (fieldValue.password === "") {
+        temp.password = "This field is required.";
+        tempEnabled.password = true;
+      } else {
+        temp.password = "";
+        tempEnabled.password = false;
+      }
+    }
+    setErrors({
+      ...temp,
+    });
+    setErrorsEnabled({
+      ...tempEnabled,
+    });
+
+    if (fieldValue === values) {
+      return Object.values(temp).every((x) => x === "");
+    }
+  }
+
+  const {
+    values,
+    setValues,
+    errors,
+    setErrors,
+    errorsEnabled,
+    setErrorsEnabled,
+    handleInputChange,
+    resetForm,
+  } = useForm(initialFormValue, true, validate);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      console.log("submit");
+      resetForm();
+    }
+  };
+
   return (
     <div className={cx("main")}>
       <div className={cx("wrap-login")}>
@@ -15,7 +74,7 @@ function SignIn() {
           <div className={cx("title-login")}>
             <div className={cx("title")}>Đăng nhập</div>
           </div>
-          <form className={cx("form-login")}>
+          <Form className={cx("form-login")} onSubmit={handleSubmit}>
             <div className={cx("form-group")}>
               <label className={cx("label")} htmlFor="User">
                 Username
@@ -24,9 +83,16 @@ function SignIn() {
                 id="outlined-basic"
                 variant="outlined"
                 type="text"
-                sx={{  '& .MuiInputBase-root': {
-                    borderRadius: '15px',
-                  }, }}
+                name="username"
+                sx={{
+                  "& .MuiInputBase-root": {
+                    borderRadius: "15px",
+                  },
+                }}
+                error={errorsEnabled.username}
+                helperText={errors.username}
+                value={values.username}
+                onChange={handleInputChange}
               />
             </div>
             <div className={cx("form-group")}>
@@ -37,15 +103,24 @@ function SignIn() {
                 id="outlined-password-input"
                 type="password"
                 autoComplete="current-password"
-                sx={{  '& .MuiInputBase-root': {
-                    borderRadius: '15px',
-                  }, }}
+                name="password"
+                sx={{
+                  "& .MuiInputBase-root": {
+                    borderRadius: "15px",
+                  },
+                }}
+                error={errorsEnabled.password}
+                helperText={errors.password}
+                value={values.password}
+                onChange={handleInputChange}
               />
             </div>
             <div className={cx("button")}>
-              <button className={cx("btn-login")}>Đăng nhập</button>
+              <button type="submit" className={cx("btn-login")}>
+                Đăng nhập
+              </button>
             </div>
-          </form>
+          </Form>
         </div>
       </div>
     </div>
