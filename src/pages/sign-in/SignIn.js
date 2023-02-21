@@ -17,7 +17,7 @@ function SignIn() {
     let tempEnabled = { ...errorsEnabled };
     if ("username" in fieldValue) {
       if (fieldValue.username === "") {
-        temp.username = "This field is required.";
+        temp.username = "Không được để trống";
         tempEnabled.username = true;
       } else {
         temp.username = "";
@@ -26,7 +26,7 @@ function SignIn() {
     }
     if ("password" in fieldValue) {
       if (fieldValue.password === "") {
-        temp.password = "This field is required.";
+        temp.password = "Không được để trống";
         tempEnabled.password = true;
       } else {
         temp.password = "";
@@ -77,7 +77,7 @@ function SignIn() {
           <Form className={cx("form-login")} onSubmit={handleSubmit}>
             <div className={cx("form-group")}>
               <label className={cx("label")} htmlFor="User">
-                Username
+                Tên đăng nhập
               </label>
               <TextField
                 id="outlined-basic"
@@ -93,6 +93,11 @@ function SignIn() {
                 helperText={errors.username}
                 value={values.username}
                 onChange={handleInputChange}
+                FormHelperTextProps={{
+                  style: {
+                    fontSize: "14px",
+                  },
+                }}
               />
             </div>
             <div className={cx("form-group")}>
@@ -112,6 +117,11 @@ function SignIn() {
                 error={errorsEnabled.password}
                 helperText={errors.password}
                 value={values.password}
+                FormHelperTextProps={{
+                  style: {
+                    fontSize: "14px",
+                  },
+                }}
                 onChange={handleInputChange}
               />
             </div>
