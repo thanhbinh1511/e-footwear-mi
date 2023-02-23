@@ -1,5 +1,4 @@
 import Header from "~/layouts/Header";
-import Footer from "~/layouts/Footer";
 import SideBar from "~/layouts/SideBar";
 import classNames from "classnames/bind";
 import style from "./DefaultLayout.module.scss";
@@ -19,7 +18,6 @@ function DefaultLayout({ children }) {
             <div className={cx("wrap-content")}>
               <Header />
               <div className={cx("content")}>{children}</div>
-              <Footer />
             </div>
         </Grid>
       </Grid>

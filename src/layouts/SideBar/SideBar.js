@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import MenuIcon from "@mui/icons-material/Menu";
 import AdbIcon from "@mui/icons-material/Adb";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';import { Logout } from "@mui/icons-material";
 const cx = classNames.bind(style);
 
 function SideBar() {
@@ -10,7 +11,7 @@ function SideBar() {
     <div className={cx("background")}>
       <div className={cx("title")}>
         <div className="title-content">ADMIN</div>
-        <MenuIcon fontSize="medium" sx={{ marginLeft: "10px" }} />
+        <ExitToAppIcon fontSize="medium" sx={{ marginLeft: "10px" }} />
       </div>
       <div className={cx("wrap-avatar")}>
         <div className={cx("avatar")}>
@@ -59,21 +60,6 @@ function SideBar() {
       </div>
       <div className={cx("wrap-menu")}>
         <div className={cx("menu-heading")}>Heading</div>
-        <div className={cx("menu-items")}>
-          <div className={cx("menu-icon")}>
-            <MenuIcon fontSize="medium" />
-          </div>
-          <div className={cx("menu-content")}>Example 1</div>
-        </div>
-        <div className={cx("menu-items")}>
-          <div className={cx("menu-icon")}>
-            <AdbIcon fontSize="medium" />
-          </div>
-          <div className={cx("menu-content")}>Example 2</div>
-        </div>
-      </div>
-      <div className={cx("wrap-menu")}>
-        <div className={cx("menu-heading")}>Dashboard</div>
         <div className={cx("menu-items")}>
           <div className={cx("menu-icon")}>
             <MenuIcon fontSize="medium" />
