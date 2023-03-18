@@ -1,79 +1,66 @@
 import style from "./SideBar.module.scss";
 import classNames from "classnames/bind";
-import MenuIcon from "@mui/icons-material/Menu";
-import AdbIcon from "@mui/icons-material/Adb";
+import logo from "~/assets/image/logo.png";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';import { Logout } from "@mui/icons-material";
+import { Box } from "@mui/material";
+import PersonIcon from '@mui/icons-material/Person';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import AutoGraphIcon from '@mui/icons-material/AutoGraph';
+import CategoryIcon from '@mui/icons-material/Category';
 const cx = classNames.bind(style);
 
 function SideBar() {
   return (
-    <div className={cx("background")}>
-      <div className={cx("title")}>
-        <div className="title-content">ADMIN</div>
-        <ExitToAppIcon fontSize="medium" sx={{ marginLeft: "10px" }} />
-      </div>
-      <div className={cx("wrap-avatar")}>
-        <div className={cx("avatar")}>
-          <div className={cx("avatar-img")} />
-        </div>
-        <div className={cx("name")}>Nguyen Van A</div>
-      </div>
-      <div className={cx("wrap-menu")}>
-        <div className={cx("menu-heading")}></div>
-        <div className={cx("menu-items")}>
-          <div className={cx("menu-icon")}>
+    <Box className={cx("background")}>
+      <Box className={cx("wrap-logo")}>
+        <img src={logo} alt="" className={cx("logo")} />
+      </Box>
+      <Box className={cx("wrap-menu", "active")}>
+        <Box className={cx("line")} />
+        <Box className={cx("menu-items")}>
+          <Box className={cx("menu-icon")}>
             <DashboardIcon color="primary" fontSize="medium" />
-          </div>
-          <div className={cx("menu-content")}>Dashboard</div>
-        </div>
-      </div>
-      <div className={cx("wrap-menu")}>
-        <div className={cx("menu-heading")}>Heading</div>
-        <div className={cx("menu-items")}>
-          <div className={cx("menu-icon")}>
-            <MenuIcon fontSize="medium" />
-          </div>
-          <a className={cx("menu-content")}>Example 1</a>
-        </div>
-        <div className={cx("menu-items")}>
-          <div className={cx("menu-icon")}>
-            <AdbIcon fontSize="medium" />
-          </div>
-          <div className={cx("menu-content")}>Example 2</div>
-        </div>
-      </div>
-      <div className={cx("wrap-menu")}>
-        <div className={cx("menu-heading")}>Heading</div>
-        <div className={cx("menu-items")}>
-          <div className={cx("menu-icon")}>
-            <MenuIcon fontSize="medium" />
-          </div>
-          <div className={cx("menu-content")}>Example 1</div>
-        </div>
-        <div className={cx("menu-items")}>
-          <div className={cx("menu-icon")}>
-            <AdbIcon fontSize="medium" />
-          </div>
-          <div className={cx("menu-content")}>Example 2</div>
-        </div>
-      </div>
-      <div className={cx("wrap-menu")}>
-        <div className={cx("menu-heading")}>Heading</div>
-        <div className={cx("menu-items")}>
-          <div className={cx("menu-icon")}>
-            <MenuIcon fontSize="medium" />
-          </div>
-          <div className={cx("menu-content")}>Example 1</div>
-        </div>
-        <div className={cx("menu-items")}>
-          <div className={cx("menu-icon")}>
-            <AdbIcon fontSize="medium" />
-          </div>
-          <div className={cx("menu-content")}>Example 2</div>
-        </div>
-      </div>
-    </div>
+          </Box>
+          <Box className={cx("menu-content")}>Dashboard</Box>
+        </Box>
+      </Box>
+      <Box className={cx("wrap-menu")}>
+        <Box className={cx("line")} />
+        <Box className={cx("menu-items")}>
+          <Box className={cx("menu-icon")}>
+            <PersonIcon fontSize="medium" />
+          </Box>
+          <Box className={cx("menu-content")}>Khách Hàng</Box>
+        </Box>
+      </Box>
+      <Box className={cx("wrap-menu")}>
+        <Box className={cx("line")} />
+        <Box className={cx("menu-items")}>
+          <Box className={cx("menu-icon")}>
+            <ConfirmationNumberIcon fontSize="medium" />
+          </Box>
+          <Box className={cx("menu-content")}>Đơn hàng</Box>
+        </Box>
+      </Box>
+      <Box className={cx("wrap-menu")}>
+        <Box className={cx("line")} />
+        <Box className={cx("menu-items")}>
+          <Box className={cx("menu-icon")}>
+            <AutoGraphIcon color="primary" fontSize="medium" />
+          </Box>
+          <Box className={cx("menu-content")}>Thống Kê</Box>
+        </Box>
+      </Box>
+      <Box className={cx("wrap-menu")}>
+        <Box className={cx("line")} />
+        <Box className={cx("menu-items")}>
+          <Box className={cx("menu-icon")}>
+            <CategoryIcon color="primary" fontSize="medium" />
+          </Box>
+          <Box className={cx("menu-content")}>Danh Mục</Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

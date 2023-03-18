@@ -12,7 +12,9 @@ function App() {
 
                     if (route.layout) {
                         Layout = route.layout;
-                    }
+                        
+                    }   
+                    console.log(route);
                     return (
                         <Route
                             key={index}
