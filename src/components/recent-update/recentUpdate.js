@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import style from "./recentUpdate.module.scss";
 import classNames from "classnames/bind";
-import { dataRecentUpdate } from "~/assets/data/fake-recent-data";
+import { dataRecentUpdate } from "~/assets/data/fake-recentUpdate-data.js";
 
 const cx = classNames.bind(style);
 function RecentUpdate() {

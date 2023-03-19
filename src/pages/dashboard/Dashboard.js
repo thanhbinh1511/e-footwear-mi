@@ -1,6 +1,6 @@
 import style from "./Dashboard.module.scss"
 import classNames from "classnames/bind"
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import CardStatistical from "~/components/card-statistical/CardStatistical";
 
 const cx = classNames.bind(style);
@@ -12,10 +12,22 @@ function Dashboard() {
                 <Typography className={cx("heading")}>
                     Dashboard
                 </Typography>
-                <Box className={cx("wrap-statistical")}>
-                    <CardStatistical />
-                </Box>
             </Box>
+            <Box className={cx("container")} >
+                <Grid container spacing={2}>
+                    <Grid item xl={4} className={cx("wrap-card")}>
+                        <CardStatistical />
+                    </Grid>
+                    <Grid item xl={4} className={cx("wrap-card")}>
+                        <CardStatistical />
+                    </Grid>
+                    <Grid item xl={4} className={cx("wrap-card")}>
+                        <CardStatistical />
+                    </Grid>
+
+                </Grid>
+            </Box>
+
 
         </Box>
     );

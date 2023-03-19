@@ -1,0 +1,60 @@
+.main {
+    width: 100%;
+
+    .wrap {
+        margin-right: 20px;
+
+        .heading {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .wrap-content {
+            padding-bottom: 20px;
+
+            .wrap-data {
+                .wrap-info {
+                    background-color: #fff;
+                    border-radius: 15px;
+                    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                    margin-bottom: 10px;
+                    .content {
+                        padding: 10px 15px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        .wrap-icon {
+
+                            .icon {
+                                width: 30px;
+                                height: 30px;
+                            }
+                        }
+
+                        .wrap-text {
+                            .content {
+                                display: flex;
+                                flex-direction: column;
+
+                                .name {
+                                    font-size: 14px;
+                                    text-transform: uppercase;
+                                }
+
+                            }
+
+
+                        }
+
+                        .count {
+                            font-size: 1.4rem;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+}

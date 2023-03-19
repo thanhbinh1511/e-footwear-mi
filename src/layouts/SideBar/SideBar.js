@@ -7,6 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import CategoryIcon from '@mui/icons-material/Category';
+import LogoutIcon from '@mui/icons-material/Logout';
 const cx = classNames.bind(style);
 
 function SideBar() {
@@ -46,7 +47,7 @@ function SideBar() {
         <Box className={cx("line")} />
         <Box className={cx("menu-items")}>
           <Box className={cx("menu-icon")}>
-            <AutoGraphIcon color="primary" fontSize="medium" />
+            <AutoGraphIcon fontSize="medium" />
           </Box>
           <Box className={cx("menu-content")}>Thống Kê</Box>
         </Box>
@@ -55,9 +56,17 @@ function SideBar() {
         <Box className={cx("line")} />
         <Box className={cx("menu-items")}>
           <Box className={cx("menu-icon")}>
-            <CategoryIcon color="primary" fontSize="medium" />
+            <CategoryIcon fontSize="medium" />
           </Box>
           <Box className={cx("menu-content")}>Danh Mục</Box>
+        </Box>
+      </Box>
+      <Box className={cx("wrap-logout")}>
+        <Box className={cx("menu-items")}>
+          <Box className={cx("menu-icon")}>
+            <LogoutIcon fontSize="medium" />
+          </Box>
+          <Box className={cx("menu-content")}>Đăng xuất</Box>
         </Box>
       </Box>
     </Box>
