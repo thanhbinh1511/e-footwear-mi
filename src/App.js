@@ -14,7 +14,6 @@ function App() {
                         Layout = route.layout;
                         
                     }   
-                    console.log(route);
                     return (
                         <Route
                             key={index}

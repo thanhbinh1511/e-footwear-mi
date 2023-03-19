@@ -8,12 +8,15 @@ const cx = classNames.bind(style);
 function Dashboard() {
     return (
         <Box className={cx("main")}>
-            <Typography className={cx("heading")}>
-                Dashboard
-            </Typography>
-            <Box className={cx("wrap-statistical")}>
-                <CardStatistical />
+            <Box className={cx("wrap-header")}>
+                <Typography className={cx("heading")}>
+                    Dashboard
+                </Typography>
+                <Box className={cx("wrap-statistical")}>
+                    <CardStatistical />
+                </Box>
             </Box>
+
         </Box>
     );
 }
