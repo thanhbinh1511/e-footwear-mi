@@ -17,10 +17,10 @@ function Dashboard() {
             </Box>
             <Box className={cx("container")} >
                 <Grid container spacing={2}>
-                    <Grid item xl={4} md={5} className={cx("wrap-card")}>
+                    <Grid item xs={4} className={cx("wrap-card")}>
                         <CardStatistical />
                     </Grid>
-                    <Grid item xl={8} md={7} className={cx("wrap-card")}>
+                    <Grid item xl={8} className={cx("wrap-card")}>
                         <CardOrder />
                     </Grid>
                 </Grid>

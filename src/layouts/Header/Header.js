@@ -9,12 +9,12 @@ const cx = classNames.bind(style);
 function Header() {
   return (
     <Box className={cx("wrap-header")}>
-      <IconButton sx={{ margin: "0 10px" }} aria-label="show 4 new mails" color="inherit">
+      <IconButton sx={{ margin: "0 15px" }} aria-label="show 4 new mails" color="inherit">
         <Badge badgeContent={1} color="error">
           <MailOutlineOutlined color='' />
         </Badge>
       </IconButton>
-      <IconButton sx={{ margin: "0 10px" }} aria-label="show 4 new mails" color="inherit">
+      <IconButton sx={{ margin: "0 15px" }} aria-label="show 4 new mails" color="inherit">
         <Badge badgeContent={1} color="error">
           <NotificationsNoneIcon color='' />
         </Badge>
@@ -22,7 +22,7 @@ function Header() {
       <Box className={cx("wrap-admin")}>
         <Box className={cx("wrap-name")}>
           <Typography className={cx("name")} >
-            <span className={cx("sub-name")}>Hey,</span>  Huy
+            <span className={cx("sub-name")}>Hey,</span>  Huy Quang
           </Typography>
           <Typography className={cx("role")} >
             Admin
