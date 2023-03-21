@@ -20,17 +20,17 @@ function DefaultLayout({ children }) {
           <Box className={cx("wrap-content")}>
             <Header />
             <Box className={cx("content")}>
-              <Grid container sx={{ paddingBottom: "20px" }}>
-                <Grid item xl={9} >
-                  <Box sx={{ margin: " 0 30px" }} >
+              <Grid container sx={{ paddingBottom: "20px" }} spacing={2}>
+                <Grid item xl={9}  >
+                  <Box >
                     {children}
                   </Box>
                 </Grid>
                 <Grid item xs={3}>
-                  <Box>
-                    <RecentUpdate />
+                  <Box sx={{ marginBottom: "20px" }}>
+                    <RecentUpdate  />
                   </Box>
-                  <Box sx={{ marginTop: "30px" }}>
+                  <Box >
                     <SaleAnalytics />
                   </Box>
                 </Grid>

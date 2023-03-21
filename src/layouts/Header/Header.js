@@ -29,7 +29,7 @@ function Header() {
           </Typography>
         </Box>
         <Box className={cx("wrap-avatar")}>
-          <img className={cx("avatar")} src="https://scontent.fsgn6-1.fna.fbcdn.net/v/t39.30808-6/317277106_3377146609195662_2392426401529684860_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=WxwjXpXvYL4AX_tL90D&_nc_ht=scontent.fsgn6-1.fna&oh=00_AfBpLNptiRasa3a4hJxlVmBlFgVT7KfhEtQ5i4PJFNbxwA&oe=64171372"></img>
+          <img className={cx("avatar")} src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/317277106_3377146609195662_2392426401529684860_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=Av7Y_ksE3JEAX8uCOBy&_nc_ht=scontent.fsgn2-6.fna&oh=00_AfAAEz9aQonhDeRS-xhPPmZk6CH5ifiHTLXnu4YHLjvnAw&oe=641EFC72"></img>
         </Box>
 
       </Box>
