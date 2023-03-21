@@ -1,9 +1,9 @@
-import Header from "~/layouts/Header";
-import SideBar from "~/layouts/SideBar";
+import Header from "~/layouts/header";
+import SideBar from "~/layouts/side-bar";
 import classNames from "classnames/bind";
 import style from "./DefaultLayout.module.scss";
 import { Box, Grid } from '@mui/material';
-import RecentUpdate from "~/components/recent-update/recentUpdate";
+import RecentUpdate from "~/components/recent-update/RecentUpdate";
 import SaleAnalytics from "~/components/sale-analytics/SaleAnalytics";
 
 const cx = classNames.bind(style);
@@ -21,12 +21,12 @@ function DefaultLayout({ children }) {
             <Header />
             <Box className={cx("content")}>
               <Grid container sx={{ paddingBottom: "20px" }}>
-                <Grid item xl={9} md={8}>
+                <Grid item xl={9} md={9}>
                   <Box sx={{ margin: " 0 30px" }} >
                     {children}
                   </Box>
                 </Grid>
-                <Grid item xl={3} md={4}>
+                <Grid item xl={3} md={3}>
                   <Box>
                     <RecentUpdate />
                   </Box>

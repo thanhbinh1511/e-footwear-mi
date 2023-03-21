@@ -1,13 +1,23 @@
 .main {
     width: 100%;
 
-    .wrap-header{
+    .wrap-header {
         margin-left: 2rem;
 
         .heading {
             font-size: 1.5rem;
             font-weight: 800;
             margin-bottom: 1rem;
+        }
+    }
+
+    .container {
+        .wrap-card {
+            .card {}
+        }
+
+        .wrap-revenue {
+            margin-top: 2rem;
         }
     }
 
