@@ -40,7 +40,8 @@ function CardRevenue() {
                 'rgb(234, 189, 168)',
 
             ],
-            borderWidth: 1
+            borderWidth: 2,
+
         }]
     }
 

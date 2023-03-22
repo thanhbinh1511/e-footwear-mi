@@ -1,6 +1,9 @@
 import Dashboard from "~/pages/dashboard/Dashboard";
-import {DefaultLayout, FullWidthLayout} from "~/layouts";
+import Order from "~/pages/order/Order";
+import Category from "~/pages/category/Category";
+import { FullWidthLayout } from "~/layouts";
 import SignIn from "~/pages/sign-in";
+import Customer from "~/pages/customer/Customer";
 
 export const publicRoutes = [
     {
@@ -13,5 +16,18 @@ export const publicRoutes = [
         component: SignIn,
         layout: FullWidthLayout,
         exact: true,
+    },
+    {
+        path: "/admin/customer",
+        component: Customer,
+    },
+    {
+        path: "/admin/order",
+        component: Order,
+    },
+    {
+        path: "/admin/category",
+        component: Category,
+
     }
 ];

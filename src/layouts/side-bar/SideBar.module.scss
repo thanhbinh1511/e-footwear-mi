@@ -23,6 +23,7 @@
         height: 60px;
         align-items: center;
         margin: 10px 10px;
+        text-decoration: none;
 
         .line {
             width: 10px;
@@ -46,18 +47,9 @@
                 padding-left: 10px;
                 line-height: 25px;
             }
+
         }
 
-    }
-
-    .active {
-        background-color: #e1e2f0;
-        color: #7c84e9;
-        border-radius: 10px;
-
-        .line {
-            display: block;
-        }
     }
 
     .wrap-menu:hover {
@@ -76,6 +68,7 @@
     align-items: center;
     position: absolute;
     bottom: 0;
+
     .menu-items {
         display: flex;
         font-size: 16px;
@@ -90,4 +83,14 @@
         }
     }
 
+}
+
+.active {
+    background-color: #e1e2f0;
+    color: #7c84e9;
+    border-radius: 10px;
+
+}
+.show {
+    display: block !important;
 }
