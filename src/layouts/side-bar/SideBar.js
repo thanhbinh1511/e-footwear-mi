@@ -6,8 +6,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Box } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
-import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import CategoryIcon from '@mui/icons-material/Category';
+import { Inventory } from "@mui/icons-material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -21,10 +21,13 @@ function SideBar() {
       setActive(0);
     } else if (location.includes("customer")) {
       setActive(1);
-    } else if (location.includes("order")) {
+    } else if (location.includes("product")) {
       setActive(2);
-    } else if (location.includes("category")) {
+
+    } else if (location.includes("order")) {
       setActive(3);
+    } else if (location.includes("category")) {
+      setActive(4);
     }
   }, [location]);
   return (
@@ -34,7 +37,7 @@ function SideBar() {
       </Box>
       <Box component={Link}
         to={"/admin/dashboard"} className={cx("wrap-menu", `${active === 0 ? "active" : ""}`)}>
-        <Box  className={cx("line",`${active === 0 ? "show" : ""}`)} />
+        <Box className={cx("line", `${active === 0 ? "show" : ""}`)} />
         <Box className={cx("menu-items")}>
           <Box className={cx("menu-icon")}>
             <DashboardIcon color={`${active === 0 ? "primary" : ""}`} fontSize="medium" />
@@ -44,7 +47,7 @@ function SideBar() {
       </Box>
       <Box component={Link}
         to={"/admin/customer"} className={cx("wrap-menu", `${active === 1 ? "active" : ""}`)}>
-        <Box className={cx("line",`${active === 1 ? "show" : ""}`)} />
+        <Box className={cx("line", `${active === 1 ? "show" : ""}`)} />
         <Box className={cx("menu-items")}>
           <Box className={cx("menu-icon")}>
             <PersonIcon color={`${active === 1 ? "primary" : ""}`} fontSize="medium" />
@@ -54,26 +57,36 @@ function SideBar() {
         </Box>
       </Box>
       <Box component={Link}
-        to={"/admin/order"} className={cx("wrap-menu", `${active === 2 ? "active" : ""}`)}>
-        <Box className={cx("line",`${active === 2 ? "show" : ""}`)} />
+        to={"/admin/product"} className={cx("wrap-menu", `${active === 2 ? "active" : ""}`)}>
+        <Box className={cx("line", `${active === 2 ? "show" : ""}`)} />
         <Box className={cx("menu-items")}>
           <Box className={cx("menu-icon")}>
-            <ConfirmationNumberIcon color={`${active === 2 ? "primary" : ""}`} fontSize="medium" />
+            <Inventory color={`${active === 2 ? "primary" : ""}`} fontSize="medium" />
+          </Box>
+          <Box className={cx("menu-content")}>Sản phẩm</Box>
+        </Box>
+      </Box>
+      <Box component={Link}
+        to={"/admin/order"} className={cx("wrap-menu", `${active === 3 ? "active" : ""}`)}>
+        <Box className={cx("line", `${active === 3 ? "show" : ""}`)} />
+        <Box className={cx("menu-items")}>
+          <Box className={cx("menu-icon")}>
+            <ConfirmationNumberIcon color={`${active === 3 ? "primary" : ""}`} fontSize="medium" />
           </Box>
           <Box className={cx("menu-content")}>Đơn hàng</Box>
         </Box>
       </Box>
       <Box component={Link}
-        to={"/admin/category"} className={cx("wrap-menu", `${active === 3 ? "active" : ""}`)}>
-        <Box className={cx("line",`${active === 3 ? "show" : ""}`)} />
+        to={"/admin/category"} className={cx("wrap-menu", `${active === 4 ? "active" : ""}`)}>
+        <Box className={cx("line", `${active === 4 ? "show" : ""}`)} />
         <Box className={cx("menu-items")}>
           <Box className={cx("menu-icon")}>
-            <CategoryIcon color={`${active === 3 ? "primary" : ""}`} fontSize="medium" />
+            <CategoryIcon color={`${active === 4 ? "primary" : ""}`} fontSize="medium" />
           </Box>
-          <Box className={cx("menu-content")}>Danh Mục</Box>
+          <Box className={cx("menu-content")}>Danh mục</Box>
         </Box>
       </Box>
-      <Box className={cx("wrap-logout")}>
+      <Box className={cx("wrap-menu")}>
         <Box className={cx("menu-items")}>
           <Box className={cx("menu-icon")}>
             <LogoutIcon fontSize="medium" />

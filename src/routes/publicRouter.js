@@ -4,6 +4,7 @@ import Category from "~/pages/category/Category";
 import { FullWidthLayout } from "~/layouts";
 import SignIn from "~/pages/sign-in";
 import Customer from "~/pages/customer/Customer";
+import Product from "~/pages/product/Product";
 
 export const publicRoutes = [
     {
@@ -29,5 +30,10 @@ export const publicRoutes = [
         path: "/admin/category",
         component: Category,
 
+    },
+    {
+        path: "/admin/product",
+        component: Product,
     }
+
 ];

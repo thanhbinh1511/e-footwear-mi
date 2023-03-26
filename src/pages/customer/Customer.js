@@ -14,7 +14,12 @@ function Customer() {
                 </Typography>
             </Box>
             <Box className={cx("container")} >
-            
+                <Box className={cx("wrap-button")}>
+                </Box>
+                <Box className={cx("wrap-table")}>
+
+                    
+                </Box>
             </Box>
         </Box>
 

@@ -8,7 +8,7 @@ function SaleAnalytics() {
         <Box>
             <Box className={cx("main")}>
                 <Box className={cx("wrap")}>
-                    <Typography className={cx("heading")}>Sale Analytics</Typography>
+                    <Typography className={cx("heading")}>Thống kê doanh số</Typography>
                     <Box className={cx("wrap-content")}>
                         {dataSaleAnalytics.map((item,index) => (
                             <Box key={index} className={cx("wrap-data")}>

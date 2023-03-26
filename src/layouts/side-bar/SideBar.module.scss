@@ -1,6 +1,6 @@
 .background {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     position: relative;
 
     .wrap-logo {
@@ -62,28 +62,7 @@
 
 }
 
-.wrap-logout {
-    display: flex;
-    height: 60px;
-    align-items: center;
-    position: absolute;
-    bottom: 0;
 
-    .menu-items {
-        display: flex;
-        font-size: 16px;
-        font-weight: 600;
-        color: #333;
-        padding: 20px 40px;
-        cursor: pointer;
-
-        .menu-content {
-            padding-left: 10px;
-            line-height: 25px;
-        }
-    }
-
-}
 
 .active {
     background-color: #e1e2f0;

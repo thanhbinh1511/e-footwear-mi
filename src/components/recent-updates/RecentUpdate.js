@@ -8,7 +8,7 @@ function RecentUpdate() {
     return (
         <Box className={cx("main")}>
             <Box className={cx("wrap")}>
-                <Typography className={cx("heading")}>Recent Update</Typography>
+                <Typography className={cx("heading")}>Cập nhật đơn hàng</Typography>
                 <Box className={cx("wrap-content")}>
                     {dataRecentUpdate.map((item, index) => (
                         <Box key={index} className={cx("content")}>
