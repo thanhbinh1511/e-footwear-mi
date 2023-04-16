@@ -1,14 +1,14 @@
-import style from "./Category.module.scss";
+import { Box, Typography, Button } from "@mui/material";
+import style from "./Colors.module.scss";
 import classNames from "classnames/bind";
-import { Box, Grid, Typography, Button } from "@mui/material";
+import { dataColors } from "~/assets/data/fake-colors";
 import { Table, Popconfirm, Space } from "antd";
-import { dataCategories } from "~/assets/data/fake-category";
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import AddCategory from "~/components/dialog-category/AddCategory";
+import AddColors from "~/components/dialog-colors/AddColors";
 const cx = classNames.bind(style);
-function Category() {
+function Colors() {
     const [editRow, setEdit] = useState(false);
     const handleDelete = (record) => { }
     const columns = [
@@ -16,12 +16,18 @@ function Category() {
             title: "Id",
             dataIndex: "id",
             key: "id",
+        },
+        {
+            title: "Mã màu",
+            dataIndex: "code_color",
+            key: "code_color",
+
 
         },
         {
-            title: "Tên danh mục",
-            dataIndex: "value",
-            key: "value",
+            title: "Tên màu",
+            dataIndex: "name_color",
+            key: "name_color",
 
         },
         {
@@ -45,7 +51,7 @@ function Category() {
             title: "Hành động",
             key: "action",
             render: (_, record) => {
-                return dataCategories.length >= 1 ? (
+                return dataColors.length >= 1 ? (
                     <Space>
                         <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
                             <DeleteIcon color="error" />
@@ -57,10 +63,12 @@ function Category() {
             },
         },
     ];
-    const data = dataCategories.map((item, index) => {
+
+    const data = dataColors.map((item, index) => {
         return {
             id: item.id,
-            value: item.name,
+            code_color: item.code_color,
+            name_color: item.name_color,
             status: item.state,
             create_at: item.create_at,
             update_at: item.update_at,
@@ -68,22 +76,21 @@ function Category() {
     }
     )
     return (
-
         <Box className={cx("main")}>
             <Box className={cx("wrap-header")}>
                 <Typography className={cx("heading")}>
-                    Danh mục
+                    Màu sắc
                 </Typography>
             </Box>
             <Box className={cx("container")} >
                 <Box className={cx("wrap-button")}>
-                    <AddCategory />
+                    <AddColors />
                 </Box>
                 <Box className={cx("wrap-table")}>
                     <Table dataSource={data} columns={columns} />
                 </Box>
             </Box>
         </Box>
-    );
+    )
 }
-export default Category;
+export default Colors;

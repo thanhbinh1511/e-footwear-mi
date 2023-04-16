@@ -1,73 +1,75 @@
 import style from "./Product.module.scss";
+import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
-import { Box, Typography } from "@mui/material";
-import DialogProduct from "~/components/dialog-product/DialogProduct";
+import { Box, Button, Typography } from "@mui/material";
 import { dataProduct } from "~/assets/data/fake-productData";
-import DataTableBase from "~/components/datatable-base/DataTableBase";
+import { Table, Popconfirm, Space } from "antd";
+import { useState } from "react";
+import DialogProduct from "~/components/dialog-product/DialogProduct";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const cx = classNames.bind(style);
 function Product() {
+    const [editRow, setEdit] = useState(false);
+    const handleDelete = (record) => { }
     const columns = [
         {
-            name: "Tên sản phẩm",
-            selector: row => row.name,
-            sortable: true,
-            width: "200px"
+            title: "Id",
+            dataIndex: "id",
+            key: "id",
         },
         {
-            name: "Thương hiệu",
-            selector: row => row.brand,
-            sortable: true,
-            width: "120px"
+            title: "Tên sản phẩm",
+            dataIndex: "name",
+            key: "name",
         },
         {
-            name: "Giá gốc",
-            selector: row => row.price,
-            sortable: true,
-            width: "120px"
+            title: "Danh mục",
+            dataIndex: "category",
+            key: "category",
         },
         {
-            name: "Giá khuyến mãi",
-            selector: row => row.sale,
-            sortable: true,
-            width: "120px"
+            title: "Giá gốc",
+            dataIndex: "price",
+            key: "price",
         },
         {
-            name: "Màu sắc",
-            selector: row => row.color,
-            sortable: true,
-            width: "120px"
+            title: "Giá khuyến mãi",
+            dataIndex: "sale",
+            key: "sale",
         },
         {
-            name: "Kích thước",
-            selector: row => row.size,
-            sortable: true,
-            width: "120px"
+            title: "Màu sắc",
+            dataIndex: "color",
+            key: "color",
         },
         {
-            name: "Số lượng",
-            selector: row => row.quantity,
-            sortable: true,
-            width: "120px"
+            title: "Hành động",
+            key: "action",
+            render: (_, record) => {
+                return dataProduct.length >= 1 ? (
+                    <Space>
+                    <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
+                        <DeleteIcon color="error" />
+                    </Popconfirm>
+                    <EditIcon color="warning" />
+
+                </Space>
+                ) : null;
+            },
         },
-        {
-            name: "Trạng thái",
-            selector: row => row.status,
-            sortable: true,
-            width: "120px"
-        },
-    ]
+    ];
+
     const data = dataProduct.map((item, index) => {
         return {
-            id: index,
+            id: item.id,
             name: item.name,
-            brand: item.brand,
+            category: item.category,
             price: item.price,
             sale: item.sale,
             color: item.color,
-            size: item.size,
             quantity: item.quantity,
-            status: item.status,
         }
     }
     )
@@ -83,8 +85,9 @@ function Product() {
                 <Box className={cx("wrap-button")}>
                     <DialogProduct />
                 </Box>
+
                 <Box className={cx("wrap-table")}>
-                    <DataTableBase columns={columns} data={data} />
+                    <Table dataSource={data} columns={columns} />;
                 </Box>
             </Box>
         </Box>

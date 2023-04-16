@@ -1,0 +1,50 @@
+export const dataCategories = [
+    {
+        id: 1,
+        name: "Nam",
+        state: "ACTIVE",
+        parent_id: 0,
+        create_at: "2021-10-10",
+        update_at: "2021-10-10",
+    },
+    {
+        id: 2,
+        name: "Nữ",
+        state: "ACTIVE",
+        parent_id: 0,
+        create_at: "2021-10-10",
+        update_at: "2021-10-10",
+    },
+    {
+        id: 3,
+        name: "Giày Bóng Đá",
+        state: "ACTIVE",
+        parent_id: 1,
+        create_at: "2021-10-10",
+        update_at: "2021-10-10",
+    },
+    {
+        id: 4,
+        name: "Giày Thể Thao",
+        state: "ACTIVE",
+        parent_id: 1,
+        create_at: "2021-10-10",
+        update_at: "2021-10-10",
+    },
+    {
+        id: 5,
+        name: "Hunter",
+        state: "ACTIVE",
+        parent_id: 1,
+        create_at: "2021-10-10",
+        update_at: "2021-10-10",
+    },
+    {
+        id: 6,
+        name: "Sandal",
+        state: "ACTIVE",
+        parent_id: 1,
+        create_at: "2021-10-10",
+        update_at: "2021-10-10",
+    }
+];

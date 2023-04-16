@@ -1,7 +1,7 @@
 export const dataProduct = [{
     id: 1,
     name: "Adidas Prophere Green",
-    brand: "Adidas",
+    category: "Giày thể thao",
     price: "1.000.000",
     sale: "900.000",
     color: "Green",
@@ -11,7 +11,7 @@ export const dataProduct = [{
 }, {
     id: 2,
     name: "Balenciaga Speed Trainer",
-    brand: "Balenciaga",
+    category: "Giày thể thao",
     price: "1.200.000",
     sale: "900.000",
     color: "Green",
@@ -21,7 +21,7 @@ export const dataProduct = [{
 }, {
     id: 3,
     name: "Nike Air Max 270 React",
-    brand: "Nike",
+    category: "Giày thể thao",
     price: "1.500.000",
     sale: "1.200.000",
     color: "Green",
@@ -32,7 +32,7 @@ export const dataProduct = [{
 {
     id: 4,
     name: "Nike Air Max 270 React",
-    brand: "Nike",
+    category: "Giày thể thao",
     price: "1.500.000",
     sale: "1.200.000",
     color: "Green",
@@ -43,7 +43,7 @@ export const dataProduct = [{
 {
     id: 5,
     name: "Nike Air Max 270 React",
-    brand: "Nike",
+    category: "Giày thể thao",
     price: "1.500.000",
     sale: "1.200.000",
     color: "Green",
@@ -54,7 +54,7 @@ export const dataProduct = [{
 {
     id: 6,
     name: "Nike Air Max 270 React",
-    brand: "Nike",
+    category: "Giày thể thao",
     price: "1.500.000",
     sale: "1.200.000",
     color: "Green",
@@ -65,7 +65,7 @@ export const dataProduct = [{
 {
     id: 7,
     name: "Nike Air Max 270 React",
-    brand: "Nike",
+    category: "Giày thể thao",
     price: "1.500.000",
     sale: "1.200.000",
     color: "Green",
@@ -76,7 +76,7 @@ export const dataProduct = [{
 {
     id: 8,
     name: "Nike Air Max 270 React",
-    brand: "Nike",
+    category: "Giày thể thao",
     price: "1.500.000",
     sale: "1.200.000",
     color: "Green",
@@ -87,7 +87,7 @@ export const dataProduct = [{
 {
     id: 9,
     name: "Nike Air Max 270 React",
-    brand: "Nike",
+    category: "Giày thể thao",
     price: "1.500.000",
     sale: "1.200.000",
     color: "Green",
@@ -98,7 +98,7 @@ export const dataProduct = [{
 {
     id: 10,
     name: "Nike Air Max 270 React",
-    brand: "Nike",
+    category: "Giày thể thao",
     price: "1.500.000",
     sale: "1.200.000",
     color: "Green",
@@ -109,7 +109,7 @@ export const dataProduct = [{
 {
     id: 11,
     name: "Nike Air Max 270 React",
-    brand: "Nike",
+    category: "Giày thể thao",
     price: "1.500.000",
     sale: "1.200.000",
     color: "Green",
@@ -120,7 +120,7 @@ export const dataProduct = [{
 {
     id: 12,
     name: "Nike Air Max 270 React",
-    brand: "Nike",
+    category: "Giày thể thao",
     price: "1.500.000",
     sale: "1.200.000",
     color: "Green",

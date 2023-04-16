@@ -25,8 +25,8 @@ function DialogProduct() {
 
     return (
         <Box>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Thêm Sản Phẩm
+            <Button variant="contained" onClick={handleClickOpen}>
+                Thêm sản phẩm
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Sản Phẩm</DialogTitle>
