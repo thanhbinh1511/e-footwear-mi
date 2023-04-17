@@ -5,13 +5,19 @@ import { dataSizes } from "~/assets/data/fake-sizes";
 import { Table, Popconfirm, Space } from "antd";
 import { Link } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddSizes from "~/components/dialog-sizes/AddSizes";
+import { UpdateSizes } from "~/components/dialog-sizes";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllSizes } from "~/redux/size/sizesSlice";
 const cx = classNames.bind(style);
 function Sizes() {
-    const [editRow, setEdit] = useState(false);
     const handleDelete = (record) => { }
+    const sizes = useSelector((state) => state.sizeReducer.sizes);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchAllSizes());
+    }, []);
     const columns = [
         {
             title: "Id",
@@ -20,8 +26,8 @@ function Sizes() {
         },
         {
             title: "Kích cỡ",
-            dataIndex: "value",
-            key: "value",
+            dataIndex: "size",
+            key: "size",
         },
         {
             title: "Ngày tạo",
@@ -43,26 +49,27 @@ function Sizes() {
         {
             title: "Hành động",
             key: "action",
-            render: (_, record) => {
+            dataIndex: "key",
+            render: (dataIndex, record) => {
                 return dataSizes.length >= 1 ? (
                     <Space>
                         <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
                             <DeleteIcon color="error" />
                         </Popconfirm>
-                        <EditIcon color="warning" />
-
+                        <UpdateSizes dataIndex={dataIndex} />
                     </Space>
                 ) : null;
             },
         },
     ];
-    const data = dataSizes.map((item, index) => {
+    const data = sizes.map((item, index) => {
         return {
+            key: index,
             id: item.id,
-            value: item.value,
+            size: item.value,
             status: item.state,
-            created_at: item.createdAt,
-            updated_at: item.updatedAt,
+            created_at: item.createAt,
+            updated_at: item.updateAt,
         }
     }
     )

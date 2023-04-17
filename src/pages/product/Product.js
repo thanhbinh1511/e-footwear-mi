@@ -50,12 +50,12 @@ function Product() {
             render: (_, record) => {
                 return dataProduct.length >= 1 ? (
                     <Space>
-                    <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
-                        <DeleteIcon color="error" />
-                    </Popconfirm>
-                    <EditIcon color="warning" />
+                        <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
+                            <DeleteIcon color="error" />
+                        </Popconfirm>
+                        <EditIcon color="warning" />
 
-                </Space>
+                    </Space>
                 ) : null;
             },
         },
@@ -63,6 +63,7 @@ function Product() {
 
     const data = dataProduct.map((item, index) => {
         return {
+            key: index,
             id: item.id,
             name: item.name,
             category: item.category,
@@ -87,7 +88,7 @@ function Product() {
                 </Box>
 
                 <Box className={cx("wrap-table")}>
-                    <Table dataSource={data} columns={columns} />;
+                    <Table dataSource={data} columns={columns} />
                 </Box>
             </Box>
         </Box>

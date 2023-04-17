@@ -1,15 +1,14 @@
 import style from "./Category.module.scss";
 import classNames from "classnames/bind";
-import { Box, Grid, Typography, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Table, Popconfirm, Space } from "antd";
 import { dataCategories } from "~/assets/data/fake-category";
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import AddCategory from "~/components/dialog-category/AddCategory";
+import { UpdateCategory } from "~/components/dialog-category";
 const cx = classNames.bind(style);
 function Category() {
-    const [editRow, setEdit] = useState(false);
     const handleDelete = (record) => { }
     const columns = [
         {
@@ -50,8 +49,7 @@ function Category() {
                         <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
                             <DeleteIcon color="error" />
                         </Popconfirm>
-                        <EditIcon color="warning" />
-
+                        <UpdateCategory />
                     </Space>
                 ) : null;
             },

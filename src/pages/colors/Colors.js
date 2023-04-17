@@ -7,6 +7,7 @@ import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddColors from "~/components/dialog-colors/AddColors";
+import { UpdateColors } from "~/components/dialog-colors";
 const cx = classNames.bind(style);
 function Colors() {
     const [editRow, setEdit] = useState(false);
@@ -56,8 +57,7 @@ function Colors() {
                         <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
                             <DeleteIcon color="error" />
                         </Popconfirm>
-                        <EditIcon color="warning" />
-
+                        <UpdateColors />
                     </Space>
                 ) : null;
             },
@@ -66,6 +66,7 @@ function Colors() {
 
     const data = dataColors.map((item, index) => {
         return {
+            key: index,
             id: item.id,
             code_color: item.code_color,
             name_color: item.name_color,
