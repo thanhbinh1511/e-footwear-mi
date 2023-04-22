@@ -1,49 +1,40 @@
-import classNames from "classnames/bind";
-import { useState, useRef, useEffect } from "react";
-import style from "./Style.module.scss";
-import { Box } from '@mui/system';
+import EditIcon from '@mui/icons-material/Edit';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
+import classnames from "classnames/bind";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useForm } from "~/hooks/useForm";
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    TextField,
-}
-    from '@mui/material';
-const cx = classNames.bind(style);
-function DialogSizes(props) {
-    const handleClose = () => {
-        props.parentCallbackClose(false);
-    };
+import { fetchUpdateSize } from "~/redux/size/sizesSlice";
+import style from "./Style.module.scss";
+const cx = classnames.bind(style);
+function UpdateSizes(props) {
+    const dispatch = useDispatch();
+    const [open, setOpen] = useState(false);
     const initialValues = {
-        size: props.data?.value,
+        value: props?.value,
     };
     const validate = (fieldValues = values) => {
         let temp = { ...errors };
         let tempEnable = { ...errorsEnable };
-        if ("size" in fieldValues) {
-            if (fieldValues.size === "") {
-                tempEnable.size = true;
-                temp.size = "Kích cỡ không được để trống";
+        if ("value" in fieldValues) {
+            if (fieldValues.value === "") {
+                tempEnable.value = true;
+                temp.value = "Không được để trống.";
             } else {
-                tempEnable.size = false;
-                temp.size = "";
+                tempEnable.value = false;
+                temp.value = "";
             }
         }
+
         setErrors({
             ...temp,
-        })
+        });
         setErrorsEnable({
             ...tempEnable,
-        })
-        if (fieldValues === values) {
-            return Object.values(temp).every((x) => x === "");
-
-        };
-
+        });
+        if (fieldValues === values) return Object.values(temp).every((x) => x === ""); // trả về boolean
     };
+
     const {
         values,
         setValues,
@@ -53,12 +44,33 @@ function DialogSizes(props) {
         setErrorsEnable,
         handleInputChange,
         resetForm,
-
     } = useForm(initialValues, true, validate);
+    const handleOpen = async () => {
+        setOpen(!open);
+    };
+    const handleClose = (childData) => {
+        setOpen(!open);
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (validate()) {
+            dispatch(fetchUpdateSize({
+                id: props?.id,
+                value: values?.value,
+            })
+            );
+            setOpen(!open);
+        }
+    };
     return (
-        <Box>
-            <Dialog open={props.open}
-                onClose={() => props.parentCallbackClose(false)}
+        <Box className={cx("dialog-main")} >
+            <Button disableElevation
+                disableRipple
+                style={{ backgroundColor: "transparent" }} onClick={handleOpen}>
+                <EditIcon color="warning" />
+            </Button>
+            <Dialog open={open}
+                onClose={handleClose}
                 className={cx("dialog-content")}
                 PaperProps={{
                     style: {
@@ -68,12 +80,13 @@ function DialogSizes(props) {
                         borderRadius: "10px",
                     },
                 }}>
-                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}>Size giày</DialogTitle>
+                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}>Cập nhật Size Giày</DialogTitle>
                 <DialogContent>
                     <Box
                         id="size-form"
                         component={"form"}
                         className={cx("form")}
+                        onSubmit={(e) => handleSubmit(e)}
                     >
                         <Box className={cx("form-flex")}>
                             <Box>
@@ -88,12 +101,12 @@ function DialogSizes(props) {
                             <TextField
                                 variant="outlined"
                                 type="number"
-                                name="size"
-                                id="size"
+                                name="value"
+                                id="value"
                                 onChange={handleInputChange}
-                                value={values.size}
-                                // error={errorsEnable.size}
-                                helperText={errors.size}
+                                value={values?.value}
+                                error={errorsEnable?.value}
+                                helperText={errors?.value}
                                 FormHelperTextProps={{ style: { fontSize: 12, borderRadius: 5 } }}
                                 placeholder="Vui lòng nhập kích cỡ"
                                 inputProps={{
@@ -114,13 +127,15 @@ function DialogSizes(props) {
                             type="submit"
                             className={cx("btn-save")}
                             form="size-form"
+                            onClick={handleSubmit}
                         >
                             Lưu
                         </Button>
                     </Box>
                 </DialogActions>
             </Dialog>
-        </Box>
+        </Box >
     );
 }
-export default DialogSizes;
+
+export default UpdateSizes;

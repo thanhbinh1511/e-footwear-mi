@@ -13,6 +13,8 @@ import storage from "redux-persist/lib/storage";
 
 // reducers
 import sizeReducer from "~/redux/size/sizesSlice";
+import colorReducer from "~/redux/color/colorsSlice";
+import categoryReducer from "~/redux/category/categoriesSlice";
 const persistConfig = {
     key: "root",
     storage,
@@ -25,6 +27,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     sizeReducer: sizeReducer,
+    colorReducer: colorReducer,
+    categoryReducer: categoryReducer,
 });
 //----
 const appReducer = (state, action) => {

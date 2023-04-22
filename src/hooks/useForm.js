@@ -12,9 +12,10 @@ export function Form(props) {
 export function useForm(initialFormValue, validateOnChange = false, validate) {
   const [values, setValues] = useState(initialFormValue);
   const [errors, setErrors] = useState({});
-  const [errorsEnabled, setErrorsEnabled] = useState({});
+  const [errorsEnable, setErrorsEnable] = useState({});
 
   const handleInputChange = (e) => {
+
     const { name, value } = e.target;
     setValues({
       ...values,
@@ -27,7 +28,7 @@ export function useForm(initialFormValue, validateOnChange = false, validate) {
   const resetForm = () => {
     setValues(initialFormValue);
     setErrors({});
-    setErrorsEnabled({});
+    setErrorsEnable({});
   };
 
   return {
@@ -35,8 +36,8 @@ export function useForm(initialFormValue, validateOnChange = false, validate) {
     setValues,
     errors,
     setErrors,
-    errorsEnabled,
-    setErrorsEnabled,
+    errorsEnable,
+    setErrorsEnable,
     handleInputChange,
     resetForm,
   };

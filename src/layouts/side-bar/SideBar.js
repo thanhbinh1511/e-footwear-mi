@@ -15,6 +15,8 @@ import { Inventory } from "@mui/icons-material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import BrowseGalleryIcon from '@mui/icons-material/BrowseGallery';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 const cx = classNames.bind(style);
 
 function SideBar() {
@@ -42,6 +44,12 @@ function SideBar() {
     } else if (location.includes("sizes")) {
       setActive(8);
     }
+    else if (location.includes("galleries")) {
+      setActive(9);
+    }
+    else if (location.includes("type-gallery")) {
+      setActive(10);
+    }
   }, [location]);
   return (
     <Box className={cx("background")}>
@@ -58,7 +66,7 @@ function SideBar() {
           <Box className={cx("menu-content")}>Dashboard</Box>
         </Box>
       </Box>
-      <Box component={Link}
+      <Box component={Link} 
         to={"/admin/customer"} className={cx("wrap-menu", `${active === 1 ? "active" : ""}`)}>
         <Box className={cx("line", `${active === 1 ? "show" : ""}`)} />
         <Box className={cx("menu-items")}>
@@ -139,6 +147,27 @@ function SideBar() {
           <Box className={cx("menu-content")}>Kích cỡ</Box>
         </Box>
       </Box>
+      <Box component={Link}
+        to={"/admin/galleries"} className={cx("wrap-menu", `${active === 9 ? "active" : ""}`)}>
+        <Box className={cx("line", `${active === 9 ? "show" : ""}`)} />
+        <Box className={cx("menu-items")}>
+          <Box className={cx("menu-icon")}>
+            <BrowseGalleryIcon color={`${active === 9 ? "primary" : ""}`} fontSize="medium" />
+          </Box>
+          <Box className={cx("menu-content")}>Bộ sưu tập</Box>
+        </Box>
+      </Box>
+      <Box component={Link}
+        to={"/admin/type-gallery"} className={cx("wrap-menu", `${active === 10 ? "active" : ""}`)}>
+        <Box className={cx("line", `${active === 10 ? "show" : ""}`)} />
+        <Box className={cx("menu-items")}>
+          <Box className={cx("menu-icon")}>
+            <LibraryBooksIcon color={`${active === 10 ? "primary" : ""}`} fontSize="medium" />
+          </Box>
+          <Box className={cx("menu-content")}>Loại bộ sưu tập</Box>
+        </Box>
+      </Box>
+
 
 
       <Box className={cx("wrap-menu")}>

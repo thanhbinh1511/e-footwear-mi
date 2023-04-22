@@ -3,13 +3,20 @@ import classNames from "classnames/bind";
 import { Box, Typography } from "@mui/material";
 import { Table, Popconfirm, Space } from "antd";
 import { dataCategories } from "~/assets/data/fake-category";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCategory from "~/components/dialog-category/AddCategory";
 import { UpdateCategory } from "~/components/dialog-category";
+import { fetchAllCategories } from "~/redux/category/categoriesSlice";
+import { useDispatch, useSelector } from "react-redux";
 const cx = classNames.bind(style);
 function Category() {
     const handleDelete = (record) => { }
+    const categories = useSelector((state) => state.categoryReducer.categories);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchAllCategories());
+    }, [dispatch]);
     const columns = [
         {
             title: "Id",
@@ -44,7 +51,7 @@ function Category() {
             title: "Hành động",
             key: "action",
             render: (_, record) => {
-                return dataCategories.length >= 1 ? (
+                return data.length >= 1 ? (
                     <Space>
                         <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
                             <DeleteIcon color="error" />
@@ -55,13 +62,14 @@ function Category() {
             },
         },
     ];
-    const data = dataCategories.map((item, index) => {
+    const data = categories.map((item, index) => {
         return {
+            key: index,
             id: item.id,
             value: item.name,
             status: item.state,
-            create_at: item.create_at,
-            update_at: item.update_at,
+            create_at: item.createAt,
+            update_at: item.updateAt,
         }
     }
     )

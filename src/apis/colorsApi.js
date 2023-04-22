@@ -1,36 +1,27 @@
 import axios from "./axios";
-export const sizesApi = {
-    async requestAllSize() {
+export const colorsApi = {
+    async requestAllColor() {
         return await axios
-            .get(`/sizes`)
+            .get(`/colors`)
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestSizeById(id) {
+    async requestDeleteColor(id) {
         return await axios
-            .get(`/sizes/${id}`)
+            .delete(`/colors/${id}`)
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestUpdateSize(params) {
+    async requestUpdateColor(params) {
         return await axios
-            .put(`/sizes/${params.id}`, { value: params.value })
+            .put(`/colors/${params.id}`, { codeColor: params.codeColor, name: params.name })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestCreateSize(data) {
+    async requestCreateColor(data) {
         return await axios
-            .post(`/sizes`, data)
+            .post(`/colors`, data)
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestDeleteSize(id) {
-        return await axios
-            .delete(`/sizes/${id}`)
-            .then((response) => response)
-            .catch((error) => error.response.data);
-    }
-
-
-
 };

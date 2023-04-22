@@ -1,17 +1,25 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import style from "./Colors.module.scss";
 import classNames from "classnames/bind";
-import { dataColors } from "~/assets/data/fake-colors";
-import { Table, Popconfirm, Space } from "antd";
-import { useState } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import AddColors from "~/components/dialog-colors/AddColors";
-import { UpdateColors } from "~/components/dialog-colors";
+import { Table, Space } from "antd";
+import { useEffect } from "react";
+import AddColors from "~/components/crud-colors/AddColors";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllColors } from "~/redux/color/colorsSlice";
+import { DeleteColors, UpdateColors } from "~/components/crud-colors";
 const cx = classNames.bind(style);
 function Colors() {
-    const [editRow, setEdit] = useState(false);
-    const handleDelete = (record) => { }
+    const { colors, colorChanged } = useSelector((state) => state.colorReducer);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchAllColors());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (colorChanged) {
+            dispatch(fetchAllColors());
+        }
+    }, [dispatch, colorChanged])
     const columns = [
         {
             title: "Id",
@@ -51,28 +59,22 @@ function Colors() {
         {
             title: "Hành động",
             key: "action",
-            render: (_, record) => {
-                return dataColors.length >= 1 ? (
-                    <Space>
-                        <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
-                            <DeleteIcon color="error" />
-                        </Popconfirm>
-                        <UpdateColors />
-                    </Space>
-                ) : null;
-            },
+            dataIndex: "option",
         },
     ];
-
-    const data = dataColors.map((item, index) => {
+    const data = colors.map((item, index) => {
         return {
             key: index,
             id: item.id,
-            code_color: item.code_color,
-            name_color: item.name_color,
+            code_color: item.codeColor,
+            name_color: item.name,
             status: item.state,
-            create_at: item.create_at,
-            update_at: item.update_at,
+            create_at: item.createAt,
+            update_at: item.updateAt,
+            option: <Space>
+                <UpdateColors id={item?.id} codeColor={item?.codeColor} name={item?.name} />
+                <DeleteColors id={item?.id} />
+            </Space>
         }
     }
     )

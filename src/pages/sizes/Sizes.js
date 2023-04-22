@@ -1,23 +1,26 @@
-import { Box, Button, Typography } from "@mui/material";
-import style from "./Sizes.module.scss";
+import { Box, Typography } from "@mui/material";
+import { Space, Table } from "antd";
 import classNames from "classnames/bind";
-import { dataSizes } from "~/assets/data/fake-sizes";
-import { Table, Popconfirm, Space } from "antd";
-import { Link } from "react-router-dom";
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useEffect, useState } from "react";
-import AddSizes from "~/components/dialog-sizes/AddSizes";
-import { UpdateSizes } from "~/components/dialog-sizes";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DeleteSizes, UpdateSizes } from "~/components/crud-sizes";
+import AddSizes from "~/components/crud-sizes/AddSizes";
 import { fetchAllSizes } from "~/redux/size/sizesSlice";
+import style from "./Sizes.module.scss";
 const cx = classNames.bind(style);
 function Sizes() {
-    const handleDelete = (record) => { }
-    const sizes = useSelector((state) => state.sizeReducer.sizes);
+    const { sizes, sizeChanged } = useSelector((state) => state.sizeReducer);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchAllSizes());
-    }, []);
+    }, [dispatch]);
+    useEffect(() => {
+        if (sizeChanged) {
+            dispatch(fetchAllSizes());
+        }
+    }, [dispatch, sizeChanged]);
+
+
     const columns = [
         {
             title: "Id",
@@ -48,21 +51,11 @@ function Sizes() {
         },
         {
             title: "Hành động",
-            key: "action",
-            dataIndex: "key",
-            render: (dataIndex, record) => {
-                return dataSizes.length >= 1 ? (
-                    <Space>
-                        <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
-                            <DeleteIcon color="error" />
-                        </Popconfirm>
-                        <UpdateSizes dataIndex={dataIndex} />
-                    </Space>
-                ) : null;
-            },
+            key: "option",
+            dataIndex: "option",
         },
     ];
-    const data = sizes.map((item, index) => {
+    const data = sizes?.map((item, index) => {
         return {
             key: index,
             id: item.id,
@@ -70,9 +63,15 @@ function Sizes() {
             status: item.state,
             created_at: item.createAt,
             updated_at: item.updateAt,
+            option: <Space>
+                <UpdateSizes id={item?.id} value={item?.value} />
+                <DeleteSizes id={item?.id} />
+            </Space>
+
         }
     }
-    )
+    );
+
     return (
         <Box className={cx("main")}>
             <Box className={cx("wrap-header")}>
@@ -85,7 +84,7 @@ function Sizes() {
                     <AddSizes />
                 </Box>
                 <Box className={cx("wrap-table")}>
-                    <Table dataSource={data} columns={columns} />
+                    <Table columns={columns} dataSource={data} />
                 </Box>
             </Box>
         </Box>

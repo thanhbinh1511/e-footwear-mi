@@ -1,23 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-    CREATE_SIZE,
-    DELETE_SIZE_BY_ID,
-    GET_ALL_SIZE, GET_SIZE_BY_ID, UPDATE_SIZE_BY_ID,
-} from "./sizesType";
-import { sizesApi } from "~/apis/sizesApi";
+    GET_ALL_COLOR,
+    DELETE_COLOR_BY_ID,
+    CREATE_COLOR,
+    UPDATE_COLOR_BY_ID,
+} from "./colorsType";
+import { colorsApi } from "~/apis/colorsApi";
 import MySwal from "~/constants/MySwal";
 const initialState = {
-    sizes: [],
-    size: null,
+    colors: [],
+    color: null,
     isLoading: false,
-    sizeChanged: false,
+    colorChanged: false,
 };
 
-const fetchAllSizes = createAsyncThunk(
-    GET_ALL_SIZE,
+const fetchAllColors = createAsyncThunk(
+    GET_ALL_COLOR,
     async (params, thunkApi) => {
         try {
-            const response = await sizesApi.requestAllSize();
+            const response = await colorsApi.requestAllColor();
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -26,11 +27,11 @@ const fetchAllSizes = createAsyncThunk(
         }
     }
 );
-const fetchSizeById = createAsyncThunk(
-    GET_SIZE_BY_ID,
-    async (params, thunkApi) => {
+const fetchDeleteColor = createAsyncThunk(
+    DELETE_COLOR_BY_ID,
+    async (id, thunkApi) => {
         try {
-            const response = await sizesApi.requestSizeById(params);
+            const response = await colorsApi.requestDeleteColor(id);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -39,11 +40,11 @@ const fetchSizeById = createAsyncThunk(
         }
     }
 );
-const fetchUpdateSize = createAsyncThunk(
-    UPDATE_SIZE_BY_ID,
+const fetchCreateColor = createAsyncThunk(
+    CREATE_COLOR,
     async (params, thunkApi) => {
         try {
-            const response = await sizesApi.requestUpdateSize(params);
+            const response = await colorsApi.requestCreateColor(params);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -52,24 +53,11 @@ const fetchUpdateSize = createAsyncThunk(
         }
     }
 );
-const fetchCreateSize = createAsyncThunk(
-    CREATE_SIZE,
+const fetchUpdateColor = createAsyncThunk(
+    UPDATE_COLOR_BY_ID,
     async (params, thunkApi) => {
         try {
-            const response = await sizesApi.requestCreateSize(params);
-            return response.success
-                ? thunkApi.fulfillWithValue(response)
-                : thunkApi.rejectWithValue(response);
-        } catch (error) {
-            return thunkApi.rejectWithValue(error.response.data);
-        }
-    }
-);
-const fetchDeleteSize = createAsyncThunk(
-    DELETE_SIZE_BY_ID,
-    async (params, thunkApi) => {
-        try {
-            const response = await sizesApi.requestDeleteSize(params);
+            const response = await colorsApi.requestUpdateColor(params);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -79,61 +67,38 @@ const fetchDeleteSize = createAsyncThunk(
     }
 );
 
-const sizeSlice = createSlice({
-    name: "size",
+const colorSlice = createSlice({
+    name: "color",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            //get All Size
-            .addCase(fetchAllSizes.pending, (state, action) => {
+            //get All color
+            .addCase(fetchAllColors.pending, (state, action) => {
                 state.isLoading = true;
-                state.sizeChanged = false;
                 return state;
             })
-            .addCase(fetchAllSizes.rejected, (state, action) => {
+            .addCase(fetchAllColors.rejected, (state, action) => {
                 state.isLoading = false;
-                state.sizeChanged = false;
                 return state;
             })
-            .addCase(fetchAllSizes.fulfilled, (state, action) => {
-                const sizes = action.payload.data;
-                state.sizes = sizes;
+            .addCase(fetchAllColors.fulfilled, (state, action) => {
+                const colors = action.payload.data;
+                state.colors = colors;
                 state.isLoading = false;
-                state.sizeChanged = false;
                 return state;
             })
-
-            //get Size By Id
-            .addCase(fetchSizeById.pending, (state, action) => {
-                state.isLoading = true;
-                state.sizeChanged = false;
-                return state;
-            }
-            )
-            .addCase(fetchSizeById.rejected, (state, action) => {
-                state.isLoading = false;
-                state.sizeChanged = false;
-                return state;
-            }
-            )
-            .addCase(fetchSizeById.fulfilled, (state, action) => {
-                const size = action.payload.data;
-                state.size = size;
-                state.sizeChanged = false;
-                return state;
-            })
-            // Update Size By Id
-            .addCase(fetchUpdateSize.rejected, (state, action) => {
+            // Delete Color By Id
+            .addCase(fetchDeleteColor.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = false;
-                state.sizeChanged = false;
+                state.colorChanged = false;
                 MySwal.fire({
                     toast: true,
                     position: 'top-end',
                     icon: 'error',
                     title: 'Thất bại!',
-                    text: `Cập nhật size giày thất bại!`,
+                    text: `Xóa màu thất bại!`,
                     showConfirmButton: false,
                     timer: 2500,
                     showClass: {
@@ -145,23 +110,126 @@ const sizeSlice = createSlice({
                 });
                 return state
             })
-            .addCase(fetchUpdateSize.pending, (state, action) => {
+            .addCase(fetchDeleteColor.pending, (state, action) => {
                 state.isLoading = true;
-                state.sizeChanged = false;
+                state.colorChanged = false;
                 return state;
             }
             )
-            .addCase(fetchUpdateSize.fulfilled, (state, action) => {
+            .addCase(fetchDeleteColor.fulfilled, (state, action) => {
+                const data = action.payload;
+                const list = state.colors.filter(item => item.id !== data);
+                state.colors = list
+                state.colorChanged = true;
+                state.isLoading = true;
+                MySwal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: `Xóa màu thành công!`,
+                    showConfirmButton: false,
+                    timer: 2500,
+                    showClass: {
+                        popup: 'animate__animated animate__backInRight'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__backOutRight'
+                    }
+                });
+                return state
+            }
+            )
+            //Create Color
+            .addCase(fetchCreateColor.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = false;
+                state.colorChanged = false;
+                MySwal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Thất bại!',
+                    text: `Tạo màu sắc thất bại!`,
+                    showConfirmButton: false,
+                    timer: 2500,
+                    showClass: {
+                        popup: 'animate__animated animate__backInRight'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__backOutRight'
+                    }
+                });
+                return state
+            }
+            )
+            .addCase(fetchCreateColor.pending, (state, action) => {
+                state.isLoading = true;
+                state.colorChanged = false;
+                return state;
+            }
+            )
+            .addCase(fetchCreateColor.fulfilled, (state, action) => {
+                const data = action.payload;
+                state.colorChanged = true;
+                state.isLoading = true;
+                MySwal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: `Tạo màu sắc thành công!`,
+                    showConfirmButton: false,
+                    timer: 2500,
+                    showClass: {
+                        popup: 'animate__animated animate__backInRight'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__backOutRight'
+                    }
+                });
+                return state
+            }
+            )
+            // Update Color By Id
+            .addCase(fetchUpdateColor.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = false;
+                state.colorChanged = false;
+                MySwal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Thất bại!',
+                    text: `Cập nhật màu sắc thất bại!`,
+                    showConfirmButton: false,
+                    timer: 2500,
+                    showClass: {
+                        popup: 'animate__animated animate__backInRight'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__backOutRight'
+                    }
+                });
+                return state
+            })
+            .addCase(fetchUpdateColor.pending, (state, action) => {
+                state.isLoading = true;
+                state.colorChanged = false;
+                return state;
+            }
+            )
+            .addCase(fetchUpdateColor.fulfilled, (state, action) => {
                 const data = action.payload.data;
-                const list = state.sizes.filter((item) => item.id !== data.id);
-                state.sizeChanged = true;
+                const list = state.colors.filter((item) => item.id !== data.id);
+                state.colorChanged = true;
                 state.isLoading = true;
                 MySwal.fire({
                     toast: true,
                     position: 'top-end',
                     icon: 'success',
                     title: 'Thành công!',
-                    text: `Cập nhật size giày thành công!`,
+                    text: `Cập nhật màu sắc thành công!`,
                     showConfirmButton: false,
                     timer: 2500,
                     showClass: {
@@ -173,114 +241,12 @@ const sizeSlice = createSlice({
                 });
                 return state
             })
-            /// Create Size
-            .addCase(fetchCreateSize.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isSuccess = false;
-                state.sizeChanged = false;
-                MySwal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    icon: 'error',
-                    title: 'Thất bại!',
-                    text: `Tạo size giày thất bại!`,
-                    showConfirmButton: false,
-                    timer: 2500,
-                    showClass: {
-                        popup: 'animate__animated animate__backInRight'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__backOutRight'
-                    }
-                });
-                return state
-            }
-            )
-            .addCase(fetchCreateSize.pending, (state, action) => {
-                state.isLoading = true;
-                state.sizeChanged = false;
-                return state;
-            }
-            )
-            .addCase(fetchCreateSize.fulfilled, (state, action) => {
-                const data = action.payload;
-                state.sizeChanged = true;
-                state.isLoading = true;
-                MySwal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Thành công!',
-                    text: `Tạo size giày thành công!`,
-                    showConfirmButton: false,
-                    timer: 2500,
-                    showClass: {
-                        popup: 'animate__animated animate__backInRight'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__backOutRight'
-                    }
-                });
-                return state
-            }
-            )
-            // Delete Size By Id
-            .addCase(fetchDeleteSize.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isSuccess = false;
-                state.sizeChanged = false;
-                MySwal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    icon: 'error',
-                    title: 'Thất bại!',
-                    text: `Xóa size giày thất bại!`,
-                    showConfirmButton: false,
-                    timer: 2500,
-                    showClass: {
-                        popup: 'animate__animated animate__backInRight'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__backOutRight'
-                    }
-                });
-                return state
-            })
-            .addCase(fetchDeleteSize.pending, (state, action) => {
-                state.isLoading = true;
-                state.sizeChanged = false;
-                return state;
-            }
-            )
-            .addCase(fetchDeleteSize.fulfilled, (state, action) => {
-                const data = action.payload;
-                const list = state.sizes.filter(item => item.id !== data);
-                state.sizes = list
-                state.sizeChanged = true;
-                state.isLoading = true;
-                MySwal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Thành công!',
-                    text: `Xóa size giày thành công!`,
-                    showConfirmButton: false,
-                    timer: 2500,
-                    showClass: {
-                        popup: 'animate__animated animate__backInRight'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__backOutRight'
-                    }
-                });
-                return state
-            }
-            )
-    }
+    },
+});
 
-})
 
-const sizeReducer = sizeSlice.reducer;
-export default sizeReducer;
-export { fetchAllSizes, fetchSizeById, fetchUpdateSize, fetchCreateSize, fetchDeleteSize };
+
+const colorReducer = colorSlice.reducer;
+export default colorReducer;
+export { fetchCreateColor, fetchUpdateColor, fetchDeleteColor, fetchAllColors };
 
