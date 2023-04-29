@@ -143,7 +143,6 @@ const colorSlice = createSlice({
             //Create Color
             .addCase(fetchCreateColor.rejected, (state, action) => {
                 state.isLoading = false;
-                state.isSuccess = false;
                 state.colorChanged = false;
                 MySwal.fire({
                     toast: true,
@@ -194,7 +193,6 @@ const colorSlice = createSlice({
             // Update Color By Id
             .addCase(fetchUpdateColor.rejected, (state, action) => {
                 state.isLoading = false;
-                state.isSuccess = false;
                 state.colorChanged = false;
                 MySwal.fire({
                     toast: true,

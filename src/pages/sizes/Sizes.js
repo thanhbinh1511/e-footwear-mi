@@ -3,8 +3,8 @@ import { Space, Table } from "antd";
 import classNames from "classnames/bind";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteSizes, UpdateSizes } from "~/components/crud-sizes";
-import AddSizes from "~/components/crud-sizes/AddSizes";
+import { DeleteSize, UpdateSize } from "~/components/crud-size";
+import AddSizes from "~/components/crud-size/AddSize";
 import { fetchAllSizes } from "~/redux/size/sizesSlice";
 import style from "./Sizes.module.scss";
 const cx = classNames.bind(style);
@@ -55,7 +55,7 @@ function Sizes() {
             dataIndex: "option",
         },
     ];
-    const data = sizes?.map((item, index) => {
+    const data = sizes.map((item, index) => {
         return {
             key: index,
             id: item.id,
@@ -64,8 +64,8 @@ function Sizes() {
             created_at: item.createAt,
             updated_at: item.updateAt,
             option: <Space>
-                <UpdateSizes id={item?.id} value={item?.value} />
-                <DeleteSizes id={item?.id} />
+                <UpdateSize id={item?.id} value={item?.value} />
+                <DeleteSize id={item?.id} />
             </Space>
 
         }

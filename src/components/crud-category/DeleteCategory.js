@@ -1,13 +1,13 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
-import classnames from "classnames/bind";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchDeleteColor } from '~/redux/color/colorsSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
 import style from "./Style.module.scss";
+import classnames from "classnames/bind";
+import { fetchDeleteCategory } from "~/redux/category/categoriesSlice";
 const cx = classnames.bind(style);
 
-function DeleteColors(props) {
+function DeleteCategory(props) {
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const handleClose = () => {
@@ -15,10 +15,9 @@ function DeleteColors(props) {
     };
 
     const handleAction = (id) => {
-        dispatch(fetchDeleteColor(id));
+        dispatch(fetchDeleteCategory(id));
         setOpen(!open);
     };
-
     return (
         <Box className={cx("dialog-main")} >
             <Button disableElevation
@@ -48,7 +47,7 @@ function DeleteColors(props) {
                             variant="contained"
                             type="submit"
                             className={cx("btn-save")}
-                            form="color-form"
+                            form="category-form"
                         >
                             Xóa
                         </Button>
@@ -58,4 +57,4 @@ function DeleteColors(props) {
         </Box >
     )
 }
-export default DeleteColors;
+export default DeleteCategory;

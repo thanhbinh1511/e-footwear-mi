@@ -1,24 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-    GET_ALL_CATEGORY,
-    DELETE_CATEGORY_BY_ID,
-    CREATE_CATEGORY,
-    UPDATE_CATEGORY_BY_ID,
-} from "./categoriesType";
-import { categoriesApi } from "~/apis/categoriesApi";
+    GET_ALL_GALLERY,
+    CREATE_GALLERY,
+    UPDATE_GALLERY_BY_ID,
+    DELETE_GALLERY_BY_ID,
+
+} from "./galleriesType";
+
+import { galleriesApi } from "~/apis/galleriesApi";
 import MySwal from "~/constants/MySwal";
 const initialState = {
-    categories: [],
-    category: null,
+    galleries: [],
+    gallery: null,
     isLoading: false,
-    categoryChanged: false,
+    galleryChanged: false,
 };
-
-const fetchAllCategories = createAsyncThunk(
-    GET_ALL_CATEGORY,
+const fetchAllGalleries = createAsyncThunk(
+    GET_ALL_GALLERY,
     async (params, thunkApi) => {
         try {
-            const response = await categoriesApi.requestAllCategory();
+            const response = await galleriesApi.requestAllGallery();
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -27,11 +28,11 @@ const fetchAllCategories = createAsyncThunk(
         }
     }
 );
-const fetchDeleteCategory = createAsyncThunk(
-    DELETE_CATEGORY_BY_ID,
+const fetchDeleteGallery = createAsyncThunk(
+    DELETE_GALLERY_BY_ID,
     async (id, thunkApi) => {
         try {
-            const response = await categoriesApi.requestDeleteCategory(id);
+            const response = await galleriesApi.requestDeleteGallery(id);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -40,11 +41,11 @@ const fetchDeleteCategory = createAsyncThunk(
         }
     }
 );
-const fetchCreateCategory = createAsyncThunk(
-    CREATE_CATEGORY,
-    async (category, thunkApi) => {
+const fetchCreateGallery = createAsyncThunk(
+    CREATE_GALLERY,
+    async (params, thunkApi) => {
         try {
-            const response = await categoriesApi.requestCreateCategory(category);
+            const response = await galleriesApi.requestCreateGallery(params);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -53,51 +54,40 @@ const fetchCreateCategory = createAsyncThunk(
         }
     }
 );
-const fetchUpdateCategory = createAsyncThunk(
-    UPDATE_CATEGORY_BY_ID,
-    async (category, thunkApi) => {
-        try {
-            const response = await categoriesApi.requestUpdateCategory(category);
-            return response.success
-                ? thunkApi.fulfillWithValue(response)
-                : thunkApi.rejectWithValue(response);
-        } catch (error) {
-            return thunkApi.rejectWithValue(error.response.data);
-        }
-    }
-);
-const categorySlice = createSlice({
-    name: "category",
+
+
+const gallerySlice = createSlice({
+    name: "gallery",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            //get All category
-            .addCase(fetchAllCategories.pending, (state, action) => {
+            //get All gallery
+            .addCase(fetchAllGalleries.pending, (state, action) => {
                 state.isLoading = true;
                 return state;
             })
-            .addCase(fetchAllCategories.rejected, (state, action) => {
+            .addCase(fetchAllGalleries.rejected, (state, action) => {
                 state.isLoading = false;
                 return state;
             })
-            .addCase(fetchAllCategories.fulfilled, (state, action) => {
-                const categories = action.payload.data;
-                state.categories = categories;
+            .addCase(fetchAllGalleries.fulfilled, (state, action) => {
+                const galleries = action.payload.data;
+                state.galleries = galleries;
                 state.isLoading = false;
                 return state;
             })
-            //delete category
-            .addCase(fetchDeleteCategory.rejected, (state, action) => {
+            //delete gallery by id
+            .addCase(fetchDeleteGallery.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = false;
-                state.categoryChanged = false;
+                state.galleryChanged = false;
                 MySwal.fire({
                     toast: true,
                     position: 'top-end',
                     icon: 'error',
                     title: 'Thất bại!',
-                    text: `Xóa danh mục thất bại!`,
+                    text: `Xóa ảnh thất bại!`,
                     showConfirmButton: false,
                     timer: 2500,
                     showClass: {
@@ -109,24 +99,24 @@ const categorySlice = createSlice({
                 });
                 return state
             })
-            .addCase(fetchDeleteCategory.pending, (state, action) => {
+            .addCase(fetchDeleteGallery.pending, (state, action) => {
                 state.isLoading = true;
-                state.categoryChanged = false;
+                state.galleryChanged = false;
                 return state;
             }
             )
-            .addCase(fetchDeleteCategory.fulfilled, (state, action) => {
+            .addCase(fetchDeleteGallery.fulfilled, (state, action) => {
                 const data = action.payload;
-                const list = state.categories.filter(item => item.id !== data);
-                state.sizes = list
-                state.categoryChanged = true;
+                const list = state.galleries.filter(item => item.id !== data);
+                state.galleries = list
+                state.galleryChanged = true;
                 state.isLoading = true;
                 MySwal.fire({
                     toast: true,
                     position: 'top-end',
                     icon: 'success',
                     title: 'Thành công!',
-                    text: `Xóa danh mục thành công!`,
+                    text: `Xóa ảnh thành công!`,
                     showConfirmButton: false,
                     timer: 2500,
                     showClass: {
@@ -137,17 +127,18 @@ const categorySlice = createSlice({
                     }
                 });
                 return state
-            })
-            //add category
-            .addCase(fetchCreateCategory.rejected, (state, action) => {
+            }
+            )
+            //create gallery
+            .addCase(fetchCreateGallery.rejected, (state, action) => {
                 state.isLoading = false;
-                state.categoryChanged = false;
+                state.galleryChanged = false;
                 MySwal.fire({
                     toast: true,
                     position: 'top-end',
                     icon: 'error',
                     title: 'Thất bại!',
-                    text: `Thêm danh mục thất bại!`,
+                    text: `Thêm ảnh thất bại!`,
                     showConfirmButton: false,
                     timer: 2500,
                     showClass: {
@@ -158,22 +149,24 @@ const categorySlice = createSlice({
                     }
                 });
                 return state
-            })
-            .addCase(fetchCreateCategory.pending, (state, action) => {
+            }
+            )
+            .addCase(fetchCreateGallery.pending, (state, action) => {
                 state.isLoading = true;
-                state.categoryChanged = false;
+                state.galleryChanged = false;
                 return state;
-            })
-            .addCase(fetchCreateCategory.fulfilled, (state, action) => {
+            }
+            )
+            .addCase(fetchCreateGallery.fulfilled, (state, action) => {
                 const data = action.payload;
-                state.categoryChanged = true;
+                state.galleryChanged = true;
                 state.isLoading = true;
                 MySwal.fire({
                     toast: true,
                     position: 'top-end',
                     icon: 'success',
                     title: 'Thành công!',
-                    text: `Thêm danh mục thành công!`,
+                    text: `Thêm ảnh thành công!`,
                     showConfirmButton: false,
                     timer: 2500,
                     showClass: {
@@ -184,16 +177,13 @@ const categorySlice = createSlice({
                     }
                 });
                 return state
-            })
+            }
+            )
 
 
-
-    },
+    }
 });
-
-
-
-const categoryReducer = categorySlice.reducer;
-export default categoryReducer;
-export { fetchCreateCategory, fetchUpdateCategory, fetchDeleteCategory, fetchAllCategories };
+const galleryReducer = gallerySlice.reducer;
+export default galleryReducer;
+export { fetchCreateGallery, fetchDeleteGallery, fetchAllGalleries };
 

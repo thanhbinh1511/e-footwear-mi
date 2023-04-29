@@ -1,25 +1,25 @@
 import { Box, Typography } from "@mui/material";
-import style from "./Colors.module.scss";
 import classNames from "classnames/bind";
+import style from "./Galleries.module.scss";
 import { Table, Space } from "antd";
+import { fetchAllGalleries } from "~/redux/gallery/galleriesSlice";
 import { useEffect } from "react";
-import AddColors from "~/components/crud-color/AddColor";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllColors } from "~/redux/color/colorsSlice";
-import { DeleteColor, UpdateColor } from "~/components/crud-color";
+import { AddGallery, DeleteGallery } from "~/components/crud-gallerry";
 const cx = classNames.bind(style);
-function Colors() {
-    const { colors, colorChanged } = useSelector((state) => state.colorReducer);
+function Galleries() {
+    const { galleries, galleryChanged } = useSelector((state) => state.galleryReducer);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchAllColors());
+        dispatch(fetchAllGalleries());
     }, [dispatch]);
 
     useEffect(() => {
-        if (colorChanged) {
-            dispatch(fetchAllColors());
+        if (galleryChanged) {
+            dispatch(fetchAllGalleries());
         }
-    }, [dispatch, colorChanged])
+    }, [dispatch, galleryChanged])
+
     const columns = [
         {
             title: "Id",
@@ -27,31 +27,31 @@ function Colors() {
             key: "id",
         },
         {
-            title: "Mã màu",
-            dataIndex: "code_color",
-            key: "code_color",
 
-
+            title: "Ảnh",
+            dataIndex: "image_url",
+            key: "image_url",
+            render: (text) => <img src={text} alt="" style={{ width: "120px", height: "60px" }} />
         },
         {
-            title: "Tên màu",
-            dataIndex: "name_color",
-            key: "name_color",
-
+            title: "Slug",
+            dataIndex: "link",
+            key: "link",
         },
         {
-            title: "Ngày tạo",
-            dataIndex: "create_at",
-            key: "create_at",
-        },
-        {
-            title: "Ngày cập nhật",
-            dataIndex: "update_at",
-            key: "update_at",
+            title: "Mô tả",
+            dataIndex: "title",
+            key: "title",
 
         },
         {
-            title: "Trạng thái",
+            title: "Loại ảnh",
+            dataIndex: "type_gallery_id",
+            key: "type_gallery_id",
+
+        },
+        {
+            title: "Trạng thái",
             dataIndex: "status",
             key: "status",
             render: (text) => <Typography component={"span"} sx={{ color: "#4ec192" }}>{text}</Typography>
@@ -61,33 +61,32 @@ function Colors() {
             key: "action",
             dataIndex: "option",
         },
+
     ];
-    const data = colors.map((item, index) => {
+    const data = galleries.map((item, index) => {
         return {
             key: index,
             id: item.id,
-            code_color: item.codeColor,
-            name_color: item.name,
+            image_url: item.imageURL,
+            link: item.link,
+            title: item.title,
+            type_gallery_id: item.typeGallery.id,
             status: item.state,
-            create_at: item.createAt,
-            update_at: item.updateAt,
             option: <Space>
-                <UpdateColor id={item?.id} codeColor={item?.codeColor} name={item?.name} />
-                <DeleteColor id={item?.id} />
+                <DeleteGallery id={item?.id} />
             </Space>
         }
-    }
-    )
+    })
     return (
         <Box className={cx("main")}>
             <Box className={cx("wrap-header")}>
                 <Typography className={cx("heading")}>
-                    Màu sắc
+                    Quản lý thư viện ảnh
                 </Typography>
             </Box>
             <Box className={cx("container")} >
                 <Box className={cx("wrap-button")}>
-                    <AddColors />
+                    <AddGallery/>   
                 </Box>
                 <Box className={cx("wrap-table")}>
                     <Table dataSource={data} columns={columns} />
@@ -96,4 +95,4 @@ function Colors() {
         </Box>
     )
 }
-export default Colors;
+export default Galleries;

@@ -10,7 +10,7 @@ import { fetchUpdateColor } from "~/redux/color/colorsSlice";
 
 const cx = classnames.bind(style);
 
-function UpdateColors(props) {
+function UpdateColor(props) {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const initialValues = {
@@ -178,4 +178,4 @@ function UpdateColors(props) {
     );
 }
 
-export default UpdateColors;
+export default UpdateColor;

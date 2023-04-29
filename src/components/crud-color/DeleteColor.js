@@ -1,13 +1,13 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Box, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import classnames from "classnames/bind";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchDeleteSize } from "~/redux/size/sizesSlice";
-import DeleteIcon from '@mui/icons-material/Delete';
+import { fetchDeleteColor } from '~/redux/color/colorsSlice';
 import style from "./Style.module.scss";
-import classnames from "classnames/bind";
 const cx = classnames.bind(style);
 
-function DeleteSizes(props) {
+function DeleteColor(props) {
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const handleClose = () => {
@@ -15,9 +15,10 @@ function DeleteSizes(props) {
     };
 
     const handleAction = (id) => {
-        dispatch(fetchDeleteSize(id));
+        dispatch(fetchDeleteColor(id));
         setOpen(!open);
     };
+
     return (
         <Box className={cx("dialog-main")} >
             <Button disableElevation
@@ -47,7 +48,7 @@ function DeleteSizes(props) {
                             variant="contained"
                             type="submit"
                             className={cx("btn-save")}
-                            form="size-form"
+                            form="color-form"
                         >
                             Xóa
                         </Button>
@@ -57,4 +58,4 @@ function DeleteSizes(props) {
         </Box >
     )
 }
-export default DeleteSizes;
+export default DeleteColor;

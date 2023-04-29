@@ -2,33 +2,23 @@ import style from "./Style.module.scss";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import EditIcon from '@mui/icons-material/Edit';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUpdateCategory } from "~/redux/category/categoriesSlice";
 import { useForm } from "~/hooks/useForm";
-import { fetchCreateColor } from "~/redux/color/colorsSlice";
 const cx = classnames.bind(style);
 
-function AddColors() {
+function UpdateCategory(props) {
     const dispatch = useDispatch();
+    const { categories } = useSelector((state) => state.categoryReducer);
     const [open, setOpen] = useState(false);
-    const handleOpen = () => {
-        setOpen(!open);
-    };
     const initialValues = {
-        codeColor: "",
-        name: "",
+        name: props?.name,
+        parent: props?.parent,
     };
     const validate = (fieldValues = values) => {
         let temp = { ...errors };
         let tempEnable = { ...errorsEnable };
-        if ("codeColor" in fieldValues) {
-            if (fieldValues.codeColor === "") {
-                tempEnable.codeColor = true;
-                temp.codeColor = "Không được để trống.";
-            } else {
-                tempEnable.codeColor = false;
-                temp.codeColor = "";
-            }
-        }
         if ("name" in fieldValues) {
             if (fieldValues.name === "") {
                 tempEnable.name = true;
@@ -38,6 +28,16 @@ function AddColors() {
                 temp.name = "";
             }
         }
+        if ("parent" in fieldValues) {
+            if (fieldValues.parent === "") {
+                tempEnable.parent = true;
+                temp.parent = "Không được để trống.";
+            } else {
+                tempEnable.parent = false;
+                temp.parent = "";
+            }
+        }
+
         setErrors({
             ...temp,
         });
@@ -46,7 +46,6 @@ function AddColors() {
         });
         if (fieldValues === values) return Object.values(temp).every((x) => x === ""); // trả về boolean
     };
-
     const {
         values,
         setValues,
@@ -57,97 +56,92 @@ function AddColors() {
         handleInputChange,
         resetForm,
     } = useForm(initialValues, true, validate);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
     const handleClose = (childData) => {
         setOpen(!open);
     };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (validate()) {
-            dispatch(fetchCreateColor({
-                codeColor: values?.codeColor,
-                name: values?.name,
-            })
-            );
-            resetForm();
-            handleClose();
-        }
-    };
+
 
     return (
-        <Box className={cx("dialog-main")} >
-            <Button variant="contained" onClick={handleOpen}>
-                Thêm màu sắc
+        <Box className={cx("dialog-main")}>
+            <Button disableElevation
+                disableRipple
+                style={{ backgroundColor: "transparent" }} onClick={handleOpen}>
+                <EditIcon color="warning" />
             </Button>
             <Dialog open={open}
-                onClose={handleClose}
                 className={cx("dialog-content")}
                 PaperProps={{
                     style: {
-                        maxWidth: "300px",
-                        width: "300px",
+                        maxWidth: "400px",
+                        width: "400px",
                         position: "relative",
                         borderRadius: "10px",
                     },
                 }}>
-                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}>Thêm Màu Sắc</DialogTitle>
+                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}>  Sửa danh mục</DialogTitle>
                 <DialogContent>
                     <Box
-                        id="color-form"
+                        id="category-form"
                         component={"form"}
                         className={cx("form")}
-                        onSubmit={(e) => handleSubmit(e)}
                     >
-                        <Box className={cx("form-flex")}>
-                            <Box>
-                                <Box
-                                    component={"label"}
-                                    htmlFor="codeColor"
-                                    className={cx("form-label")}
-                                >
-                                    Mã màu
-                                </Box>
-                            </Box>
-                            <TextField
-                                variant="outlined"
-                                type="text"
-                                name="codeColor"
-                                id="codeColor"
-                                onChange={handleInputChange}
-                                value={values?.codeColor}
-                                error={errorsEnable?.codeColor}
-                                helperText={errors?.codeColor}
-                                FormHelperTextProps={{ style: { fontSize: 12, borderRadius: 5 } }}
-                                placeholder="Vui lòng nhập mã màu"
-                                inputProps={{
-                                    style: { fontSize: "1.1rem", padding: "1rem 1rem" },
-                                }}
-                            />
-                        </Box>
-                        <Box className={cx("form-flex")}>
+                        <Box className={cx("form-flex")} sx={{ marginBottom: "1rem" }}>
                             <Box>
                                 <Box
                                     component={"label"}
                                     htmlFor="name"
                                     className={cx("form-label")}
                                 >
-                                    Tên màu
+                                    Tên danh mục
                                 </Box>
                             </Box>
                             <TextField
+                                fullWidth
                                 variant="outlined"
                                 type="text"
                                 name="name"
                                 id="name"
+                                value={values.name}
                                 onChange={handleInputChange}
-                                value={values?.name}
-                                error={errorsEnable?.name}
-                                helperText={errors?.name}
-                                FormHelperTextProps={{ style: { fontSize: 12, borderRadius: 5 } }}
-                                placeholder="Vui lòng nhập tên màu"
+                                error={errorsEnable.name}
+                                helperText={errors.name}
+                                FormHelperTextProps={{ style: { fontSize: 12 } }}
+                                placeholder="Vui lòng nhập tên danh mục"
                                 inputProps={{
                                     style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                 }}
                             />
+                        </Box>
+                        <Box className={cx("form-flex")} sx={{ marginBottom: "1rem" }}>
+                            <Box>
+                                <Box
+                                    component={"label"}
+                                    htmlFor="parent_id"
+                                    className={cx("form-label")}
+                                >
+                                    Danh mục cha
+                                </Box>
+                            </Box>
+                            <TextField select
+                                SelectProps={{
+                                    native: true,
+                                    style: { fontSize: '1.2rem' }
+                                }} name="parent" id="parent" onChange={handleInputChange}>
+                                <Box component="option" value={values.parent}></Box>
+                                {
+                                    categories?.map((item, index) => (
+                                        <Box component={"option"} sx={{ fontSize: '1.2rem' }} key={item.id} value={item.id}>
+                                            {item.name}
+                                        </Box>
+                                    ))
+                                }
+                            </TextField>
+
                         </Box>
                     </Box>
                 </DialogContent>
@@ -161,16 +155,15 @@ function AddColors() {
                             variant="contained"
                             type="submit"
                             className={cx("btn-save")}
-                            form="color-form"
-
+                            form="category-form"
                         >
                             Lưu
                         </Button>
                     </Box>
                 </DialogActions>
             </Dialog>
-        </Box >
+        </Box>
     );
 }
 
-export default AddColors;
+export default UpdateCategory;

@@ -1,20 +1,17 @@
-import style from "./Style.module.scss";
+import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "~/hooks/useForm";
-import { fetchCreateSize } from "~/redux/size/sizesSlice";
+import { fetchUpdateSize } from "~/redux/size/sizesSlice";
+import style from "./Style.module.scss";
 const cx = classnames.bind(style);
-
-function AddSizes() {
+function UpdateSize(props) {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
-    const handleOpen = () => {
-        setOpen(!open);
-    };
     const initialValues = {
-        value: "",
+        value: props?.value,
     };
     const validate = (fieldValues = values) => {
         let temp = { ...errors };
@@ -48,25 +45,29 @@ function AddSizes() {
         handleInputChange,
         resetForm,
     } = useForm(initialValues, true, validate);
+    const handleOpen = async () => {
+        setOpen(!open);
+    };
     const handleClose = (childData) => {
         setOpen(!open);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchCreateSize({
+            dispatch(fetchUpdateSize({
+                id: props?.id,
                 value: values?.value,
             })
             );
             setOpen(!open);
-            resetForm();
         }
     };
-
     return (
         <Box className={cx("dialog-main")} >
-            <Button variant="contained" onClick={handleOpen}>
-                Thêm size giày
+            <Button disableElevation
+                disableRipple
+                style={{ backgroundColor: "transparent" }} onClick={handleOpen}>
+                <EditIcon color="warning" />
             </Button>
             <Dialog open={open}
                 onClose={handleClose}
@@ -79,7 +80,7 @@ function AddSizes() {
                         borderRadius: "10px",
                     },
                 }}>
-                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}>Thêm Size Giày</DialogTitle>
+                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}>Cập nhật Size Giày</DialogTitle>
                 <DialogContent>
                     <Box
                         id="size-form"
@@ -126,6 +127,7 @@ function AddSizes() {
                             type="submit"
                             className={cx("btn-save")}
                             form="size-form"
+                            onClick={handleSubmit}
                         >
                             Lưu
                         </Button>
@@ -136,4 +138,4 @@ function AddSizes() {
     );
 }
 
-export default AddSizes;
+export default UpdateSize;

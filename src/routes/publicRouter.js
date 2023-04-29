@@ -9,6 +9,7 @@ import ProductDetail from "~/pages/product-detail/ProductDetail";
 import ProductImage from "~/pages/product-image/ProductImage";
 import Colors from "~/pages/colors/Colors";
 import Sizes from "~/pages/sizes/Sizes";
+import Galleries from "~/pages/galleries/Galleries";
 
 export const publicRoutes = [
     {
@@ -55,5 +56,8 @@ export const publicRoutes = [
         path: "/admin/sizes",
         component: Sizes,
     },
-
+    {
+        path: "/admin/galleries",
+        component: Galleries,
+    },
 ];

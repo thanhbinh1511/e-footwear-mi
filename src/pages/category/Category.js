@@ -1,22 +1,26 @@
-import style from "./Category.module.scss";
-import classNames from "classnames/bind";
 import { Box, Typography } from "@mui/material";
-import { Table, Popconfirm, Space } from "antd";
-import { dataCategories } from "~/assets/data/fake-category";
-import { useEffect, useState } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddCategory from "~/components/dialog-category/AddCategory";
-import { UpdateCategory } from "~/components/dialog-category";
-import { fetchAllCategories } from "~/redux/category/categoriesSlice";
+import { Space, Table } from "antd";
+import classNames from "classnames/bind";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DeleteCategory, UpdateCategory } from "~/components/crud-category";
+import AddCategory from "~/components/crud-category/AddCategory";
+import { fetchAllCategories } from "~/redux/category/categoriesSlice";
+import style from "./Category.module.scss";
 const cx = classNames.bind(style);
 function Category() {
-    const handleDelete = (record) => { }
-    const categories = useSelector((state) => state.categoryReducer.categories);
+    const { categories, categoryChanged } = useSelector((state) => state.categoryReducer);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchAllCategories());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (categoryChanged) {
+            dispatch(fetchAllCategories());
+        }
+    }, [categoryChanged, dispatch]);
+
     const columns = [
         {
             title: "Id",
@@ -28,6 +32,12 @@ function Category() {
             title: "Tên danh mục",
             dataIndex: "value",
             key: "value",
+
+        },
+        {
+            title: "Danh mục cha",
+            dataIndex: "parent",
+            key: "parent",
 
         },
         {
@@ -49,17 +59,9 @@ function Category() {
         },
         {
             title: "Hành động",
-            key: "action",
-            render: (_, record) => {
-                return data.length >= 1 ? (
-                    <Space>
-                        <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
-                            <DeleteIcon color="error" />
-                        </Popconfirm>
-                        <UpdateCategory />
-                    </Space>
-                ) : null;
-            },
+            key: "option",
+            dataIndex: "option",
+
         },
     ];
     const data = categories.map((item, index) => {
@@ -67,9 +69,15 @@ function Category() {
             key: index,
             id: item.id,
             value: item.name,
+            parent: item.category === null ? "" : item.category.name,
             status: item.state,
             create_at: item.createAt,
             update_at: item.updateAt,
+            option:
+                <Space>
+                    <UpdateCategory id={item?.id} name={item?.name} parent={item?.id} />
+                    <DeleteCategory id={item?.id} />
+                </Space>
         }
     }
     )
