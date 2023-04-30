@@ -10,6 +10,7 @@ import ProductImage from "~/pages/product-image/ProductImage";
 import Colors from "~/pages/colors/Colors";
 import Sizes from "~/pages/sizes/Sizes";
 import Galleries from "~/pages/galleries/Galleries";
+import TypeGalleries from "~/pages/type-galleries/TypeGalleries";
 
 export const publicRoutes = [
     {
@@ -60,4 +61,8 @@ export const publicRoutes = [
         path: "/admin/galleries",
         component: Galleries,
     },
+    {
+        path: "/admin/type-gallery",
+        component: TypeGalleries,
+    }
 ];

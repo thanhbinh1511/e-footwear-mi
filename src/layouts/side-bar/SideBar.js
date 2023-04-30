@@ -154,7 +154,7 @@ function SideBar() {
           <Box className={cx("menu-icon")}>
             <BrowseGalleryIcon color={`${active === 9 ? "primary" : ""}`} fontSize="medium" />
           </Box>
-          <Box className={cx("menu-content")}>Bộ sưu tập</Box>
+          <Box className={cx("menu-content")}>Thư viện ảnh</Box>
         </Box>
       </Box>
       <Box component={Link}
@@ -164,7 +164,7 @@ function SideBar() {
           <Box className={cx("menu-icon")}>
             <LibraryBooksIcon color={`${active === 10 ? "primary" : ""}`} fontSize="medium" />
           </Box>
-          <Box className={cx("menu-content")}>Loại bộ sưu tập</Box>
+          <Box className={cx("menu-content")}>Loại ảnh</Box>
         </Box>
       </Box>
 

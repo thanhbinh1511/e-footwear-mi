@@ -1,41 +1,42 @@
 import style from "./Style.module.scss";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
+import EditIcon from '@mui/icons-material/Edit';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "~/hooks/useForm";
-import { fetchCreateColor } from "~/redux/color/colorsSlice";
+import { fetchUpdateTypeGallery } from "~/redux/type-gallery/typeGalleriesSlice";
 const cx = classnames.bind(style);
 
-function AddColor() {
+function UpdateTypeGallery(props) {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(!open);
     };
     const initialValues = {
-        codeColor: "",
-        name: "",
+        typeCode: props?.typeCode,
+        typeName: props?.typeName,
     };
     const validate = (fieldValues = values) => {
         let temp = { ...errors };
         let tempEnable = { ...errorsEnable };
-        if ("codeColor" in fieldValues) {
-            if (fieldValues.codeColor === "") {
-                tempEnable.codeColor = true;
-                temp.codeColor = "Không được để trống.";
+        if ("typeCode" in fieldValues) {
+            if (fieldValues.typeCode === "") {
+                tempEnable.typeCode = true;
+                temp.typeCode = "Không được để trống.";
             } else {
-                tempEnable.codeColor = false;
-                temp.codeColor = "";
+                tempEnable.typeCode = false;
+                temp.typeCode = "";
             }
         }
-        if ("name" in fieldValues) {
-            if (fieldValues.name === "") {
-                tempEnable.name = true;
-                temp.name = "Không được để trống.";
+        if ("typeName" in fieldValues) {
+            if (fieldValues.typeName === "") {
+                tempEnable.typeName = true;
+                temp.typeName = "Không được để trống.";
             } else {
-                tempEnable.name = false;
-                temp.name = "";
+                tempEnable.typeName = false;
+                temp.typeName = "";
             }
         }
         setErrors({
@@ -63,20 +64,22 @@ function AddColor() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchCreateColor({
-                codeColor: values?.codeColor,
-                name: values?.name,
+            dispatch(fetchUpdateTypeGallery({
+                id: props?.id,
+                typeCode: values?.typeCode,
+                typeName: values?.typeName,
             })
             );
             setOpen(!open);
             resetForm();
         }
     };
-
     return (
-        <Box className={cx("dialog-main")} >
-            <Button variant="contained" onClick={handleOpen}>
-                Thêm màu sắc
+        <Box className={cx("dialog-main")}>
+            <Button disableElevation
+                disableRipple
+                style={{ backgroundColor: "transparent" }} onClick={handleOpen}>
+                <EditIcon color="warning" />
             </Button>
             <Dialog open={open}
                 onClose={handleClose}
@@ -89,10 +92,10 @@ function AddColor() {
                         borderRadius: "10px",
                     },
                 }}>
-                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}>Thêm Màu Sắc</DialogTitle>
+                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}>Thêm Loại Ảnhh</DialogTitle>
                 <DialogContent>
                     <Box
-                        id="color-form"
+                        id="type_gallery-form"
                         component={"form"}
                         className={cx("form")}
                         onSubmit={(e) => handleSubmit(e)}
@@ -101,23 +104,23 @@ function AddColor() {
                             <Box>
                                 <Box
                                     component={"label"}
-                                    htmlFor="codeColor"
+                                    htmlFor="typeCode"
                                     className={cx("form-label")}
                                 >
-                                    Mã màu
+                                    Mã loại ảnh
                                 </Box>
                             </Box>
                             <TextField
                                 variant="outlined"
                                 type="text"
-                                name="codeColor"
-                                id="codeColor"
+                                name="typeCode"
+                                id="typeCode"
                                 onChange={handleInputChange}
-                                value={values?.codeColor}
-                                error={errorsEnable?.codeColor}
-                                helperText={errors?.codeColor}
+                                value={values?.typeCode}
+                                error={errorsEnable?.typeCode}
+                                helperText={errors?.typeCode}
                                 FormHelperTextProps={{ style: { fontSize: 12, borderRadius: 5 } }}
-                                placeholder="Vui lòng nhập mã màu"
+                                placeholder="Vui lòng nhập mã loại ảnh"
                                 inputProps={{
                                     style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                 }}
@@ -127,23 +130,23 @@ function AddColor() {
                             <Box>
                                 <Box
                                     component={"label"}
-                                    htmlFor="name"
+                                    htmlFor="typeName"
                                     className={cx("form-label")}
                                 >
-                                    Tên màu
+                                    Tên loại ảnh
                                 </Box>
                             </Box>
                             <TextField
                                 variant="outlined"
                                 type="text"
-                                name="name"
-                                id="name"
+                                name="typeName"
+                                id="typeName"
                                 onChange={handleInputChange}
-                                value={values?.name}
-                                error={errorsEnable?.name}
-                                helperText={errors?.name}
+                                value={values?.typeName}
+                                error={errorsEnable?.typeName}
+                                helperText={errors?.typeName}
                                 FormHelperTextProps={{ style: { fontSize: 12, borderRadius: 5 } }}
-                                placeholder="Vui lòng nhập tên màu"
+                                placeholder="Vui lòng nhập tên loại ảnh"
                                 inputProps={{
                                     style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                 }}
@@ -161,7 +164,7 @@ function AddColor() {
                             variant="contained"
                             type="submit"
                             className={cx("btn-save")}
-                            form="color-form"
+                            form="type_gallery-form"
 
                         >
                             Lưu
@@ -173,4 +176,4 @@ function AddColor() {
     );
 }
 
-export default AddColor;
+export default UpdateTypeGallery;

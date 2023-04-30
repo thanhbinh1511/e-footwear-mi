@@ -102,7 +102,7 @@ function UpdateColor(props) {
                         className={cx("form")}
                         onSubmit={(e) => handleSubmit(e)}
                     >
-                        <Box className={cx("form-flex")}>
+                        <Box className={cx("form-flex")} sx={{ marginBottom: "10px" }}>
                             <Box>
                                 <Box
                                     component={"label"}
