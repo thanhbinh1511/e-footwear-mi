@@ -1,6 +1,5 @@
 .background {
     width: 100%;
-    height: 100vh;
     position: relative;
 
     .wrap-logo {
@@ -41,7 +40,6 @@
             cursor: pointer;
 
 
-            .menu-icon {}
 
             .menu-content {
                 padding-left: 10px;
@@ -70,6 +68,7 @@
     border-radius: 10px;
 
 }
+
 .show {
     display: block !important;
 }
