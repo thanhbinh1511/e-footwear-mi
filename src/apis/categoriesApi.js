@@ -18,9 +18,10 @@ export const categoriesApi = {
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestUpdateCategory(id, data) {
+    async requestUpdateCategory(data) {
+        console.log(data);
         return await axios
-            .put(`/categories/${id}`, data)
+            .put(`/categories/${data.id}`, { name: data.name, category: data.category })
             .then((response) => response)
             .catch((error) => error.response.data);
     },

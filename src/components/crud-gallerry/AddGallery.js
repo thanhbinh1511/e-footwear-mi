@@ -84,7 +84,6 @@ function AddGallery(props) {
             resetForm();
         }
     }
-    console.log(values);
     return (
         <Box className={cx("dialog-main")}>
             <Button variant="contained" onClick={handleOpen}>

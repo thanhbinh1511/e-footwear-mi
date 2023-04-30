@@ -39,12 +39,6 @@ function Galleries() {
             key: "link",
         },
         {
-            title: "Mô tả",
-            dataIndex: "title",
-            key: "title",
-
-        },
-        {
             title: "Loại ảnh",
             dataIndex: "type_gallery_id",
             key: "type_gallery_id",
@@ -69,8 +63,7 @@ function Galleries() {
             id: item.id,
             image_url: item.imageURL,
             link: item.link,
-            title: item.title,
-            type_gallery_id: item.typeGallery.id,
+            type_gallery_id: item.typeGallery.typeName,
             status: item.state,
             option: <Space>
                 <DeleteGallery id={item?.id} />

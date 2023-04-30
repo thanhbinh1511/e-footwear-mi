@@ -75,7 +75,7 @@ function Category() {
             update_at: item.updateAt,
             option:
                 <Space>
-                    <UpdateCategory id={item?.id} name={item?.name} parent={item?.id} />
+                    <UpdateCategory id={item?.id} name={item?.name} parent={item?.category?.id} />
                     <DeleteCategory id={item?.id} />
                 </Space>
         }

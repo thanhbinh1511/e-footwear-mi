@@ -185,11 +185,57 @@ const categorySlice = createSlice({
                 });
                 return state
             })
+            .addCase(fetchUpdateCategory.rejected, (state, action) => {
+                state.isLoading = false;
+                state.categoryChanged = false;
+                MySwal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Thất bại!',
+                    text: `Thêm danh mục thất bại!`,
+                    showConfirmButton: false,
+                    timer: 2500,
+                    showClass: {
+                        popup: 'animate__animated animate__backInRight'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__backOutRight'
+                    }
+                });
+                return state
+            })
+            .addCase(fetchUpdateCategory.pending, (state, action) => {
+                state.isLoading = true;
+                state.categoryChanged = false;
+                return state;
+            }
+            )
+            .addCase(fetchUpdateCategory.fulfilled, (state, action) => {
+                state.categoryChanged = true;
+                state.isLoading = true;
+                MySwal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: `Cập nhật danh mục thành công!`,
+                    showConfirmButton: false,
+                    timer: 2500,
+                    showClass: {
+                        popup: 'animate__animated animate__backInRight'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__backOutRight'
+                    }
+                });
+                return state
 
-
-
-    },
+            }
+            )
+    }
 });
+
 
 
 

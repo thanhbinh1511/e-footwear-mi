@@ -4,7 +4,7 @@ import classnames from "classnames/bind";
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUpdateCategory } from "~/redux/category/categoriesSlice";
+import { fetchAllCategories, fetchUpdateCategory } from "~/redux/category/categoriesSlice";
 import { useForm } from "~/hooks/useForm";
 const cx = classnames.bind(style);
 
@@ -28,15 +28,6 @@ function UpdateCategory(props) {
                 temp.name = "";
             }
         }
-        if ("parent" in fieldValues) {
-            if (fieldValues.parent === "") {
-                tempEnable.parent = true;
-                temp.parent = "Không được để trống.";
-            } else {
-                tempEnable.parent = false;
-                temp.parent = "";
-            }
-        }
 
         setErrors({
             ...temp,
@@ -58,14 +49,32 @@ function UpdateCategory(props) {
     } = useForm(initialValues, true, validate);
 
     const handleOpen = () => {
+        dispatch(fetchAllCategories());
+        console.log(values.parent)
+        console.log(props.parent)
+
         setOpen(true);
     };
 
     const handleClose = (childData) => {
         setOpen(!open);
     };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (validate()) {
+            const temp = values?.parent == "" ? null : { id: Number.parseInt(values?.parent) };
+            dispatch(fetchUpdateCategory({
+                id: props.id,
+                name: values.name,
+                category:
+                    temp
+            }));
+            resetForm();
 
-
+            setValues({ ...values,  parent: values?.parent == "" ? "" : Number.parseInt(values.parent) });
+            setOpen(!open);
+        }
+    };
     return (
         <Box className={cx("dialog-main")}>
             <Button disableElevation
@@ -89,6 +98,7 @@ function UpdateCategory(props) {
                         id="category-form"
                         component={"form"}
                         className={cx("form")}
+                        onSubmit={(e) => handleSubmit(e)}
                     >
                         <Box className={cx("form-flex")} sx={{ marginBottom: "1rem" }}>
                             <Box>
@@ -131,14 +141,24 @@ function UpdateCategory(props) {
                                 SelectProps={{
                                     native: true,
                                     style: { fontSize: '1.2rem' }
-                                }} name="parent" id="parent" onChange={handleInputChange}>
-                                <Box component="option" value={values.parent}></Box>
+                                }} name="parent" id="parent"
+                                error={errorsEnable.parent} value={values.parent} onChange={handleInputChange}
+                            >
+                                <Box component={"option"} sx={{ fontSize: '1.2rem' }} value="">
+                                    Chọn danh mục
+                                </Box>
                                 {
-                                    categories?.map((item, index) => (
-                                        <Box component={"option"} sx={{ fontSize: '1.2rem' }} key={item.id} value={item.id}>
-                                            {item.name}
-                                        </Box>
-                                    ))
+
+                                    categories?.map((item, index) => {
+                                        if (item.id != props.id)
+                                            return <Box component={"option"} sx={{ fontSize: '1.2rem' }} key={item.id} value={item.id} >
+                                                {item.name}
+                                            </Box>
+
+                                    }
+
+                                    )
+
                                 }
                             </TextField>
 

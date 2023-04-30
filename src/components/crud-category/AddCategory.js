@@ -59,11 +59,11 @@ function AddCategory() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            const temp = values?.parent == "" ? null : values?.parent;
+            const temp = values?.parent == "" ? null : { id: values?.parent };
             dispatch(fetchCreateCategory(
                 {
                     name: values?.name,
-                    category: temp,
+                    category:  temp 
                 }
             ));
             resetForm();
