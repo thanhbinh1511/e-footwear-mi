@@ -18,6 +18,13 @@ export const galleriesApi = {
             .then((response) => response)
             .catch((error) => error.response.data);
     },
+    async requestUpdateGallery(data) {
+        console.log(data)
+        return await axios
+            .put(`/galleries/${data.id}`, { imageURL: data.imageURL, link: data.link, title: data.title, typeGallery: data.typeGallery })
+            .then((response) => response)
+            .catch((error) => error.response.data);
+    }
 
 
 };

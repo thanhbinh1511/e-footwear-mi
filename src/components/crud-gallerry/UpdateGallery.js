@@ -5,11 +5,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Style.module.scss";
 import { useForm } from "~/hooks/useForm";
-import { fetchCreateGallery } from "~/redux/gallery/galleriesSlice";
+import { fetchUpdateGallery } from "~/redux/gallery/galleriesSlice";
 import { fetchAllTypeGalleries } from "~/redux/type-gallery/typeGalleriesSlice";
+import EditIcon from '@mui/icons-material/Edit';
 const cx = classnames.bind(style);
 
-function AddGallery() {
+function UpdateGallery(props) {
     const dispatch = useDispatch();
     const { typeGalleries } = useSelector((state) => state.typeGalleryReducer);
     const [open, setOpen] = useState(false);
@@ -19,10 +20,10 @@ function AddGallery() {
     };
 
     const initialValues = {
-        imageURL: "",
-        link: "",
-        title: "",
-        typeGallery: "",
+        imageURL: props?.url,
+        link: props?.link == null ? "" : props?.link,
+        title: props?.title == null ? "" : props?.title,
+        typeGallery: props?.typeGallery,
     };
     const validate = (fieldValues = values) => {
         let temp = { ...errors };
@@ -71,25 +72,29 @@ function AddGallery() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-
-            dispatch(fetchCreateGallery(
+            dispatch(fetchUpdateGallery(
                 {
-                    imageURL: values.imageURL,
-                    link: values.link,
-                    title: values.title,
+                    id: props?.id,
+                    imageURL: values?.imageURL,
+                    link: values?.link == "" ? null : values?.link,
+                    title: values?.title == "" ? null : values?.title,
                     typeGallery: {
-                        id: values.typeGallery,
+                        id: Number.parseInt(values?.typeGallery)
                     }
+
                 }
             ));
-            setOpen(!open);
             resetForm();
+            setOpen(!open);
+            setValues({ ...values, imageURL: values?.imageURL, link: values?.link == "" ? "" : values?.link, title: values?.title == "" ? "" : values?.title, typeGallery: values?.typeGallery == "" ? "" : values?.typeGallery });
         }
     }
     return (
         <Box className={cx("dialog-main")}>
-            <Button variant="contained" onClick={handleOpen}>
-                Thêm ảnh
+            <Button disableElevation
+                disableRipple
+                style={{ backgroundColor: "transparent" }} onClick={handleOpen}>
+                <EditIcon color="warning" />
             </Button>
             <Dialog open={open}
                 className={cx("dialog-content")}
@@ -178,6 +183,7 @@ function AddGallery() {
                                 name="title"
                                 id="title"
                                 onChange={handleInputChange}
+                                value={values.title}
                                 placeholder="Vui lòng nhập đường mô tả"
                                 inputProps={{
                                     style: { fontSize: "1.1rem", padding: "1rem 1rem" },
@@ -205,10 +211,7 @@ function AddGallery() {
                                 error={errorsEnable.typeGallery}
                                 helperText={errors.typeGallery}
                                 FormHelperTextProps={{ style: { fontSize: 12 } }}
-
                             >
-
-                                <Box component="option" value="null">Chọn loại ảnh</Box>
                                 {
                                     typeGalleries?.map((item, index) => (
                                         <Box component={"option"} sx={{ fontSize: '1.2rem' }} key={item?.id} value={item?.id}>
@@ -242,4 +245,4 @@ function AddGallery() {
     );
 }
 
-export default AddGallery;
+export default UpdateGallery;

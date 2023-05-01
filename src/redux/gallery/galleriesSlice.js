@@ -54,6 +54,20 @@ const fetchCreateGallery = createAsyncThunk(
         }
     }
 );
+const fetchUpdateGallery = createAsyncThunk(
+    UPDATE_GALLERY_BY_ID,
+    async (params, thunkApi) => {
+        try {
+            const response = await galleriesApi.requestUpdateGallery(params);
+            return response.success
+                ? thunkApi.fulfillWithValue(response)
+                : thunkApi.rejectWithValue(response);
+        } catch (error) {
+            return thunkApi.rejectWithValue(error.response.data);
+        }
+    }
+);
+
 
 
 const gallerySlice = createSlice({
@@ -179,11 +193,60 @@ const gallerySlice = createSlice({
                 return state
             }
             )
-
+            //update gallery
+            .addCase(fetchUpdateGallery.rejected, (state, action) => {
+                state.isLoading = false;
+                state.galleryChanged = false;
+                MySwal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Thất bại!',
+                    text: `Cập nhật ảnh thất bại!`,
+                    showConfirmButton: false,
+                    timer: 2500,
+                    showClass: {
+                        popup: 'animate__animated animate__backInRight'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__backOutRight'
+                    }
+                });
+                return state
+            }
+            )
+            .addCase(fetchUpdateGallery.pending, (state, action) => {
+                state.isLoading = true;
+                state.galleryChanged = false;
+                return state;
+            }
+            )
+            .addCase(fetchUpdateGallery.fulfilled, (state, action) => {
+                const data = action.payload;
+                state.galleryChanged = true;
+                state.isLoading = true;
+                MySwal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: `Cập nhật ảnh thành công!`,
+                    showConfirmButton: false,
+                    timer: 2500,
+                    showClass: {
+                        popup: 'animate__animated animate__backInRight'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__backOutRight'
+                    }
+                });
+                return state
+            }
+            )
 
     }
 });
 const galleryReducer = gallerySlice.reducer;
 export default galleryReducer;
-export { fetchCreateGallery, fetchDeleteGallery, fetchAllGalleries };
+export { fetchUpdateGallery, fetchCreateGallery, fetchDeleteGallery, fetchAllGalleries };
 

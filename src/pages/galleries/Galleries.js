@@ -5,7 +5,7 @@ import { Table, Space } from "antd";
 import { fetchAllGalleries } from "~/redux/gallery/galleriesSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AddGallery, DeleteGallery } from "~/components/crud-gallerry";
+import { AddGallery, DeleteGallery, UpdateGallery } from "~/components/crud-gallerry";
 const cx = classNames.bind(style);
 function Galleries() {
     const { galleries, galleryChanged } = useSelector((state) => state.galleryReducer);
@@ -63,9 +63,11 @@ function Galleries() {
             id: item.id,
             image_url: item.imageURL,
             link: item.link,
+            title: item.title,
             type_gallery_id: item.typeGallery.typeName,
             status: item.state,
             option: <Space>
+                <UpdateGallery id={item?.id} url={item?.imageURL} link={item?.link} title={item?.title} typeGallery={item?.typeGallery?.id} />
                 <DeleteGallery id={item?.id} />
             </Space>
         }
@@ -79,7 +81,7 @@ function Galleries() {
             </Box>
             <Box className={cx("container")} >
                 <Box className={cx("wrap-button")}>
-                    <AddGallery/>   
+                    <AddGallery />
                 </Box>
                 <Box className={cx("wrap-table")}>
                     <Table dataSource={data} columns={columns} />

@@ -69,8 +69,8 @@ function TypeGalleries() {
             created_at: item.createAt,
             updated_at: item.updateAt,
             option: <Space>
-                <DeleteTypeGallery id={item.id} />
                 <UpdateTypeGallery id={item.id} typeCode={item.typeCode} typeName={item.typeName} />
+                <DeleteTypeGallery id={item.id} />
             </Space>
 
         }

@@ -26,6 +26,4 @@ export const typeGalleriesApi = {
             .catch((error) => error.response.data);
 
     }
-
-
 }
