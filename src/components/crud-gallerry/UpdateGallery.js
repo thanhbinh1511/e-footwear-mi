@@ -76,8 +76,8 @@ function UpdateGallery(props) {
                 {
                     id: props?.id,
                     imageURL: values?.imageURL,
-                    link: values?.link == "" ? null : values?.link,
-                    title: values?.title == "" ? null : values?.title,
+                    link: values?.link === "" ? null : values?.link,
+                    title: values?.title === "" ? null : values?.title,
                     typeGallery: {
                         id: Number.parseInt(values?.typeGallery)
                     }
@@ -86,7 +86,7 @@ function UpdateGallery(props) {
             ));
             resetForm();
             setOpen(!open);
-            setValues({ ...values, imageURL: values?.imageURL, link: values?.link == "" ? "" : values?.link, title: values?.title == "" ? "" : values?.title, typeGallery: values?.typeGallery == "" ? "" : values?.typeGallery });
+            setValues({ ...values, imageURL: values?.imageURL, link: values?.link === "" ? "" : values?.link, title: values?.title === "" ? "" : values?.title, typeGallery: values?.typeGallery === "" ? "" : values?.typeGallery });
         }
     }
     return (

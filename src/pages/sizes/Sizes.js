@@ -36,11 +36,13 @@ function Sizes() {
             title: "Ngày tạo",
             dataIndex: "created_at",
             key: "created_at",
+            render: (text) => <span>{new Date(text).toLocaleDateString()}</span>,
         },
         {
             title: "Ngày cập nhật",
             dataIndex: "updated_at",
             key: "updated_at",
+            render: (text) => <span>{new Date(text).toLocaleDateString()}</span>,
 
 
         }, {

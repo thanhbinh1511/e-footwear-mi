@@ -11,6 +11,7 @@ import Colors from "~/pages/colors/Colors";
 import Sizes from "~/pages/sizes/Sizes";
 import Galleries from "~/pages/galleries/Galleries";
 import TypeGalleries from "~/pages/type-galleries/TypeGalleries";
+import Coupons from "~/pages/coupon/Coupons";
 
 export const publicRoutes = [
     {
@@ -64,5 +65,9 @@ export const publicRoutes = [
     {
         path: "/admin/type-gallery",
         component: TypeGalleries,
+    },
+    {
+        path: "/admin/coupons",
+        component: Coupons,
     }
 ];

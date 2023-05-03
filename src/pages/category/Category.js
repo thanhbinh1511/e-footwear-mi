@@ -44,11 +44,13 @@ function Category() {
             title: "Ngày tạo",
             dataIndex: "create_at",
             key: "create_at",
+            render: (text) => <span>{new Date(text).toLocaleDateString()}</span>,
         },
         {
             title: "Ngày cập nhật",
             dataIndex: "update_at",
             key: "update_at",
+            render: (text) => <span>{new Date(text).toLocaleDateString()}</span>,
 
         },
         {

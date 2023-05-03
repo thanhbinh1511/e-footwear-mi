@@ -30,7 +30,4 @@ export const sizesApi = {
             .then((response) => response)
             .catch((error) => error.response.data);
     }
-
-
-
 };

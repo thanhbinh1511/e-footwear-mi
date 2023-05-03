@@ -17,6 +17,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BrowseGalleryIcon from '@mui/icons-material/BrowseGallery';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import LoyaltyIcon from '@mui/icons-material/Loyalty';
 const cx = classNames.bind(style);
 
 function SideBar() {
@@ -50,6 +51,9 @@ function SideBar() {
     else if (location.includes("type-gallery")) {
       setActive(10);
     }
+    else if (location.includes("coupons")) {
+      setActive(11);
+    }
   }, [location]);
   return (
     <Box className={cx("background")}>
@@ -66,7 +70,7 @@ function SideBar() {
           <Box className={cx("menu-content")}>Dashboard</Box>
         </Box>
       </Box>
-      <Box component={Link} 
+      <Box component={Link}
         to={"/admin/customer"} className={cx("wrap-menu", `${active === 1 ? "active" : ""}`)}>
         <Box className={cx("line", `${active === 1 ? "show" : ""}`)} />
         <Box className={cx("menu-items")}>
@@ -167,7 +171,16 @@ function SideBar() {
           <Box className={cx("menu-content")}>Loại ảnh</Box>
         </Box>
       </Box>
-
+      <Box component={Link}
+        to={"/admin/coupons"} className={cx("wrap-menu", `${active === 11 ? "active" : ""}`)}>
+        <Box className={cx("line", `${active === 11 ? "show" : ""}`)} />
+        <Box className={cx("menu-items")}>
+          <Box className={cx("menu-icon")}>
+            <LoyaltyIcon color={`${active === 11 ? "primary" : ""}`} fontSize="medium" />
+          </Box>
+          <Box className={cx("menu-content")}>Mã giảm giá</Box>
+        </Box>
+      </Box>
 
 
       <Box className={cx("wrap-menu")}>

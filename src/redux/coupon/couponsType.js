@@ -1,0 +1,3 @@
+export const GET_ALL_COUPON = "GET_ALL_COUPON";
+export const CREATE_COUPON = "CREATE_COUPON";
+export const UPDATE_COUPON_BY_ID = "UPDATE_COUPON_BY_ID";
