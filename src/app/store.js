@@ -19,6 +19,7 @@ import galleryReducer from "~/redux/gallery/galleriesSlice";
 import typeGalleryReducer from "~/redux/type-gallery/typeGalleriesSlice";
 import couponReducer from "~/redux/coupon/couponsSlice";
 import productReducer from "~/redux/product/productSlice";
+import productDetailReducer from "~/redux/product-detail/productDetailSlice";
 const persistConfig = {
     key: "root",
     storage,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
     typeGalleryReducer: typeGalleryReducer,
     couponReducer: couponReducer,
     productReducer: productReducer,
+    productDetailReducer: productDetailReducer,
 
 });
 //----
