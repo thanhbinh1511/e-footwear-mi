@@ -1,0 +1,15 @@
+.dialog-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    padding: 1rem 1rem;
+    align-items: center;
+    background-color: #fff;
+
+    .btn-cancel {
+        border-color: #1435c3;
+        color: #1435c3;
+        text-transform: inherit;
+        font-size: 1rem;
+    }
+}

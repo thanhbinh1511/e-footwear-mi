@@ -1,18 +1,25 @@
-import style from "./Product.module.scss";
-import { Link } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
+import { Space, Table } from "antd";
 import classNames from "classnames/bind";
-import { Box, Button, Typography } from "@mui/material";
-import { dataProduct } from "~/assets/data/fake-productData";
-import { Table, Popconfirm, Space } from "antd";
-import { useState } from "react";
-import DialogProduct from "~/components/dialog-product/DialogProduct";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ViewProduct } from "~/components/crud-product";
+import { fetchAllProducts } from "~/redux/product/productSlice";
+import style from "./Product.module.scss";
 
 const cx = classNames.bind(style);
 function Product() {
-    const [editRow, setEdit] = useState(false);
-    const handleDelete = (record) => { }
+    const { products, productChanged } = useSelector((state) => state.productReducer);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchAllProducts());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (productChanged) {
+            dispatch(fetchAllProducts());
+        }
+    }, [dispatch, productChanged])
     const columns = [
         {
             title: "Id",
@@ -23,21 +30,26 @@ function Product() {
             title: "Tên sản phẩm",
             dataIndex: "name",
             key: "name",
-        },
-        {
-            title: "Danh mục",
-            dataIndex: "category",
-            key: "category",
+            width: "350px"
         },
         {
             title: "Giá gốc",
             dataIndex: "price",
             key: "price",
+            render: (text) => <span>{text.toLocaleString()} đ</span>,
+            align: "center"
         },
         {
             title: "Giá khuyến mãi",
             dataIndex: "sale",
             key: "sale",
+            render: (text) => <span>{text.toLocaleString()} đ</span>,
+            align: "center"
+        },
+        {
+            title: "Danh mục",
+            dataIndex: "category",
+            key: "category",
         },
         {
             title: "Màu sắc",
@@ -47,30 +59,26 @@ function Product() {
         {
             title: "Hành động",
             key: "action",
-            render: (_, record) => {
-                return dataProduct.length >= 1 ? (
-                    <Space>
-                        <Popconfirm title="Bạn có chắc chắn xóa" onConfirm={() => handleDelete(record)}>
-                            <DeleteIcon color="error" />
-                        </Popconfirm>
-                        <EditIcon color="warning" />
-
-                    </Space>
-                ) : null;
-            },
+            dataIndex: "option",
         },
     ];
 
-    const data = dataProduct.map((item, index) => {
+    const data = products.map((item, index) => {
+        const images = item.images.map(image => image.imageURL);
         return {
             key: index,
             id: item.id,
             name: item.name,
-            category: item.category,
-            price: item.price,
-            sale: item.sale,
-            color: item.color,
-            quantity: item.quantity,
+            price: item.originPrice,
+            sale: item.discountPrice,
+            category: item.category.name,
+            color: item.color.name,
+            option: <Space>
+                {/* <UpdateProduct />
+                <DeleteProduct/> */}
+                <ViewProduct key={index} name={item.name} discountRate={item.discountRate} images={images} description={item.description} />
+            </Space>
+
         }
     }
     )
@@ -84,7 +92,7 @@ function Product() {
             </Box>
             <Box className={cx("container")} >
                 <Box className={cx("wrap-button")}>
-                    <DialogProduct />
+                    {/* <DialogProduct /> */}
                 </Box>
 
                 <Box className={cx("wrap-table")}>

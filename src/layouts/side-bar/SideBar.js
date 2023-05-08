@@ -1,23 +1,21 @@
-import { Route, Link } from "react-router-dom";
-import style from "./SideBar.module.scss";
-import classNames from "classnames/bind";
-import logo from "~/assets/image/logo.png";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import { Box } from "@mui/material";
-import PersonIcon from '@mui/icons-material/Person';
-import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
-import InfoIcon from '@mui/icons-material/Info';
-import FormatSizeIcon from '@mui/icons-material/FormatSize';
-import CollectionsIcon from '@mui/icons-material/Collections';
-import ColorLensIcon from '@mui/icons-material/ColorLens';
-import CategoryIcon from '@mui/icons-material/Category';
 import { Inventory } from "@mui/icons-material";
-import LogoutIcon from '@mui/icons-material/Logout';
-import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
 import BrowseGalleryIcon from '@mui/icons-material/BrowseGallery';
+import CategoryIcon from '@mui/icons-material/Category';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import FormatSizeIcon from '@mui/icons-material/FormatSize';
+import InfoIcon from '@mui/icons-material/Info';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import LogoutIcon from '@mui/icons-material/Logout';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
+import PersonIcon from '@mui/icons-material/Person';
+import { Box } from "@mui/material";
+import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import logo from "~/assets/image/logo.png";
+import style from "./SideBar.module.scss";
 const cx = classNames.bind(style);
 
 function SideBar() {
@@ -38,8 +36,6 @@ function SideBar() {
       setActive(4);
     } else if (location.includes("details")) {
       setActive(5);
-    } else if (location.includes("images")) {
-      setActive(6);
     } else if (location.includes("colors")) {
       setActive(7);
     } else if (location.includes("sizes")) {
@@ -119,16 +115,6 @@ function SideBar() {
             <InfoIcon color={`${active === 5 ? "primary" : ""}`} fontSize="medium" />
           </Box>
           <Box className={cx("menu-content")}>Chi tiết sản phẩm</Box>
-        </Box>
-      </Box>
-      <Box component={Link}
-        to={"/admin/images"} className={cx("wrap-menu", `${active === 6 ? "active" : ""}`)}>
-        <Box className={cx("line", `${active === 6 ? "show" : ""}`)} />
-        <Box className={cx("menu-items")}>
-          <Box className={cx("menu-icon")}>
-            <CollectionsIcon color={`${active === 6 ? "primary" : ""}`} fontSize="medium" />
-          </Box>
-          <Box className={cx("menu-content")}>Hình ảnh sản phẩm</Box>
         </Box>
       </Box>
       <Box component={Link}

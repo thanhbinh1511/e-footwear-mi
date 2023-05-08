@@ -1,13 +1,14 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Style.module.scss";
 import { useForm } from "~/hooks/useForm";
 import { fetchCreateGallery } from "~/redux/gallery/galleriesSlice";
 import { fetchAllTypeGalleries } from "~/redux/type-gallery/typeGalleriesSlice";
+import { storage } from "~/utils/firebase";
 const cx = classnames.bind(style);
+
 
 function AddGallery() {
     const dispatch = useDispatch();
@@ -71,21 +72,38 @@ function AddGallery() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-
-            dispatch(fetchCreateGallery(
-                {
-                    imageURL: values.imageURL,
-                    link: values.link,
-                    title: values.title,
-                    typeGallery: {
-                        id: values.typeGallery,
-                    }
+            // // const imageFile = e.target.imageURL.files[0];  // Lỗi chỗ này nè ....
+            // const storageRef = storage().ref('gallery-images/' + imageFile.name);
+            // const uploadTask = storageRef.put(imageFile);
+            // uploadTask.on(
+            //     'state_changed',
+            //     (snapshot) => {
+            //         // Handle upload progress
+            //     },
+            //     (error) => {
+            //         console.log(error);
+            //     },
+            //     () => {
+            //         alert("Thêm ảnh thành công");
+            //         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            //             // Pass the download URL to the createGallery function
+            dispatch(fetchCreateGallery({
+                imageURL: values.imageURL,
+                link: values.link,
+                title: values.title,
+                typeGallery: {
+                    id: values.typeGallery,
                 }
-            ));
+            }));
             setOpen(!open);
             resetForm();
-        }
+        }; // Lỗi chỗ này nè .... ")"
     }
+    //             );
+    // }
+    //     };
+
+
     return (
         <Box className={cx("dialog-main")}>
             <Button variant="contained" onClick={handleOpen}>
@@ -117,7 +135,7 @@ function AddGallery() {
                                     htmlFor="imageURL"
                                     className={cx("form-label")}
                                 >
-                                    Đường dẫn ảnh
+                                    Thêm ảnh
                                 </Box>
                             </Box>
                             <TextField

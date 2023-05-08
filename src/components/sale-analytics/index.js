@@ -1,1 +1,1 @@
-export {default} from "./saleAnalytics";
+export { default as SaleAnalytics } from "./SaleAnalytics";
