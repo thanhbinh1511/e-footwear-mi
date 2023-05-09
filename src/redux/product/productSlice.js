@@ -26,6 +26,7 @@ const fetchAllProducts = createAsyncThunk(
         }
     }
 );
+
 const productSlice = createSlice({
     name: "product",
     initialState,
@@ -50,6 +51,7 @@ const productSlice = createSlice({
                 return state
             }
             )
+            
     }
 });
 const productReducer = productSlice.reducer;

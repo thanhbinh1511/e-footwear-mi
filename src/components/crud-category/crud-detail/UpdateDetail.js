@@ -1,35 +1,68 @@
+import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import style from "./Style.module.scss";
-import EditIcon from '@mui/icons-material/Edit';
 import { useForm } from "~/hooks/useForm";
+import { fetchUpdateProductDetailById } from "~/redux/product-detail/productDetailSlice";
+import style from "./Style.module.scss";
+import Select from 'react-select';
 const cx = classnames.bind(style);
-
-
 function UpdateDetail(props) {
     const dispatch = useDispatch();
-    // const { products } = useSelector((state) => state.productReducer);
+    const { products } = useSelector((state) => state.productReducer);
+    const { sizes } = useSelector((state) => state.sizeReducer);
     const [open, setOpen] = useState(false);
+    const [label, setLabel] = useState("");
     const handleOpen = () => {
-        // dispatch(fetchAllTypeGalleries());
+        setLabel(props?.productName + " " + props?.colorName);
         setOpen(true);
     };
-
     const initialValues = {
-        stockQuantity: "",
-        size: "",
-        product: "",
+        stockQuantity: props?.stockQuantity,
+        size: props?.size,
+        product: props?.product,
+
     };
+
     const validate = (fieldValues = values) => {
-        // setErrors({
-        //     ...temp,
-        // });
-        // setErrorsEnable({
-        //     ...tempEnable,
-        // });
-        // if (fieldValues === values) return Object.values(temp).every((x) => x === ""); // trả về boolean
+        let temp = { ...errors };
+        let tempEnable = { ...errorsEnable };
+        if ("product" in fieldValues) {
+            if (fieldValues.product === "") {
+                tempEnable.product = true;
+                temp.product = "Không được để trống.";
+            } else {
+                tempEnable.product = false;
+                temp.product = "";
+            }
+        }
+        if ("size" in fieldValues) {
+            if (fieldValues.size === "") {
+                tempEnable.size = true;
+                temp.size = "Không được để trống.";
+            } else {
+                tempEnable.size = false;
+                temp.size = "";
+            }
+        }
+
+        if ("stockQuantity" in fieldValues) {
+            if (fieldValues.stockQuantity === "") {
+                tempEnable.stockQuantity = true;
+                temp.stockQuantity = "Không được để trống.";
+            } else {
+                tempEnable.stockQuantity = false;
+                temp.stockQuantity = "";
+            }
+        }
+        setErrors({
+            ...temp,
+        });
+        setErrorsEnable({
+            ...tempEnable,
+        });
+        if (fieldValues === values) return Object.values(temp).every((x) => x === ""); // trả về boolean
     };
     const {
         values,
@@ -48,13 +81,32 @@ function UpdateDetail(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            setOpen(!open);
+            dispatch(fetchUpdateProductDetailById(
+                {
+                    id: props?.id,
+                    stockQuantity: values?.stockQuantity,
+                    product: {
+                        id: Number.parseInt(values?.product)
+                    },
+                    size: {
+                        id: Number.parseInt(values?.size)
+                    }
+                }));
             resetForm();
+            setOpen(!open);
+            setValues({ ...values, stockQuantity: values?.stockQuantity, product: values?.product, size: values?.size });
         }
     };
-
-
-
+    const handleProductChange = (selectedOption) => {
+        setLabel(selectedOption.label);
+        setValues({
+            ...values,
+            product: selectedOption.value,
+        });
+    };
+    const options = products?.map(function (item) {
+        return { value: item.id, label: item.name + " " + item.color.name };
+    })
     return (
         <Box className={cx("dialog-main")}>
             <Button disableElevation
@@ -73,7 +125,7 @@ function UpdateDetail(props) {
                         borderRadius: "10px",
                     },
                 }}>
-                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}> Sửa Tiết Sản Phấm</DialogTitle>
+                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}> Sửa Chi Tiết Sản Phấm</DialogTitle>
                 <DialogContent>
                     <Box
                         id="detail-form"
@@ -91,27 +143,16 @@ function UpdateDetail(props) {
                                     Loại
                                 </Box>
                             </Box>
-                            <TextField select
-                                SelectProps={{
-                                    native: true,
-                                    style: { fontSize: '1.2rem' }
-                                }} name="product"
+                            <Select
+                                name="product"
                                 id="product"
-                                onChange={handleInputChange}
-                            // value={values.typeGallery}
-                            // error={errorsEnable.typeGallery}
-                            // helperText={errors.typeGallery}
-                            // FormHelperTextProps={{ style: { fontSize: 12 } }}
+                                value={{ label: label, value: values.product }}
+                                error={errorsEnable.product}
+                                helperText={errors.product}
+                                onChange={handleProductChange}
+                                options={options}
                             >
-                                <Box component="option" value="null">Chọn sản phẩm</Box>
-                                {/* {
-                                    typeGalleries?.map((item, index) => (
-                                        <Box component={"option"} sx={{ fontSize: '1.2rem' }} key={item?.id} value={item?.id}>
-                                            {item?.typeName}
-                                        </Box>
-                                    ))
-                                } */}
-                            </TextField>
+                            </Select>
 
                         </Box>
                         <Box className={cx("form-flex")} sx={{ marginBottom: "1rem" }}>
@@ -130,20 +171,19 @@ function UpdateDetail(props) {
                                     style: { fontSize: '1.2rem' }
                                 }} name="size"
                                 id="size"
+                                value={values?.size}
+                                error={errorsEnable.size}
+                                helperText={errors.size}
                                 onChange={handleInputChange}
-                            // value={values.typeGallery}
-                            // error={errorsEnable.typeGallery}
-                            // helperText={errors.typeGallery}
-                            // FormHelperTextProps={{ style: { fontSize: 12 } }}
                             >
-                                <Box component="option" value="null">Chọn kích cỡ</Box>
-                                {/* {
-                                    typeGalleries?.map((item, index) => (
+
+                                {
+                                    sizes?.map((item, index) => (
                                         <Box component={"option"} sx={{ fontSize: '1.2rem' }} key={item?.id} value={item?.id}>
-                                            {item?.typeName}
+                                            {item?.value}
                                         </Box>
                                     ))
-                                } */}
+                                }
                             </TextField>
 
                         </Box>
@@ -164,7 +204,9 @@ function UpdateDetail(props) {
                                 name="stockQuantity"
                                 id="stockQuantity"
                                 onChange={handleInputChange}
-                                // value={values.link}
+                                value={values?.stockQuantity}
+                                error={errorsEnable.stockQuantity}
+                                helperText={errors.stockQuantity}
                                 placeholder="Vui lòng nhập số lượng"
                                 inputProps={{
                                     style: { fontSize: "1.1rem", padding: "1rem 1rem" },

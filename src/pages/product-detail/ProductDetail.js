@@ -12,6 +12,7 @@ import UpdateDetail from "~/components/crud-category/crud-detail/UpdateDetail";
 const cx = classNames.bind(style);
 function ProductDetail() {
     const { productDetails, productDetailChanged } = useSelector((state) => state.productDetailReducer);
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchAllProductDetails());
@@ -36,6 +37,12 @@ function ProductDetail() {
 
         },
         {
+            title: "Màu sắc",
+            dataIndex: "color",
+            key: "color",
+            align: "center"
+        },
+        {
             title: "Kích thước",
             dataIndex: "size",
             key: "size",
@@ -54,16 +61,17 @@ function ProductDetail() {
             align: "center"
         },
     ]
-    const data = productDetails.map((item, index) => {
+    const data = productDetails?.map((item, index) => {
         return {
             key: index,
             id: item.id,
             name: item.product.name,
+            color: item.product.color.name,
             size: item.size.value,
             quantity: item.stockQuantity,
             option:
                 <Space>
-                    <UpdateDetail />
+                    <UpdateDetail id={item?.id} product={item.product.id} size={item.size.id} stockQuantity={item.stockQuantity} productName={item.product.name} colorName={item.product.color.name} />
                     <DeleteDetail id={item.id} />
                 </Space>
         }

@@ -4,6 +4,7 @@ import classnames from "classnames/bind";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import style from "./Style.module.scss";
+import { fetchDeleteProductDetail } from '~/redux/product-detail/productDetailSlice';
 const cx = classnames.bind(style);
 
 function DeleteDetail(props) {
@@ -12,11 +13,10 @@ function DeleteDetail(props) {
     const handleClose = () => {
         setOpen(!open);
     };
-
-    // const handleAction = (id) => {
-    //     dispatch(fetchDeleteColor(id));
-    //     setOpen(!open);
-    // };
+    const handleAction = (id) => {
+        dispatch(fetchDeleteProductDetail(id));
+        setOpen(!open);
+    };
 
     return (
         <Box className={cx("dialog-main")} >
@@ -43,7 +43,7 @@ function DeleteDetail(props) {
                             Huỷ bỏ
                         </Button>
                         <Button
-                            // onClick={() => handleAction(props.id)}
+                            onClick={() => handleAction(props.id)}
                             variant="contained"
                             type="submit"
                             className={cx("btn-save")}
