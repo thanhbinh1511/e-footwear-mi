@@ -63,6 +63,7 @@ function Colors() {
             title: "Hành động",
             key: "action",
             dataIndex: "option",
+            align: "center"
         },
     ];
     const data = colors.map((item, index) => {

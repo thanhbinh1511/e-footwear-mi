@@ -3,9 +3,10 @@ import { Space, Table } from "antd";
 import classNames from "classnames/bind";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ViewProduct } from "~/components/crud-product";
+import { AddProduct, DeleteProduct, ViewProduct } from "~/components/crud-product";
 import { fetchAllProducts } from "~/redux/product/productSlice";
 import style from "./Product.module.scss";
+import UpdateProduct from "~/components/crud-product/UpdateProduct";
 
 const cx = classNames.bind(style);
 function Product() {
@@ -37,7 +38,7 @@ function Product() {
             dataIndex: "price",
             key: "price",
             render: (text) => <span>{text.toLocaleString()} đ</span>,
-            align: "center"
+            align: "center",
         },
         {
             title: "Giá khuyến mãi",
@@ -60,6 +61,7 @@ function Product() {
             title: "Hành động",
             key: "action",
             dataIndex: "option",
+            align: "center"
         },
     ];
 
@@ -74,9 +76,9 @@ function Product() {
             category: item.category.name,
             color: item.color.name,
             option: <Space>
-                {/* <UpdateProduct />
-                <DeleteProduct/> */}
                 <ViewProduct key={index} name={item.name} discountRate={item.discountRate} images={images} description={item.description} />
+                <UpdateProduct id={item.id} name={item.name} discountRate={item.discountRate} originPrice={item.originPrice} description={item.description} category={item.category.id} color={item.color.id} images={images} />
+                <DeleteProduct id={item.id} />
             </Space>
 
         }
@@ -92,7 +94,7 @@ function Product() {
             </Box>
             <Box className={cx("container")} >
                 <Box className={cx("wrap-button")}>
-                    {/* <DialogProduct /> */}
+                    <AddProduct />
                 </Box>
 
                 <Box className={cx("wrap-table")}>

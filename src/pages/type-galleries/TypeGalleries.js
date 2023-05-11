@@ -59,6 +59,7 @@ function TypeGalleries() {
             title: "Hành động",
             key: "option",
             dataIndex: "option",
+            align: "center",
         },
     ];
     const data = typeGalleries.map((item, index) => {

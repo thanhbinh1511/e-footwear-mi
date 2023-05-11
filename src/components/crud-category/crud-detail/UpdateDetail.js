@@ -22,7 +22,6 @@ function UpdateDetail(props) {
         stockQuantity: props?.stockQuantity,
         size: props?.size,
         product: props?.product,
-
     };
 
     const validate = (fieldValues = values) => {

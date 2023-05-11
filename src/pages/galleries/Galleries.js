@@ -54,6 +54,7 @@ function Galleries() {
             title: "Hành động",
             key: "action",
             dataIndex: "option",
+            align: "center",
         },
 
     ];

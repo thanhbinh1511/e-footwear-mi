@@ -12,4 +12,34 @@
         text-transform: inherit;
         font-size: 1rem;
     }
+
+    .btn-save {
+        box-shadow: none;
+        background-color: #1435c3;
+        text-transform: inherit;
+        font-size: 1rem;
+
+        &:hover {
+            box-shadow: none;
+        }
+    }
+}
+
+.form-label {
+    font-size: 1rem !important;
+    position: relative;
+    padding-left: 1rem !important;
+    display: inline-block;
+    margin-bottom: 0.5rem !important;
+    font-weight: 400;
+
+
+    &::before {
+        content: "*";
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #ff4d4f;
+        font-size: 1rem;
+    }
 }

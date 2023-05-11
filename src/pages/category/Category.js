@@ -63,6 +63,7 @@ function Category() {
             title: "Hành động",
             key: "option",
             dataIndex: "option",
+            align: "center"
 
         },
     ];

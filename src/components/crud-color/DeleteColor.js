@@ -24,7 +24,7 @@ function DeleteColor(props) {
             <Button disableElevation
                 disableRipple
                 style={{ backgroundColor: "transparent" }} onClick={() => setOpen(!open)}>
-                <DeleteIcon color="warning" />
+                <DeleteIcon color="error" />
             </Button>
             <Dialog open={open}
                 onClose={handleClose}

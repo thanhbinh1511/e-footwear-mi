@@ -55,6 +55,7 @@ function Sizes() {
             title: "Hành động",
             key: "option",
             dataIndex: "option",
+            align: "center",
         },
     ];
     const data = sizes.map((item, index) => {

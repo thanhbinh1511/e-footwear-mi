@@ -80,11 +80,11 @@ function AddDetail() {
         if (validate()) {
             dispatch(fetchCreateProductDetail({
                 stockQuantity: values.stockQuantity,
-                size: {
-                    id: values.size,
-                },
                 product: {
-                    id: values.product,
+                    id: Number.parseInt(values?.product)
+                },
+                size: {
+                    id: Number.parseInt(values?.size)
                 }
             }));
             resetForm();

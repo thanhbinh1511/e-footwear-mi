@@ -55,6 +55,7 @@ function Coupons() {
             title: "Hành động",
             key: "option",
             dataIndex: "option",
+            align: "center",
         },
     ];
     const data = coupons.map((item, index) => {

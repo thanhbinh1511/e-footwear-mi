@@ -4,18 +4,17 @@ import { useDispatch } from "react-redux";
 import DeleteIcon from '@mui/icons-material/Delete';
 import style from "./Style.module.scss";
 import classnames from "classnames/bind";
-import { fetchDeleteGallery } from "~/redux/gallery/galleriesSlice";
+import { fetchDeleteProduct } from "~/redux/product/productSlice";
 const cx = classnames.bind(style);
 
-function DeleteGallery(props) {
+function DeleteProduct(props) {
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const handleClose = () => {
         setOpen(!open);
     };
-
     const handleAction = (id) => {
-        dispatch(fetchDeleteGallery(id));
+        dispatch(fetchDeleteProduct(id));
         setOpen(!open);
     };
     return (
@@ -57,4 +56,4 @@ function DeleteGallery(props) {
         </Box >
     )
 }
-export default DeleteGallery;
+export default DeleteProduct;
