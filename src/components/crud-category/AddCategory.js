@@ -10,6 +10,7 @@ const cx = classnames.bind(style);
 
 function AddCategory() {
     const dispatch = useDispatch();
+    const { accessToken } = useSelector((state) => state.authReducer);
     const { categories } = useSelector((state) => state.categoryReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
@@ -60,11 +61,11 @@ function AddCategory() {
         e.preventDefault();
         if (validate()) {
             const temp = values?.parent == "" ? null : { id: values?.parent };
-            dispatch(fetchCreateCategory(
-                {
-                    name: values?.name,
-                    category:  temp 
-                }
+            const data = {
+                name: values?.name,
+                category: temp
+            }
+            dispatch(fetchCreateCategory({ data, accessToken }
             ));
             resetForm();
             setOpen(!open);

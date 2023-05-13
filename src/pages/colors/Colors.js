@@ -10,14 +10,15 @@ import { DeleteColor, UpdateColor } from "~/components/crud-color";
 const cx = classNames.bind(style);
 function Colors() {
     const { colors, colorChanged } = useSelector((state) => state.colorReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchAllColors());
+        dispatch(fetchAllColors(accessToken));
     }, [dispatch]);
 
     useEffect(() => {
         if (colorChanged) {
-            dispatch(fetchAllColors());
+            dispatch(fetchAllColors(accessToken));
         }
     }, [dispatch, colorChanged])
     const columns = [

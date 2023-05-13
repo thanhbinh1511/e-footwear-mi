@@ -13,6 +13,8 @@ const cx = classnames.bind(style);
 function UpdateGallery(props) {
     const dispatch = useDispatch();
     const { typeGalleries } = useSelector((state) => state.typeGalleryReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         dispatch(fetchAllTypeGalleries());
@@ -72,15 +74,18 @@ function UpdateGallery(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
+            const data = {
+                id: props?.id,
+                imageURL: values?.imageURL,
+                link: values?.link === "" ? null : values?.link,
+                title: values?.title === "" ? null : values?.title,
+                typeGallery: {
+                    id: Number.parseInt(values?.typeGallery)
+                }
+            }
             dispatch(fetchUpdateGallery(
                 {
-                    id: props?.id,
-                    imageURL: values?.imageURL,
-                    link: values?.link === "" ? null : values?.link,
-                    title: values?.title === "" ? null : values?.title,
-                    typeGallery: {
-                        id: Number.parseInt(values?.typeGallery)
-                    }
+                    data, accessToken
 
                 }
             ));

@@ -1,6 +1,6 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from '@mui/icons-material/Delete';
 import style from "./Style.module.scss";
 import classnames from "classnames/bind";
@@ -9,13 +9,14 @@ const cx = classnames.bind(style);
 
 function DeleteCategory(props) {
     const [open, setOpen] = useState(false);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
     const handleClose = () => {
         setOpen(!open);
     };
-
     const handleAction = (id) => {
-        dispatch(fetchDeleteCategory(id));
+        dispatch(fetchDeleteCategory({ id, accessToken }
+        ));
         setOpen(!open);
     };
     return (

@@ -1,25 +1,41 @@
 import axios from './axios';
 export const productDetailsApi = {
-    async requestAllProductDetails() {
+    async requestAllProductDetails(accessToken) {
         return await axios
-            .get(`/details`)
+            .get(`/details`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestDeleteProductDetails(id) {
+    async requestDeleteProductDetails(id, accessToken) {
         return await axios
-            .delete(`/details/${id}`)
+            .delete(`/details/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestCreateProductDetails(data) {
+    async requestCreateProductDetails(data, accessToken) {
         return await axios
-            .post(`/details`, data)
+            .post(`/details`, data, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestUpdateProductDetails(data) {
+    async requestUpdateProductDetails(data, accessToken) {
         return await axios
-            .put(`/details/${data.id}`, { stockQuantity: data.stockQuantity, size: data.size, product: data.product })
+            .put(`/details/${data.id}`, { stockQuantity: data.stockQuantity, size: data.size, product: data.product }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
     }
 }

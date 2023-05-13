@@ -2,20 +2,21 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchDeleteTypeGallery } from '~/redux/type-gallery/typeGalleriesSlice';
 import style from "./Style.module.scss";
 const cx = classnames.bind(style);
 
 function DeleteTypeGallery(props) {
     const [open, setOpen] = useState(false);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
     const handleClose = () => {
         setOpen(!open);
     };
 
     const handleAction = (id) => {
-        dispatch(fetchDeleteTypeGallery(id));
+        dispatch(fetchDeleteTypeGallery({ id, accessToken }));
         setOpen(!open);
     };
 

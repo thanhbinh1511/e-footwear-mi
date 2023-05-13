@@ -20,6 +20,8 @@ import typeGalleryReducer from "~/redux/type-gallery/typeGalleriesSlice";
 import couponReducer from "~/redux/coupon/couponsSlice";
 import productReducer from "~/redux/product/productSlice";
 import productDetailReducer from "~/redux/product-detail/productDetailSlice";
+import authReducer from "~/redux/auth/authSlice";
+import { AUTH_LOGOUT } from "~/redux/auth/authType";
 const persistConfig = {
     key: "root",
     storage,
@@ -39,11 +41,12 @@ const rootReducer = combineReducers({
     couponReducer: couponReducer,
     productReducer: productReducer,
     productDetailReducer: productDetailReducer,
+    authReducer: authReducer,
 
 });
 //----
 const appReducer = (state, action) => {
-    if (action.type === "AUTH_LOGOUT" + "/fulfilled") {
+    if (action.type === AUTH_LOGOUT + "/fulfilled") {
         return rootReducer(undefined, action);
     }
 

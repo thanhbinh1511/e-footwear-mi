@@ -5,7 +5,7 @@ import classnames from "classnames/bind";
 import { useState } from "react";
 import style from "./Style.module.scss";
 import { useForm } from "~/hooks/useForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUpdateColor } from "~/redux/color/colorsSlice";
 
 const cx = classnames.bind(style);
@@ -13,6 +13,7 @@ const cx = classnames.bind(style);
 function UpdateColor(props) {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const initialValues = {
         codeColor: props?.codeColor,
         name: props?.name,
@@ -60,10 +61,13 @@ function UpdateColor(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchUpdateColor({
+            const data = {
                 id: props?.id,
                 codeColor: values?.codeColor,
                 name: values?.name,
+            }
+            dispatch(fetchUpdateColor({
+                data, accessToken
             })
             );
             setOpen(!open);

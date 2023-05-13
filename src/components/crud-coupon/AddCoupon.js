@@ -2,13 +2,15 @@ import style from "./Style.module.scss";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "~/hooks/useForm";
 import { fetchCreateCoupon } from "~/redux/coupon/couponsSlice";
 const cx = classnames.bind(style);
 
 function AddCoupon() {
     const dispatch = useDispatch();
+    const { accessToken } = useSelector((state) => state.authReducer);
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(!open);
@@ -83,11 +85,14 @@ function AddCoupon() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchCreateCoupon({
+            const data = {
                 code: values.code,
                 maxUsage: values.maxUsage,
                 price: values.price,
                 endTime: values.endTime,
+            }
+            dispatch(fetchCreateCoupon({
+                data, accessToken
             })
             );
             setOpen(!open);

@@ -12,15 +12,16 @@ import UpdateDetail from "~/components/crud-category/crud-detail/UpdateDetail";
 const cx = classNames.bind(style);
 function ProductDetail() {
     const { productDetails, productDetailChanged } = useSelector((state) => state.productDetailReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchAllProductDetails());
+        dispatch(fetchAllProductDetails(accessToken));
     }, [dispatch]);
 
     useEffect(() => {
         if (productDetailChanged) {
-            dispatch(fetchAllProductDetails());
+            dispatch(fetchAllProductDetails(accessToken));
         }
     }, [dispatch, productDetailChanged])
     const columns = [

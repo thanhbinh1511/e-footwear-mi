@@ -9,6 +9,7 @@ const cx = classnames.bind(style);
 function AddProduct() {
     const dispatch = useDispatch();
     const { categories } = useSelector((state) => state.categoryReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const { colors } = useSelector((state) => state.colorReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
@@ -147,7 +148,7 @@ function AddProduct() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchCreateProduct({
+            const data = {
                 name: values?.name,
                 discountRate: values?.discountRate,
                 originPrice: values?.originPrice,
@@ -172,6 +173,9 @@ function AddProduct() {
                         imageURL: values?.imageURL4,
                     },
                 ]
+            }
+            dispatch(fetchCreateProduct({
+                data, accessToken
             }));
             setOpen(!open);
             resetForm();

@@ -2,13 +2,14 @@ import style from "./Style.module.scss";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "~/hooks/useForm";
 import { fetchCreateColor } from "~/redux/color/colorsSlice";
 const cx = classnames.bind(style);
 
 function AddColor() {
     const dispatch = useDispatch();
+    const { accessToken } = useSelector((state) => state.authReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(!open);
@@ -63,9 +64,12 @@ function AddColor() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchCreateColor({
+            const data = {
                 codeColor: values?.codeColor,
                 name: values?.name,
+            }
+            dispatch(fetchCreateColor({
+                data, accessToken
             })
             );
             setOpen(!open);

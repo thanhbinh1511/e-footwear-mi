@@ -11,6 +11,7 @@ const cx = classnames.bind(style);
 function UpdateDetail(props) {
     const dispatch = useDispatch();
     const { products } = useSelector((state) => state.productReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const { sizes } = useSelector((state) => state.sizeReducer);
     const [open, setOpen] = useState(false);
     const [label, setLabel] = useState("");
@@ -80,16 +81,19 @@ function UpdateDetail(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
+            const data = {
+                id: props?.id,
+                stockQuantity: values?.stockQuantity,
+                product: {
+                    id: Number.parseInt(values?.product)
+                },
+                size: {
+                    id: Number.parseInt(values?.size)
+                }
+            }
             dispatch(fetchUpdateProductDetailById(
                 {
-                    id: props?.id,
-                    stockQuantity: values?.stockQuantity,
-                    product: {
-                        id: Number.parseInt(values?.product)
-                    },
-                    size: {
-                        id: Number.parseInt(values?.size)
-                    }
+                    data, accessToken
                 }));
             resetForm();
             setOpen(!open);

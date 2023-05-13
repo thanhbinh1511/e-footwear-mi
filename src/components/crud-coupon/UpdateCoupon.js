@@ -2,7 +2,7 @@ import style from "./Style.module.scss";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "~/hooks/useForm";
 import { fetchUpdateCoupon } from "~/redux/coupon/couponsSlice";
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,6 +11,8 @@ const cx = classnames.bind(style);
 function UpdateCoupon(props) {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
+    const { accessToken } = useSelector((state) => state.authReducer);
+
     const handleOpen = () => {
         setOpen(!open);
     };
@@ -84,12 +86,15 @@ function UpdateCoupon(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchUpdateCoupon({
+            const data = {
                 id: props?.id,
                 code: values.code,
                 maxUsage: values.maxUsage,
                 price: values.price,
                 endTime: values.endTime,
+            }
+            dispatch(fetchUpdateCoupon({
+                data, accessToken
             })
             );
             setOpen(!open);

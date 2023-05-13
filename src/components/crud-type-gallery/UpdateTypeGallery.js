@@ -3,13 +3,14 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextFie
 import classnames from "classnames/bind";
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "~/hooks/useForm";
 import { fetchUpdateTypeGallery } from "~/redux/type-gallery/typeGalleriesSlice";
 const cx = classnames.bind(style);
 
 function UpdateTypeGallery(props) {
     const dispatch = useDispatch();
+    const { accessToken } = useSelector((state) => state.authReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(!open);
@@ -64,10 +65,13 @@ function UpdateTypeGallery(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchUpdateTypeGallery({
+            const data = {
                 id: props?.id,
                 typeCode: values?.typeCode,
                 typeName: values?.typeName,
+            }
+            dispatch(fetchUpdateTypeGallery({
+                data, accessToken
             })
             );
             setOpen(!open);

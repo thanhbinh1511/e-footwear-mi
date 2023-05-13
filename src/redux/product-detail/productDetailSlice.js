@@ -18,7 +18,7 @@ const fetchAllProductDetails = createAsyncThunk(
     GET_ALL_PRODUCT_DETAIL,
     async (params, thunkApi) => {
         try {
-            const response = await productDetailsApi.requestAllProductDetails();
+            const response = await productDetailsApi.requestAllProductDetails(params);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -29,9 +29,9 @@ const fetchAllProductDetails = createAsyncThunk(
 );
 const fetchDeleteProductDetail = createAsyncThunk(
     DELETE_PRODUCT_DETAIL_BY_ID,
-    async (id, thunkApi) => {
+    async (params, thunkApi) => {
         try {
-            const response = await productDetailsApi.requestDeleteProductDetails(id);
+            const response = await productDetailsApi.requestDeleteProductDetails(params.id, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -44,7 +44,7 @@ const fetchCreateProductDetail = createAsyncThunk(
     CREATE_PRODUCT_DETAIL,
     async (params, thunkApi) => {
         try {
-            const response = await productDetailsApi.requestCreateProductDetails(params);
+            const response = await productDetailsApi.requestCreateProductDetails(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -57,7 +57,7 @@ const fetchUpdateProductDetailById = createAsyncThunk(
     UPDATE_PRODUCT_DETAIL_BY_ID,
     async (params, thunkApi) => {
         try {
-            const response = await productDetailsApi.requestUpdateProductDetails(params);
+            const response = await productDetailsApi.requestUpdateProductDetails(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);

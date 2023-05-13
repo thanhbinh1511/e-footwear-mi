@@ -2,68 +2,75 @@ import style from "./SignIn.module.scss";
 import classNames from "classnames/bind";
 import TextField from "@mui/material/TextField";
 import { Form, useForm } from "~/hooks/useForm";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchLogin } from "~/redux/auth/authSlice";
 
 const cx = classNames.bind(style);
 
 function SignIn() {
-  const initialFormValue = {
+  const { accountId, accessToken, isLoading } = useSelector((state) => state.authReducer);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const initialValues = {
     username: "",
     password: "",
   };
 
-  function validate(fieldValue = values) {
-    console.log(fieldValue, values);
+  const validate = (fieldValues = values) => {
     let temp = { ...errors };
-    let tempEnabled = { ...errorsEnabled };
-    if ("username" in fieldValue) {
-      if (fieldValue.username === "") {
-        temp.username = "Không được để trống";
-        tempEnabled.username = true;
+    let tempEnable = { ...errorsEnable };
+    if ("username" in fieldValues) {
+      if (fieldValues.username === "") {
+        tempEnable.username = true;
+        temp.username = "Không được để trống.";
       } else {
+        tempEnable.username = false;
         temp.username = "";
-        tempEnabled.username = false;
       }
     }
-    if ("password" in fieldValue) {
-      if (fieldValue.password === "") {
-        temp.password = "Không được để trống";
-        tempEnabled.password = true;
+    if ("password" in fieldValues) {
+      if (fieldValues.password === "") {
+        tempEnable.password = true;
+        temp.password = "Không được để trống.";
       } else {
+        tempEnable.password = false;
         temp.password = "";
-        tempEnabled.password = false;
       }
     }
     setErrors({
       ...temp,
     });
-    setErrorsEnabled({
-      ...tempEnabled,
+    setErrorsEnable({
+      ...tempEnable,
     });
-
-    if (fieldValue === values) {
-      return Object.values(temp).every((x) => x === "");
-    }
-  }
+    if (fieldValues === values) return Object.values(temp).every((x) => x === ""); // trả về boolean
+  };
 
   const {
     values,
     setValues,
     errors,
     setErrors,
-    errorsEnabled,
-    setErrorsEnabled,
+    errorsEnable,
+    setErrorsEnable,
     handleInputChange,
     resetForm,
-  } = useForm(initialFormValue, true, validate);
-
+  } = useForm(initialValues, true, validate);
+  useEffect(() => {
+    if (accessToken !== "" && accountId !== 0) {
+      console.log(accessToken)
+      navigate("/admin/dashboard");
+    }
+  }, [accountId, accessToken]);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log("submit");
+      dispatch(fetchLogin(values));
       resetForm();
     }
   };
-
   return (
     <div className={cx("main")}>
       <div className={cx("wrap-login")}>
@@ -89,7 +96,7 @@ function SignIn() {
                     borderRadius: "15px",
                   },
                 }}
-                error={errorsEnabled.username}
+                error={errorsEnable.username}
                 helperText={errors.username}
                 value={values.username}
                 onChange={handleInputChange}
@@ -114,15 +121,15 @@ function SignIn() {
                     borderRadius: "15px",
                   },
                 }}
-                error={errorsEnabled.password}
+                error={errorsEnable.password}
                 helperText={errors.password}
                 value={values.password}
+                onChange={handleInputChange}
                 FormHelperTextProps={{
                   style: {
                     fontSize: "14px",
                   },
                 }}
-                onChange={handleInputChange}
               />
             </div>
             <div className={cx("button")}>
@@ -136,5 +143,4 @@ function SignIn() {
     </div>
   );
 }
-
 export default SignIn;

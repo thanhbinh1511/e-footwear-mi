@@ -17,7 +17,7 @@ const fetchAllProducts = createAsyncThunk(
     GET_ALL_PRODUCT,
     async (params, thunkApi) => {
         try {
-            const response = await productApi.requestAllProduct();
+            const response = await productApi.requestAllProduct(params);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -28,9 +28,9 @@ const fetchAllProducts = createAsyncThunk(
 );
 const fetchDeleteProduct = createAsyncThunk(
     DELETE_PRODUCT_BY_ID,
-    async (id, thunkApi) => {
+    async (params, thunkApi) => {
         try {
-            const response = await productApi.requestDeleteProduct(id);
+            const response = await productApi.requestDeleteProduct(params.id, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -43,7 +43,7 @@ const fetchCreateProduct = createAsyncThunk(
     CREATE_PRODUCT,
     async (params, thunkApi) => {
         try {
-            const response = await productApi.requestCreateProduct(params);
+            const response = await productApi.requestCreateProduct(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -56,7 +56,7 @@ const fetchUpdateProduct = createAsyncThunk(
     UPDATE_PRODUCT_BY_ID,
     async (params, thunkApi) => {
         try {
-            const response = await productApi.requestUpdateProduct(params);
+            const response = await productApi.requestUpdateProduct(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);

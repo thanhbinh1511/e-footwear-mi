@@ -10,6 +10,7 @@ const cx = classnames.bind(style);
 function UpdateProduct(props) {
     const dispatch = useDispatch();
     const { categories } = useSelector((state) => state.categoryReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const { colors } = useSelector((state) => state.colorReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
@@ -147,7 +148,7 @@ function UpdateProduct(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchUpdateProduct({
+            const data = {
                 id: props?.id,
                 name: values?.name,
                 discountRate: values?.discountRate,
@@ -173,6 +174,9 @@ function UpdateProduct(props) {
                         imageURL: values?.imageURL4,
                     },
                 ]
+            }
+            dispatch(fetchUpdateProduct({
+                data, accessToken
             }));
             setOpen(!open);
             resetForm();

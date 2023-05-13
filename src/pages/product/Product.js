@@ -11,14 +11,15 @@ import UpdateProduct from "~/components/crud-product/UpdateProduct";
 const cx = classNames.bind(style);
 function Product() {
     const { products, productChanged } = useSelector((state) => state.productReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchAllProducts());
+        dispatch(fetchAllProducts(accessToken));
     }, [dispatch]);
 
     useEffect(() => {
         if (productChanged) {
-            dispatch(fetchAllProducts());
+            dispatch(fetchAllProducts(accessToken));
         }
     }, [dispatch, productChanged])
     const columns = [

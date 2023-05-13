@@ -9,13 +9,14 @@ import { AddTypeGallery, DeleteTypeGallery, UpdateTypeGallery } from "~/componen
 const cx = classNames.bind(style);
 function TypeGalleries() {
     const { typeGalleries, typeGalleryChanged } = useSelector((state) => state.typeGalleryReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchAllTypeGalleries());
+        dispatch(fetchAllTypeGalleries(accessToken));
     }, [dispatch]);
     useEffect(() => {
         if (typeGalleryChanged) {
-            dispatch(fetchAllTypeGalleries());
+            dispatch(fetchAllTypeGalleries(accessToken));
         }
     }, [dispatch, typeGalleryChanged]);
 

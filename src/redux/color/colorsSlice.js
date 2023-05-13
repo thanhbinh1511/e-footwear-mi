@@ -18,7 +18,7 @@ const fetchAllColors = createAsyncThunk(
     GET_ALL_COLOR,
     async (params, thunkApi) => {
         try {
-            const response = await colorsApi.requestAllColor();
+            const response = await colorsApi.requestAllColor(params);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -29,9 +29,9 @@ const fetchAllColors = createAsyncThunk(
 );
 const fetchDeleteColor = createAsyncThunk(
     DELETE_COLOR_BY_ID,
-    async (id, thunkApi) => {
+    async (params, thunkApi) => {
         try {
-            const response = await colorsApi.requestDeleteColor(id);
+            const response = await colorsApi.requestDeleteColor(params.id, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -44,7 +44,7 @@ const fetchCreateColor = createAsyncThunk(
     CREATE_COLOR,
     async (params, thunkApi) => {
         try {
-            const response = await colorsApi.requestCreateColor(params);
+            const response = await colorsApi.requestCreateColor(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -57,7 +57,7 @@ const fetchUpdateColor = createAsyncThunk(
     UPDATE_COLOR_BY_ID,
     async (params, thunkApi) => {
         try {
-            const response = await colorsApi.requestUpdateColor(params);
+            const response = await colorsApi.requestUpdateColor(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);

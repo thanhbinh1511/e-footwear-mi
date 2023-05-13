@@ -10,16 +10,25 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import PersonIcon from '@mui/icons-material/Person';
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "~/assets/image/logo.png";
 import style from "./SideBar.module.scss";
+import { useDispatch } from "react-redux";
+import { fetchLogout } from "~/redux/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(style);
 
 function SideBar() {
   const location = useLocation().pathname;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleSignOut = async () => {
+    await dispatch(fetchLogout());
+    navigate("/admin/auth/sign-in");
+  };
   const [active, setActive] = useState(0);
   useEffect(() => {
     if (location.includes("dashboard")) {
@@ -174,7 +183,7 @@ function SideBar() {
           <Box className={cx("menu-icon")}>
             <LogoutIcon fontSize="medium" />
           </Box>
-          <Box className={cx("menu-content")}>Đăng xuất</Box>
+          <Box onClick={handleSignOut} className={cx("menu-content")}>Đăng xuất</Box>
         </Box>
       </Box>
     </Box >

@@ -10,13 +10,15 @@ import { AddCoupon, UpdateCoupon } from "~/components/crud-coupon";
 const cx = classNames.bind(style);
 function Coupons() {
     const { coupons, couponChanged } = useSelector((state) => state.couponReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
+
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchAllCoupons());
+        dispatch(fetchAllCoupons(accessToken));
     }, [dispatch]);
     useEffect(() => {
         if (couponChanged) {
-            dispatch(fetchAllCoupons());
+            dispatch(fetchAllCoupons(accessToken));
         }
     }, [dispatch, couponChanged]);
 

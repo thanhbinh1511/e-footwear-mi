@@ -9,14 +9,16 @@ import { AddGallery, DeleteGallery, UpdateGallery } from "~/components/crud-gall
 const cx = classNames.bind(style);
 function Galleries() {
     const { galleries, galleryChanged } = useSelector((state) => state.galleryReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
+
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchAllGalleries());
+        dispatch(fetchAllGalleries(accessToken));
     }, [dispatch]);
 
     useEffect(() => {
         if (galleryChanged) {
-            dispatch(fetchAllGalleries());
+            dispatch(fetchAllGalleries(accessToken));
         }
     }, [dispatch, galleryChanged])
 

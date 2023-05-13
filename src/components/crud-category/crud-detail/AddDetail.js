@@ -12,6 +12,7 @@ function AddDetail() {
     const dispatch = useDispatch();
     const [label, setLabel] = useState("");
     const { products } = useSelector((state) => state.productReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const { sizes } = useSelector((state) => state.sizeReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
@@ -78,7 +79,7 @@ function AddDetail() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchCreateProductDetail({
+            const data = {
                 stockQuantity: values.stockQuantity,
                 product: {
                     id: Number.parseInt(values?.product)
@@ -86,6 +87,9 @@ function AddDetail() {
                 size: {
                     id: Number.parseInt(values?.size)
                 }
+            }
+            dispatch(fetchCreateProductDetail({
+                data, accessToken
             }));
             resetForm();
             setOpen(!open);

@@ -2,13 +2,14 @@ import style from "./Style.module.scss";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "~/hooks/useForm";
 import { fetchCreateTypeGallery } from "~/redux/type-gallery/typeGalleriesSlice";
 const cx = classnames.bind(style);
 
 function AddTypeGallery() {
     const dispatch = useDispatch();
+    const { accessToken } = useSelector((state) => state.authReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(!open);
@@ -63,9 +64,12 @@ function AddTypeGallery() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchCreateTypeGallery({
+            const data = {
                 typeCode: values?.typeCode,
                 typeName: values?.typeName,
+            }
+            dispatch(fetchCreateTypeGallery({
+                data, accessToken
             })
             );
             setOpen(!open);

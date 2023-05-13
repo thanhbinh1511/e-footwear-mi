@@ -11,6 +11,7 @@ const cx = classnames.bind(style);
 function UpdateCategory(props) {
     const dispatch = useDispatch();
     const { categories } = useSelector((state) => state.categoryReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const [open, setOpen] = useState(false);
     const initialValues = {
         name: props?.name,
@@ -63,15 +64,17 @@ function UpdateCategory(props) {
         e.preventDefault();
         if (validate()) {
             const temp = values?.parent == "" ? null : { id: Number.parseInt(values?.parent) };
-            dispatch(fetchUpdateCategory({
+            const data = {
                 id: props.id,
                 name: values.name,
                 category:
                     temp
+            }
+            dispatch(fetchUpdateCategory({
+                data, accessToken
             }));
             resetForm();
-
-            setValues({ ...values,  parent: values?.parent == "" ? "" : Number.parseInt(values.parent) });
+            setValues({ ...values, parent: values?.parent == "" ? "" : Number.parseInt(values.parent) });
             setOpen(!open);
         }
     };

@@ -2,7 +2,7 @@ import style from "./Style.module.scss";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "~/hooks/useForm";
 import { fetchCreateSize } from "~/redux/size/sizesSlice";
 const cx = classnames.bind(style);
@@ -10,6 +10,7 @@ const cx = classnames.bind(style);
 function AddSize() {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const handleOpen = () => {
         setOpen(!open);
     };
@@ -54,8 +55,11 @@ function AddSize() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchCreateSize({
+            const data = {
                 value: values?.value,
+            }
+            dispatch(fetchCreateSize({
+                data, accessToken
             })
             );
             setOpen(!open);

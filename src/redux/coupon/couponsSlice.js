@@ -16,7 +16,7 @@ const fetchAllCoupons = createAsyncThunk(
     GET_ALL_COUPON,
     async (params, thunkApi) => {
         try {
-            const response = await couponsApi.requestAllCoupon();
+            const response = await couponsApi.requestAllCoupon(params);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -29,7 +29,7 @@ const fetchCreateCoupon = createAsyncThunk(
     CREATE_COUPON,
     async (params, thunkApi) => {
         try {
-            const response = await couponsApi.requestCreateCoupon(params);
+            const response = await couponsApi.requestCreateCoupon(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -42,7 +42,7 @@ const fetchUpdateCoupon = createAsyncThunk(
     UPDATE_COUPON_BY_ID,
     async (params, thunkApi) => {
         try {
-            const response = await couponsApi.requestUpdateCoupon(params);
+            const response = await couponsApi.requestUpdateCoupon(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);

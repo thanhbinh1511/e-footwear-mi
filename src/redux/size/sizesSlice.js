@@ -17,7 +17,7 @@ const fetchAllSizes = createAsyncThunk(
     GET_ALL_SIZE,
     async (params, thunkApi) => {
         try {
-            const response = await sizesApi.requestAllSize();
+            const response = await sizesApi.requestAllSize(params);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -30,7 +30,7 @@ const fetchSizeById = createAsyncThunk(
     GET_SIZE_BY_ID,
     async (params, thunkApi) => {
         try {
-            const response = await sizesApi.requestSizeById(params);
+            const response = await sizesApi.requestSizeById(params.id, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -43,7 +43,7 @@ const fetchUpdateSize = createAsyncThunk(
     UPDATE_SIZE_BY_ID,
     async (params, thunkApi) => {
         try {
-            const response = await sizesApi.requestUpdateSize(params);
+            const response = await sizesApi.requestUpdateSize(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -56,7 +56,7 @@ const fetchCreateSize = createAsyncThunk(
     CREATE_SIZE,
     async (params, thunkApi) => {
         try {
-            const response = await sizesApi.requestCreateSize(params);
+            const response = await sizesApi.requestCreateSize(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -69,7 +69,7 @@ const fetchDeleteSize = createAsyncThunk(
     DELETE_SIZE_BY_ID,
     async (params, thunkApi) => {
         try {
-            const response = await sizesApi.requestDeleteSize(params);
+            const response = await sizesApi.requestDeleteSize(params.id, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);

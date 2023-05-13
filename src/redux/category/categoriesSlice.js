@@ -18,7 +18,7 @@ const fetchAllCategories = createAsyncThunk(
     GET_ALL_CATEGORY,
     async (params, thunkApi) => {
         try {
-            const response = await categoriesApi.requestAllCategory();
+            const response = await categoriesApi.requestAllCategory(params);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -29,9 +29,9 @@ const fetchAllCategories = createAsyncThunk(
 );
 const fetchDeleteCategory = createAsyncThunk(
     DELETE_CATEGORY_BY_ID,
-    async (id, thunkApi) => {
+    async (params, thunkApi) => {
         try {
-            const response = await categoriesApi.requestDeleteCategory(id);
+            const response = await categoriesApi.requestDeleteCategory(params.id, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -42,9 +42,9 @@ const fetchDeleteCategory = createAsyncThunk(
 );
 const fetchCreateCategory = createAsyncThunk(
     CREATE_CATEGORY,
-    async (category, thunkApi) => {
+    async (params, thunkApi) => {
         try {
-            const response = await categoriesApi.requestCreateCategory(category);
+            const response = await categoriesApi.requestCreateCategory(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -55,9 +55,9 @@ const fetchCreateCategory = createAsyncThunk(
 );
 const fetchUpdateCategory = createAsyncThunk(
     UPDATE_CATEGORY_BY_ID,
-    async (category, thunkApi) => {
+    async (params, thunkApi) => {
         try {
-            const response = await categoriesApi.requestUpdateCategory(category);
+            const response = await categoriesApi.requestUpdateCategory(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);

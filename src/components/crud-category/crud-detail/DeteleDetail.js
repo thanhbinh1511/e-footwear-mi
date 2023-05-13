@@ -2,19 +2,20 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from "./Style.module.scss";
 import { fetchDeleteProductDetail } from '~/redux/product-detail/productDetailSlice';
 const cx = classnames.bind(style);
 
 function DeleteDetail(props) {
     const [open, setOpen] = useState(false);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
     const handleClose = () => {
         setOpen(!open);
     };
     const handleAction = (id) => {
-        dispatch(fetchDeleteProductDetail(id));
+        dispatch(fetchDeleteProductDetail({ id, accessToken }));
         setOpen(!open);
     };
 

@@ -12,8 +12,8 @@ function App() {
 
                     if (route.layout) {
                         Layout = route.layout;
-                        
-                    }   
+
+                    }
                     return (
                         <Route
                             key={index}
@@ -21,7 +21,7 @@ function App() {
                             exact={route.exact}
                             element={
                                 <Layout>
-                                    <Page/>
+                                    <Page />
                                 </Layout>
                             }
                         />

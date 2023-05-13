@@ -1,6 +1,6 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchDeleteSize } from "~/redux/size/sizesSlice";
 import DeleteIcon from '@mui/icons-material/Delete';
 import style from "./Style.module.scss";
@@ -9,13 +9,14 @@ const cx = classnames.bind(style);
 
 function DeleteSize(props) {
     const [open, setOpen] = useState(false);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
     const handleClose = () => {
         setOpen(!open);
     };
 
     const handleAction = (id) => {
-        dispatch(fetchDeleteSize(id));
+        dispatch(fetchDeleteSize({ id, accessToken }));
         setOpen(!open);
     };
     return (

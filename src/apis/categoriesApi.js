@@ -1,29 +1,43 @@
 import axios from "./axios";
 export const categoriesApi = {
-    async requestAllCategory() {
+    async requestAllCategory(accessToken) {
         return await axios
-            .get(`/categories`)
+            .get(`/categories`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestDeleteCategory(id) {
+    async requestDeleteCategory(id, accessToken) {
         return await axios
-            .delete(`/categories/${id}`)
+            .delete(`/categories/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestCreateCategory(data) {
+    async requestCreateCategory(data, accessToken) {
         return await axios
-            .post(`/categories`, data)
+            .post(`/categories`, { name: data.name, category: data.category }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestUpdateCategory(data) {
-        console.log(data);
+    async requestUpdateCategory(data, accessToken) {
         return await axios
-            .put(`/categories/${data.id}`, { name: data.name, category: data.category })
+            .put(`/categories/${data.id}`, { name: data.name, category: data.category }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-
 };

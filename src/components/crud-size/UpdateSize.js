@@ -2,13 +2,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "~/hooks/useForm";
 import { fetchUpdateSize } from "~/redux/size/sizesSlice";
 import style from "./Style.module.scss";
 const cx = classnames.bind(style);
 function UpdateSize(props) {
     const dispatch = useDispatch();
+    const { accessToken } = useSelector((state) => state.authReducer);
     const [open, setOpen] = useState(false);
     const initialValues = {
         value: props?.value,
@@ -54,9 +55,12 @@ function UpdateSize(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            dispatch(fetchUpdateSize({
+            const data = {
                 id: props?.id,
                 value: values?.value,
+            }
+            dispatch(fetchUpdateSize({
+                data, accessToken
             })
             );
             setOpen(!open);

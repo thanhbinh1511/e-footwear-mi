@@ -10,13 +10,14 @@ import style from "./Sizes.module.scss";
 const cx = classNames.bind(style);
 function Sizes() {
     const { sizes, sizeChanged } = useSelector((state) => state.sizeReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchAllSizes());
+        dispatch(fetchAllSizes(accessToken));
     }, [dispatch]);
     useEffect(() => {
         if (sizeChanged) {
-            dispatch(fetchAllSizes());
+            dispatch(fetchAllSizes(accessToken));
         }
     }, [dispatch, sizeChanged]);
 

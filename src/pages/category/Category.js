@@ -9,15 +9,16 @@ import { fetchAllCategories } from "~/redux/category/categoriesSlice";
 import style from "./Category.module.scss";
 const cx = classNames.bind(style);
 function Category() {
+    const { accessToken } = useSelector((state) => state.authReducer);
     const { categories, categoryChanged } = useSelector((state) => state.categoryReducer);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchAllCategories());
+        dispatch(fetchAllCategories(accessToken));
     }, [dispatch]);
 
     useEffect(() => {
         if (categoryChanged) {
-            dispatch(fetchAllCategories());
+            dispatch(fetchAllCategories(accessToken));
         }
     }, [categoryChanged, dispatch]);
 

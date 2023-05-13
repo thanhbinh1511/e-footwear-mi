@@ -1,32 +1,52 @@
 import axios from "./axios";
 export const sizesApi = {
-    async requestAllSize() {
+    async requestAllSize(accessToken) {
         return await axios
-            .get(`/sizes`)
+            .get(`/sizes`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestSizeById(id) {
+    async requestSizeById(id, accessToken) {
         return await axios
-            .get(`/sizes/${id}`)
+            .get(`/sizes/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestUpdateSize(params) {
+    async requestUpdateSize(params, accessToken) {
         return await axios
-            .put(`/sizes/${params.id}`, { value: params.value })
+            .put(`/sizes/${params.id}`, { value: params.value }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestCreateSize(data) {
+    async requestCreateSize(data, accessToken) {
         return await axios
-            .post(`/sizes`, data)
+            .post(`/sizes`, data, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     },
-    async requestDeleteSize(id) {
+    async requestDeleteSize(id, accessToken) {
         return await axios
-            .delete(`/sizes/${id}`)
+            .delete(`/sizes/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((response) => response)
             .catch((error) => error.response.data);
     }

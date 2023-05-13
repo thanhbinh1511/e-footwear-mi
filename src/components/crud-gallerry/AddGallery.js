@@ -13,6 +13,7 @@ const cx = classnames.bind(style);
 function AddGallery() {
     const dispatch = useDispatch();
     const { typeGalleries } = useSelector((state) => state.typeGalleryReducer);
+    const { accessToken } = useSelector((state) => state.authReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         dispatch(fetchAllTypeGalleries());
@@ -72,36 +73,21 @@ function AddGallery() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            // // const imageFile = e.target.imageURL.files[0];  // Lỗi chỗ này nè ....
-            // const storageRef = storage().ref('gallery-images/' + imageFile.name);
-            // const uploadTask = storageRef.put(imageFile);
-            // uploadTask.on(
-            //     'state_changed',
-            //     (snapshot) => {
-            //         // Handle upload progress
-            //     },
-            //     (error) => {
-            //         console.log(error);
-            //     },
-            //     () => {
-            //         alert("Thêm ảnh thành công");
-            //         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            //             // Pass the download URL to the createGallery function
-            dispatch(fetchCreateGallery({
+            const data = {
                 imageURL: values.imageURL,
                 link: values.link,
                 title: values.title,
                 typeGallery: {
                     id: values.typeGallery,
                 }
+            }
+            dispatch(fetchCreateGallery({
+                data, accessToken
             }));
             setOpen(!open);
             resetForm();
-        }; // Lỗi chỗ này nè .... ")"
+        };
     }
-    //             );
-    // }
-    //     };
 
 
     return (

@@ -17,7 +17,7 @@ const fetchAllTypeGalleries = createAsyncThunk(
     GET_ALL_TYPE_GALLERY,
     async (params, thunkApi) => {
         try {
-            const response = await typeGalleriesApi.requestAllTypeGallery();
+            const response = await typeGalleriesApi.requestAllTypeGallery(params);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -30,7 +30,7 @@ const fetchCreateTypeGallery = createAsyncThunk(
     CREATE_TYPE_GALLERY,
     async (params, thunkApi) => {
         try {
-            const response = await typeGalleriesApi.requestAddTypeGallery(params);
+            const response = await typeGalleriesApi.requestAddTypeGallery(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -43,7 +43,7 @@ const fetchUpdateTypeGallery = createAsyncThunk(
     UPDATE_TYPE_GALLERY_BY_ID,
     async (params, thunkApi) => {
         try {
-            const response = await typeGalleriesApi.requestUpdateTypeGallery(params);
+            const response = await typeGalleriesApi.requestUpdateTypeGallery(params.data, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
@@ -56,7 +56,7 @@ const fetchDeleteTypeGallery = createAsyncThunk(
     DELETE_TYPE_GALLERY_BY_ID,
     async (params, thunkApi) => {
         try {
-            const response = await typeGalleriesApi.requestDeleteTypeGallery(params);
+            const response = await typeGalleriesApi.requestDeleteTypeGallery(params.id, params.accessToken);
             return response.success
                 ? thunkApi.fulfillWithValue(response)
                 : thunkApi.rejectWithValue(response);
