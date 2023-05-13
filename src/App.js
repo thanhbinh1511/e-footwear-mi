@@ -12,6 +12,7 @@ function App() {
 
                     if (route.layout) {
                         Layout = route.layout;
+
                     }
                     return (
                         <Route

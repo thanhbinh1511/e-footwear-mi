@@ -1,0 +1,38 @@
+.main {
+    width: 100%;
+
+    .wrap-card {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 15px 20px;
+        
+         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+        .wrap-heading {
+            font-size: 15px;
+
+            .wrap-money {
+                .total-money {
+                    color: #7b7a7a;
+                    font-weight: 500;
+                    display: flex;
+                    flex-direction: column;
+
+                    .sub-money {
+                        font-size: 25px !important;
+                        font-weight: 600 !important;
+                        color: #000;
+
+                    }
+                }
+
+            }
+        }
+
+        .wrap-body {
+            width: 100%;
+            margin:     0;
+            padding: 0;
+        }
+    }
+}

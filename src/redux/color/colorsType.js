@@ -1,0 +1,4 @@
+export const GET_ALL_COLOR = "GET_ALL_COLOR";
+export const CREATE_COLOR = "CREATE_COLOR";
+export const UPDATE_COLOR_BY_ID = "UPDATE_COLOR_BY_ID";
+export const DELETE_COLOR_BY_ID = "DELETE_COLOR_BY_ID";

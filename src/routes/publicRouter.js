@@ -1,10 +1,73 @@
 import Dashboard from "~/pages/dashboard/Dashboard";
+import Order from "~/pages/order/Order";
+import Category from "~/pages/category/Category";
+import { FullWidthLayout } from "~/layouts";
+import SignIn from "~/pages/sign-in";
+import Customer from "~/pages/customer/Customer";
+import Product from "~/pages/product/Product";
+import ProductDetail from "~/pages/product-detail/ProductDetail";
+import ProductImage from "~/pages/product-image/ProductImage";
+import Colors from "~/pages/colors/Colors";
+import Sizes from "~/pages/sizes/Sizes";
+import Galleries from "~/pages/galleries/Galleries";
+import TypeGalleries from "~/pages/type-galleries/TypeGalleries";
+import Coupons from "~/pages/coupon/Coupons";
 
 export const publicRoutes = [
     {
-        path: "/admin",
+        path: "/admin/dashboard",
         component: Dashboard,
-        // layout: "không có mặc định là default",
         exact: true,
     },
+    {
+        path: "/admin/auth/sign-in",
+        component: SignIn,
+        layout: FullWidthLayout,
+        exact: true,
+    },
+    {
+        path: "/admin/customer",
+        component: Customer,
+    },
+    {
+        path: "/admin/order",
+        component: Order,
+    },
+    {
+        path: "/admin/category",
+        component: Category,
+
+    },
+    {
+        path: "/admin/product",
+        component: Product,
+    },
+    {
+        path: "/admin/details",
+        component: ProductDetail,
+    },
+    {
+        path: "/admin/images",
+        component: ProductImage,
+    },
+    {
+        path: "/admin/colors",
+        component: Colors,
+    },
+    {
+        path: "/admin/sizes",
+        component: Sizes,
+    },
+    {
+        path: "/admin/galleries",
+        component: Galleries,
+    },
+    {
+        path: "/admin/type-gallery",
+        component: TypeGalleries,
+    },
+    {
+        path: "/admin/coupons",
+        component: Coupons,
+    }
 ];
