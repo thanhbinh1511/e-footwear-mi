@@ -21,6 +21,7 @@ import couponReducer from "~/redux/coupon/couponsSlice";
 import productReducer from "~/redux/product/productSlice";
 import productDetailReducer from "~/redux/product-detail/productDetailSlice";
 import authReducer from "~/redux/auth/authSlice";
+import addressReducer from "~/redux/address/addressSlice";
 import { AUTH_LOGOUT } from "~/redux/auth/authType";
 const persistConfig = {
     key: "root",
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
     productReducer: productReducer,
     productDetailReducer: productDetailReducer,
     authReducer: authReducer,
+    addressReducer: addressReducer,
 
 });
 //----
