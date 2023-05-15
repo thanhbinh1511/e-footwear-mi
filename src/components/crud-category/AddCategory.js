@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Style.module.scss";
 import { useForm } from "~/hooks/useForm";
-import { fetchCreateCategory } from "~/redux/category/categoriesSlice";
+import { fetchAllCategories, fetchCreateCategory } from "~/redux/category/categoriesSlice";
 const cx = classnames.bind(style);
 
 function AddCategory() {
@@ -14,6 +14,7 @@ function AddCategory() {
     const { categories } = useSelector((state) => state.categoryReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
+        dispatch(fetchAllCategories(accessToken));
         setOpen(true);
     };
 

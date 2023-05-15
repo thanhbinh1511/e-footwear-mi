@@ -60,7 +60,7 @@ function ViewCustomer(props) {
             title: "Trạng thái",
             dataIndex: "status",
             key: "status",
-                
+
         }
 
     ];

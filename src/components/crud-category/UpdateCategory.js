@@ -50,10 +50,7 @@ function UpdateCategory(props) {
     } = useForm(initialValues, true, validate);
 
     const handleOpen = () => {
-        dispatch(fetchAllCategories());
-        console.log(values.parent)
-        console.log(props.parent)
-
+        dispatch(fetchAllCategories(accessToken));
         setOpen(true);
     };
 
@@ -63,18 +60,16 @@ function UpdateCategory(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            const temp = values?.parent == "" ? null : { id: Number.parseInt(values?.parent) };
+            const temp = values?.parent == "" ? null : { id: values?.parent };
             const data = {
                 id: props.id,
                 name: values.name,
                 category:
                     temp
             }
-            dispatch(fetchUpdateCategory({
-                data, accessToken
-            }));
+            dispatch(fetchUpdateCategory({ data, accessToken }));
             resetForm();
-            setValues({ ...values, parent: values?.parent == "" ? "" : Number.parseInt(values.parent) });
+            setValues({ ...values, parent: values?.parent == "" ? "" : values?.parent });
             setOpen(!open);
         }
     };

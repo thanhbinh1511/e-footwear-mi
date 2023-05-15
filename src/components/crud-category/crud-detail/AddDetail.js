@@ -6,6 +6,7 @@ import Select from 'react-select';
 import { useForm } from "~/hooks/useForm";
 import { fetchCreateProductDetail } from "~/redux/product-detail/productDetailSlice";
 import style from "./Style.module.scss";
+import { fetchAllProducts } from "~/redux/product/productSlice";
 const cx = classnames.bind(style);
 
 function AddDetail() {
@@ -16,6 +17,7 @@ function AddDetail() {
     const { sizes } = useSelector((state) => state.sizeReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
+        dispatch(fetchAllProducts(accessToken));
         setOpen(true);
     };
     const initialValues = {

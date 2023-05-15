@@ -13,7 +13,6 @@ const cx = classNames.bind(style);
 function ProductDetail() {
     const { productDetails, productDetailChanged } = useSelector((state) => state.productDetailReducer);
     const { accessToken } = useSelector((state) => state.authReducer);
-
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchAllProductDetails(accessToken));
@@ -62,7 +61,7 @@ function ProductDetail() {
             align: "center"
         },
     ]
-    const data = productDetails?.map((item, index) => {
+    const data = productDetails.map((item, index) => {
         return {
             key: index,
             id: item.id,

@@ -17,7 +17,7 @@ function UpdateGallery(props) {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
-        dispatch(fetchAllTypeGalleries());
+        dispatch(fetchAllTypeGalleries(accessToken));
         setOpen(true);
     };
 

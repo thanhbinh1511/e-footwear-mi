@@ -6,6 +6,7 @@ import { fetchAllGalleries } from "~/redux/gallery/galleriesSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddGallery, DeleteGallery, UpdateGallery } from "~/components/crud-gallerry";
+
 const cx = classNames.bind(style);
 function Galleries() {
     const { galleries, galleryChanged } = useSelector((state) => state.galleryReducer);

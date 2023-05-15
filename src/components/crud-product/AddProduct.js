@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "./Style.module.scss";
 import { useForm } from "~/hooks/useForm";
 import { fetchCreateProduct } from "~/redux/product/productSlice";
+import { fetchAllCategories } from "~/redux/category/categoriesSlice";
+import { fetchAllColors } from "~/redux/color/colorsSlice";
 const cx = classnames.bind(style);
 function AddProduct() {
     const dispatch = useDispatch();
@@ -13,6 +15,8 @@ function AddProduct() {
     const { colors } = useSelector((state) => state.colorReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
+        dispatch(fetchAllCategories({ accessToken }));
+        dispatch(fetchAllColors({ accessToken }));
         setOpen(true);
     };
 

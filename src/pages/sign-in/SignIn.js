@@ -60,7 +60,6 @@ function SignIn() {
   } = useForm(initialValues, true, validate);
   useEffect(() => {
     if (accessToken !== "" && accountId !== 0) {
-      console.log(accessToken)
       navigate("/admin/dashboard");
     }
   }, [accountId, accessToken]);

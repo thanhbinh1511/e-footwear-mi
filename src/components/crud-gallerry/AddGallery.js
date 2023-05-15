@@ -6,7 +6,8 @@ import style from "./Style.module.scss";
 import { useForm } from "~/hooks/useForm";
 import { fetchCreateGallery } from "~/redux/gallery/galleriesSlice";
 import { fetchAllTypeGalleries } from "~/redux/type-gallery/typeGalleriesSlice";
-import { storage } from "~/utils/firebase";
+import { auth, db, storage } from "~/utils/firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 const cx = classnames.bind(style);
 
 
@@ -16,7 +17,7 @@ function AddGallery() {
     const { accessToken } = useSelector((state) => state.authReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
-        dispatch(fetchAllTypeGalleries());
+        dispatch(fetchAllTypeGalleries(accessToken));
         setOpen(true);
     };
 

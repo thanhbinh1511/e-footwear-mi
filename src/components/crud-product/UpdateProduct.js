@@ -6,6 +6,8 @@ import style from "./Style.module.scss";
 import { useForm } from "~/hooks/useForm";
 import { fetchUpdateProduct } from "~/redux/product/productSlice";
 import EditIcon from '@mui/icons-material/Edit';
+import { fetchAllCategories } from "~/redux/category/categoriesSlice";
+import { fetchAllColors } from "~/redux/color/colorsSlice";
 const cx = classnames.bind(style);
 function UpdateProduct(props) {
     const dispatch = useDispatch();
@@ -14,6 +16,8 @@ function UpdateProduct(props) {
     const { colors } = useSelector((state) => state.colorReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
+        dispatch(fetchAllCategories({ accessToken }));
+        dispatch(fetchAllColors({ accessToken }));
         setOpen(true);
     };
     const initialValues = {
