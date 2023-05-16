@@ -8,6 +8,7 @@ import { fetchUpdateProductDetailById } from "~/redux/product-detail/productDeta
 import style from "./Style.module.scss";
 import Select from 'react-select';
 import { fetchAllProducts } from '~/redux/product/productSlice';
+import { fetchAllSizes } from '~/redux/size/sizesSlice';
 const cx = classnames.bind(style);
 function UpdateDetail(props) {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function UpdateDetail(props) {
     const [label, setLabel] = useState("");
     const handleOpen = () => {
         dispatch(fetchAllProducts(accessToken));
+        dispatch(fetchAllSizes(accessToken));
         setLabel(props?.productName + " " + props?.colorName);
         setOpen(true);
     };

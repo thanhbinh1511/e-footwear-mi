@@ -16,8 +16,8 @@ function UpdateProduct(props) {
     const { colors } = useSelector((state) => state.colorReducer);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
-        dispatch(fetchAllCategories({ accessToken }));
-        dispatch(fetchAllColors({ accessToken }));
+        dispatch(fetchAllCategories(accessToken));
+        dispatch(fetchAllColors(accessToken));
         setOpen(true);
     };
     const initialValues = {
