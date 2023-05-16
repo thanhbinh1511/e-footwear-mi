@@ -14,6 +14,7 @@ function Order() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchAllOrders(accessToken));
+
     }, [dispatch, accessToken]);
     useEffect(() => {
         if (orderChanged) {
@@ -50,11 +51,12 @@ function Order() {
             key: "orderStatus",
 
         },
-        // {
-        //     title: "Ngày tạo",
-        //     dataIndex: "orderTime",
-        //     key: "orderTime",
-        // },
+        {
+            title: "Ngày đặt hàng",
+            dataIndex: "orderTime",
+            key: "orderTime",
+            render: (text) => <span>{new Date(text).toLocaleDateString()}</span>,
+        },
         {
             title: "Mô tả",
             dataIndex: "description",
@@ -76,7 +78,7 @@ function Order() {
             transportFee: item.transportFee,
             cost: item.cost,
             orderStatus: item.orderStatus.code,
-            // orderTime: item.orderTime,
+            orderTime: item.orderTime,
             description: item.description,
             option:
                 <Space>

@@ -153,7 +153,7 @@ function AddGallery() {
                                     style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                 }}
                             />
-                            <img src={image}  className={cx("img-demo")} />
+                            <img src={image} className={cx("img-demo")} />
                         </Box>
                         <Box className={cx("form-flex")} sx={{ marginBottom: "1rem" }}>
                             <Box>
