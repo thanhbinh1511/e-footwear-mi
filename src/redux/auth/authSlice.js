@@ -12,7 +12,6 @@ const initialState = {
     accessToken: "",
     avatar: "",
     isLogin: false,
-    isLoading: false,
 };
 const fetchLogin = createAsyncThunk(AUTH_LOGIN, async (params, thunkApi) => {
     try {

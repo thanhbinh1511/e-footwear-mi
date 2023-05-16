@@ -1,0 +1,4 @@
+export const GET_ALL_ORDER = "GET_ALL_ORDER";
+export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+export const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
+export const GET_ORDER_STATUS = "GET_ORDER_STATUS";

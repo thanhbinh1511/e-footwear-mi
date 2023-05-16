@@ -22,7 +22,11 @@ import productReducer from "~/redux/product/productSlice";
 import productDetailReducer from "~/redux/product-detail/productDetailSlice";
 import authReducer from "~/redux/auth/authSlice";
 import addressReducer from "~/redux/address/addressSlice";
+import orderReducer from "~/redux/order/orderSlice";
+import customerReducer from "~/redux/customer/customerSlice";
+import orderStatusReducer from "~/redux/order-status/orderStatusSlice";
 import { AUTH_LOGOUT } from "~/redux/auth/authType";
+
 const persistConfig = {
     key: "root",
     storage,
@@ -44,6 +48,9 @@ const rootReducer = combineReducers({
     productDetailReducer: productDetailReducer,
     authReducer: authReducer,
     addressReducer: addressReducer,
+    orderReducer: orderReducer,
+    customerReducer: customerReducer,
+    orderStatusReducer: orderStatusReducer,
 
 });
 //----

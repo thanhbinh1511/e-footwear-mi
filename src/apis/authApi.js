@@ -19,5 +19,5 @@ export const authApi = {
             })
             .then((response) => response)
             .catch((error) => error.response.data);
-    }
+    },
 };
