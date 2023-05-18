@@ -7,7 +7,6 @@ import CardRevenue from "~/components/card-revenue";
 import RecentUpdate from "~/components/recent-updates/RecentUpdate";
 import SaleAnalytics from "~/components/sale-analytics/SaleAnalytics";
 const cx = classNames.bind(style);
-
 function Dashboard() {
     return (
         <Box className={cx("main")}>
@@ -42,9 +41,6 @@ function Dashboard() {
                 </Grid>
 
             </Box>
-
-
-
         </Box>
     );
 }

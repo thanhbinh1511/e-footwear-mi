@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { orderApi } from "~/apis/orderApi";
-import { GET_ALL_ORDER, GET_ORDER_BY_ID, UPDATE_ORDER_STATUS } from "./orderType";
+import { GET_ALL_ORDER, GET_ORDER_BY_ID, UPDATE_ORDER_STATUS, COUNT_ORDER, GET_ORDER_HOT, GET_TOTAL_ORDER_BY_MONTH } from "./orderType";
 import MySwal from "~/constants/MySwal";
 const initialState = {
     orders: [],
+    countOrder: 0,
     order: null,
+    orderTotal: [],
     isLoading: false,
     orderChanged: false,
 };
@@ -47,6 +49,44 @@ const fetchUpdateOrderStatus = createAsyncThunk(
         }
     }
 );
+const fetchCountOrder = createAsyncThunk(
+    COUNT_ORDER,
+    async (params, thunkApi) => {
+        try {
+            const response = await orderApi.requestCountOrder(params);
+            return response.success
+                ? thunkApi.fulfillWithValue(response)
+                : thunkApi.rejectWithValue(response);
+        } catch (error) {
+            return thunkApi.rejectWithValue(error.response.data);
+        }
+    });
+const fetchGetHotOrder = createAsyncThunk(
+    GET_ORDER_HOT,
+    async (params, thunkApi) => {
+        try {
+            const response = await orderApi.requestGetHotOrder(params);
+            return response.success
+                ? thunkApi.fulfillWithValue(response)
+                : thunkApi.rejectWithValue(response);
+        } catch (error) {
+            return thunkApi.rejectWithValue(error.response.data);
+        }
+    });
+const fetchGetTotalOrderByMonth = createAsyncThunk(
+    GET_TOTAL_ORDER_BY_MONTH,
+    async (params, thunkApi) => {
+        try {
+            const response = await orderApi.requestGetTotalOrderByMonth(params);
+            return response.success
+                ? thunkApi.fulfillWithValue(response)
+                : thunkApi.rejectWithValue(response);
+        } catch (error) {
+            console.log(error)
+            return thunkApi.rejectWithValue(error.response.data);
+        }
+    });
+
 const orderSlice = createSlice({
     name: "order",
     initialState,
@@ -134,8 +174,59 @@ const orderSlice = createSlice({
                 });
                 return state
             })
+            .addCase(fetchCountOrder.pending, (state, action) => {
+                state.isLoading = true;
+                return state;
+            }
+            )
+            .addCase(fetchCountOrder.rejected, (state, action) => {
+                state.isLoading = false;
+                return state;
+            }
+            )
+            .addCase(fetchCountOrder.fulfilled, (state, action) => {
+                const data = action.payload.data;
+                state.isLoading = false;
+                state.countOrder = data;
+                return state;
+            }
+            )
+            .addCase(fetchGetHotOrder.pending, (state, action) => {
+                state.isLoading = true;
+                return state;
+            }
+            )
+            .addCase(fetchGetHotOrder.rejected, (state, action) => {
+                state.isLoading = false;
+                return state;
+            }
+            )
+            .addCase(fetchGetHotOrder.fulfilled, (state, action) => {
+                const data = action.payload.data;
+                state.isLoading = false;
+                state.orders = data;
+                return state;
+            }
+            )
+            .addCase(fetchGetTotalOrderByMonth.pending, (state, action) => {
+                state.isLoading = true;
+                return state;
+            }
+            )
+            .addCase(fetchGetTotalOrderByMonth.rejected, (state, action) => {
+                state.isLoading = false;
+                return state;
+            }
+            )
+            .addCase(fetchGetTotalOrderByMonth.fulfilled, (state, action) => {
+                const data = action.payload.data;
+                state.isLoading = false;
+                state.orderTotal = data;
+                return state;
+            }
+            )
     },
 });
 const orderReducer = orderSlice.reducer;
 export default orderReducer;
-export { fetchAllOrders, fetchOrderById, fetchUpdateOrderStatus };
+export { fetchAllOrders, fetchOrderById, fetchUpdateOrderStatus, fetchCountOrder, fetchGetHotOrder, fetchGetTotalOrderByMonth };

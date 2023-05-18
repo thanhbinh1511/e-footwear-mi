@@ -29,5 +29,36 @@ export const orderApi = {
             })
             .then((response) => response)
             .catch((error) => error.response.data);
+    },
+    async requestCountOrder(accessToken) {
+        return await axios
+            .get(`/orders/count`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
+            .then((response) => response)
+            .catch((error) => error.response.data);
+    },
+    async requestGetHotOrder(accessToken) {
+        return await axios
+            .get(`/orders/hot`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
+            .then((response) => response)
+            .catch((error) => error.response.data);
+
+    },
+    async requestGetTotalOrderByMonth(accessToken) {
+        return await axios
+            .get(`/orders/total`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
+            .then((response) => response)
+            .catch((error) => error.response.data);
     }
 }

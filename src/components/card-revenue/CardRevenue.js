@@ -9,7 +9,7 @@ function CardRevenue() {
     const data = {
         labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
         datasets: [{
-            label: 'Doanh thu theo tháng',
+            label: 'Tổng doanh thu theo tháng',
             data: [65, 59, 80, 81, 56, 55, 40, 20, 10, 5, 2, 1],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',

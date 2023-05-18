@@ -28,7 +28,7 @@ function MyBarChart({ data }) {
     }
     return (
         <Box className={cx('chart')} >
-            <Box className={cx('title')}>Tổng số đơn hàng</Box>
+            <Box className={cx('title')}>Tổng doanh thu</Box>
             <Bar data={data} options={options} />
         </Box>
     );

@@ -47,9 +47,9 @@ function MyLineChart({ data }) {
             },
             y: {
                 min: 0,
-                max: 100,
+                max: 10,
                 ticks: {
-                    stepSize: 10,
+                    stepSize: 1,
 
                 },
             }
@@ -57,7 +57,7 @@ function MyLineChart({ data }) {
     }
 
     return (
-        <Box className={cx('chart')}> 
+        <Box className={cx('chart')}>
             <Box className={cx('title')}>Tổng số đơn hàng</Box>
             <Line data={data} options={options} />
         </Box >

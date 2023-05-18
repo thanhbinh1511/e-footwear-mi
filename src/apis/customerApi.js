@@ -9,5 +9,16 @@ export const customerApi = {
             })
             .then((response) => response)
             .catch((error) => error.response.data);
+    },
+    async requestCountCustomer(accessToken) {
+        return await axios
+            .get(`accounts/count`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
+            .then((response) => response)
+            .catch((error) => error.response.data);
     }
+
 };
