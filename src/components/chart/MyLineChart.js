@@ -47,9 +47,9 @@ function MyLineChart({ data }) {
             },
             y: {
                 min: 0,
-                max: 10,
+                max: 40,
                 ticks: {
-                    stepSize: 1,
+                    stepSize: 3,
 
                 },
             }
