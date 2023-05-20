@@ -49,7 +49,7 @@ function CardStatistical() {
                             data: total.length > 0 ? total : [],
                             backgroundColor: [
                                 "#FF0000",
-                                "# #FFA500",
+                                "#FFA500",
                                 "#FFFF00",
                                 "#26aa99",
                                 "#0000FF ",
