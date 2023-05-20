@@ -2,15 +2,42 @@ import MyBarChart from "../chart/MyBarChart";
 import { Box, Typography } from "@mui/material";
 import style from "./CardRevenue.module.scss";
 import classNames from "classnames/bind";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchGetTotalPriceByMonth } from "~/redux/order/orderSlice";
 
 const cx = classNames.bind(style);
 
 function CardRevenue() {
+    const dispatch = useDispatch();
+    const { accessToken } = useSelector((state) => state.authReducer);
+    const { totalPrice } = useSelector((state) => state.orderReducer);
+    const [month, setMonth] = useState([])
+    const [totalOrder, setTotalOrder] = useState([])
+    useEffect(() => {
+        dispatch(fetchGetTotalPriceByMonth(accessToken));
+    }, [dispatch, accessToken]);
+
+    useEffect(() => {
+        let monthTemp = []
+        let totalOrderTemp = []
+        for (const item in totalPrice) {
+            monthTemp.push(totalPrice[item][0])
+            totalOrderTemp.push(totalPrice[item][1])
+        }
+        setMonth(monthTemp)
+        setTotalOrder(totalOrderTemp)
+    }, [totalPrice])
+
+
+
+
+
     const data = {
-        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+        labels: month.length > 0 ? month : [],
         datasets: [{
             label: 'Tổng doanh thu theo tháng',
-            data: [65, 59, 80, 81, 56, 55, 40, 20, 10, 5, 2, 1],
+            data: totalOrder.length > 0 ? totalOrder : [],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(255, 159, 64, 0.2)',

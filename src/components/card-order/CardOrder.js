@@ -26,8 +26,6 @@ function CardOrder() {
         setMonth(monthTemp)
         setTotalOrder(totalOrderTemp)
     }, [orderTotal])
-    // console.log(month)
-    console.log(totalOrder)
     const data = {
         labels: month.length > 0 ? month : [],
         datasets: [

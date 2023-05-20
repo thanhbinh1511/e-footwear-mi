@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { orderApi } from "~/apis/orderApi";
-import { GET_ALL_ORDER, GET_ORDER_BY_ID, UPDATE_ORDER_STATUS, COUNT_ORDER, GET_ORDER_HOT, GET_TOTAL_ORDER_BY_MONTH } from "./orderType";
+import { GET_ALL_ORDER, GET_ORDER_BY_ID, UPDATE_ORDER_STATUS, COUNT_ORDER, GET_ORDER_HOT, GET_TOTAL_ORDER_BY_MONTH, GET_TOTAL_PRICE_BY_MONTH } from "./orderType";
 import MySwal from "~/constants/MySwal";
 const initialState = {
     orders: [],
     countOrder: 0,
+    totalPrice: [],
     order: null,
     orderTotal: [],
     isLoading: false,
@@ -86,7 +87,19 @@ const fetchGetTotalOrderByMonth = createAsyncThunk(
             return thunkApi.rejectWithValue(error.response.data);
         }
     });
-
+const fetchGetTotalPriceByMonth = createAsyncThunk(
+    GET_TOTAL_PRICE_BY_MONTH,
+    async (params, thunkApi) => {
+        try {
+            const response = await orderApi.requestGetTotalPriceByMonth(params);
+            return response.success
+                ? thunkApi.fulfillWithValue(response)
+                : thunkApi.rejectWithValue(response);
+        } catch (error) {
+            console.log(error)
+            return thunkApi.rejectWithValue(error.response.data);
+        }
+    });
 const orderSlice = createSlice({
     name: "order",
     initialState,
@@ -225,8 +238,25 @@ const orderSlice = createSlice({
                 return state;
             }
             )
+            //get Total Price By Month
+            .addCase(fetchGetTotalPriceByMonth.pending, (state, action) => {
+                state.isLoading = true;
+                return state;
+            }
+            )
+            .addCase(fetchGetTotalPriceByMonth.rejected, (state, action) => {
+                state.isLoading = false;
+                return state;
+            }
+            )
+            .addCase(fetchGetTotalPriceByMonth.fulfilled, (state, action) => {
+                const data = action.payload.data;
+                state.isLoading = false;
+                state.totalPrice = data;
+                return state;
+            })
     },
 });
 const orderReducer = orderSlice.reducer;
 export default orderReducer;
-export { fetchAllOrders, fetchOrderById, fetchUpdateOrderStatus, fetchCountOrder, fetchGetHotOrder, fetchGetTotalOrderByMonth };
+export { fetchAllOrders, fetchOrderById, fetchUpdateOrderStatus, fetchCountOrder, fetchGetHotOrder, fetchGetTotalOrderByMonth, fetchGetTotalPriceByMonth };

@@ -60,5 +60,17 @@ export const orderApi = {
             })
             .then((response) => response)
             .catch((error) => error.response.data);
+    },
+    async requestGetTotalPriceByMonth(accessToken) {
+        return await axios
+            .get(`/orders/totalPrice`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
+            .then((response) => response)
+            .catch((error) => error.response.data);
+
     }
+
 }

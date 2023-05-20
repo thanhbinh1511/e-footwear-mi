@@ -77,7 +77,7 @@ function Order() {
             coupon: item.coupon,
             transportFee: item.transportFee,
             cost: item.cost,
-            orderStatus: item.orderStatus.code,
+            orderStatus: item.orderStatus.description,
             orderTime: item.orderTime,
             description: item.description,
             option:

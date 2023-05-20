@@ -114,7 +114,7 @@ function UpdateStatusOrder(props) {
                                 {
                                     orderStatus?.map((item, index) => (
                                         <Box component={"option"} sx={{ fontSize: '1.2rem' }} key={item?.id} value={item?.id}>
-                                            {item?.code}
+                                            {item?.description}
                                         </Box>
                                     ))
                                 }
