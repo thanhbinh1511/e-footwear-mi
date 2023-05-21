@@ -1,16 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authApi } from "~/apis/authApi";
 import MySwal from "~/constants/MySwal";
-import { AUTH_LOGIN, AUTH_LOGOUT } from "./authType";
+import { AUTH_LOGIN, AUTH_LOGOUT, GET_ALL_ACCOUNT } from "./authType";
 
 const initialState = {
+    accounts: [],
+    isLoading: false,
     accountId: 0,
     refreshToken: "",
     username: "",
     accessToken: "",
     avatar: "",
     isLogin: false,
-    isLoading: false,
 };
 const fetchLogin = createAsyncThunk(AUTH_LOGIN, async (params, thunkApi) => {
     try {
@@ -25,17 +26,46 @@ const fetchLogin = createAsyncThunk(AUTH_LOGIN, async (params, thunkApi) => {
 const fetchLogout = createAsyncThunk(AUTH_LOGOUT, async (params, thunkApi) => {
     return;
 });
+const fetchAllAccounts = createAsyncThunk(
+    GET_ALL_ACCOUNT,
+    async (params, thunkApi) => {
+        try {
+            const response = await authApi.requestAllAccount(params);
+            return response.success
+                ? thunkApi.fulfillWithValue(response)
+                : thunkApi.rejectWithValue(response);
+        } catch (error) {
+            return thunkApi.rejectWithValue(error.response.data);
+        }
+    }
+);
+
 const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            // login
+            //get All Account
+            .addCase(fetchAllAccounts.pending, (state, action) => {
+                state.isLoading = true;
+                return state;
+            })
+            .addCase(fetchAllAccounts.rejected, (state, action) => {
+                state.isLoading = false;
+                return state;
+            })
+            .addCase(fetchAllAccounts.fulfilled, (state, action) => {
+                const accounts = action.payload.data;
+                state.accounts = accounts;
+                state.isLoading = false;
+                return state;
+            })
             .addCase(fetchLogin.pending, (state, action) => {
                 state.isLoading = true;
                 return state;
             })
+            // login
             .addCase(fetchLogin.rejected, (state, action) => {
                 state.isLoading = false;
                 MySwal.fire({
@@ -95,4 +125,4 @@ const authSlice = createSlice({
 });
 const authReducer = authSlice.reducer;
 export default authReducer;
-export { fetchLogin, fetchLogout };
+export { fetchLogin, fetchLogout, fetchAllAccounts };

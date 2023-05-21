@@ -7,17 +7,34 @@ import style from "./Style.module.scss";
 import { useForm } from "~/hooks/useForm";
 import { fetchUpdateGallery } from "~/redux/gallery/galleriesSlice";
 import { fetchAllTypeGalleries } from "~/redux/type-gallery/typeGalleriesSlice";
+import Image from "mui-image";
 import EditIcon from '@mui/icons-material/Edit';
+import Axios from "axios";
 const cx = classnames.bind(style);
 
 function UpdateGallery(props) {
     const dispatch = useDispatch();
     const { typeGalleries } = useSelector((state) => state.typeGalleryReducer);
     const { accessToken } = useSelector((state) => state.authReducer);
-
+    const [image, setImage] = useState("");
     const [open, setOpen] = useState(false);
+
+    const handleFileChange = (files) => {
+        const formData = new FormData();
+        const file = files[0];
+        formData.append("file", file);
+        setValues({ ...values, imageURL: file })
+        formData.append("upload_preset", "rygave5s");
+        Axios.post("https://api.cloudinary.com/v1_1/di4tfql03/image/upload", formData)
+            .then((res) => {
+                setImage(res.data.url);
+            })
+            .catch((err) => console.log(err));
+    };
+
     const handleOpen = () => {
-        dispatch(fetchAllTypeGalleries());
+        setImage(props.url);
+        dispatch(fetchAllTypeGalleries(accessToken));
         setOpen(true);
     };
 
@@ -27,6 +44,7 @@ function UpdateGallery(props) {
         title: props?.title == null ? "" : props?.title,
         typeGallery: props?.typeGallery,
     };
+
     const validate = (fieldValues = values) => {
         let temp = { ...errors };
         let tempEnable = { ...errorsEnable };
@@ -76,7 +94,7 @@ function UpdateGallery(props) {
         if (validate()) {
             const data = {
                 id: props?.id,
-                imageURL: values?.imageURL,
+                imageURL: image,
                 link: values?.link === "" ? null : values?.link,
                 title: values?.title === "" ? null : values?.title,
                 typeGallery: {
@@ -91,7 +109,7 @@ function UpdateGallery(props) {
             ));
             resetForm();
             setOpen(!open);
-            setValues({ ...values, imageURL: values?.imageURL, link: values?.link === "" ? "" : values?.link, title: values?.title === "" ? "" : values?.title, typeGallery: values?.typeGallery === "" ? "" : values?.typeGallery });
+            setValues({ ...values, imageURL: image, link: values?.link === "" ? "" : values?.link, title: values?.title === "" ? "" : values?.title, typeGallery: values?.typeGallery === "" ? "" : values?.typeGallery });
         }
     }
     return (
@@ -133,11 +151,10 @@ function UpdateGallery(props) {
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                type="text"
+                                type="file"
                                 name="imageURL"
                                 id="imageURL"
-                                onChange={handleInputChange}
-                                value={values.imageURL}
+                                onChange={(event) => handleFileChange(event.target.files)}
                                 error={errorsEnable.imageURL}
                                 helperText={errors.imageURL}
                                 FormHelperTextProps={{ style: { fontSize: 12 } }}
@@ -146,6 +163,7 @@ function UpdateGallery(props) {
                                     style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                 }}
                             />
+                             <Image src={image} className={cx("img-demo")} alt="" height="100px" width="100px" fit="cover" easing="ease-in-out" showLoading={true}/>
                         </Box>
                         <Box className={cx("form-flex")} sx={{ marginBottom: "1rem" }}>
                             <Box>

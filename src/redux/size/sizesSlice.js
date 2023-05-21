@@ -152,8 +152,6 @@ const sizeSlice = createSlice({
             }
             )
             .addCase(fetchUpdateSize.fulfilled, (state, action) => {
-                const data = action.payload.data;
-                const list = state.sizes.filter((item) => item.id !== data.id);
                 state.sizeChanged = true;
                 state.isLoading = true;
                 MySwal.fire({
@@ -203,7 +201,6 @@ const sizeSlice = createSlice({
             }
             )
             .addCase(fetchCreateSize.fulfilled, (state, action) => {
-                const data = action.payload;
                 state.sizeChanged = true;
                 state.isLoading = true;
                 MySwal.fire({

@@ -1,0 +1,1 @@
+export { default as ViewCustomer } from "./ViewCustomer";

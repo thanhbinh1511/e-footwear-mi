@@ -106,6 +106,7 @@ const couponSlice = createSlice({
             )
             .addCase(fetchCreateCoupon.fulfilled, (state, action) => {
                 const data = action.payload;
+                
                 state.couponChanged = true;
                 state.isLoading = true;
                 MySwal.fire({
@@ -154,8 +155,6 @@ const couponSlice = createSlice({
             }
             )
             .addCase(fetchUpdateCoupon.fulfilled, (state, action) => {
-                const data = action.payload.data;
-                const list = state.coupons.filter((item) => item.id !== data.id);
                 state.couponChanged = true;
                 state.isLoading = true;
                 MySwal.fire({

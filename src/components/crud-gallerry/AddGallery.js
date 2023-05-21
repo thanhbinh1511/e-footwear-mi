@@ -1,12 +1,13 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
+import Axios from "axios";
 import classnames from "classnames/bind";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import style from "./Style.module.scss";
 import { useForm } from "~/hooks/useForm";
 import { fetchCreateGallery } from "~/redux/gallery/galleriesSlice";
 import { fetchAllTypeGalleries } from "~/redux/type-gallery/typeGalleriesSlice";
-import { storage } from "~/utils/firebase";
+import Image from "mui-image";
+import style from "./Style.module.scss";
 const cx = classnames.bind(style);
 
 
@@ -15,10 +16,7 @@ function AddGallery() {
     const { typeGalleries } = useSelector((state) => state.typeGalleryReducer);
     const { accessToken } = useSelector((state) => state.authReducer);
     const [open, setOpen] = useState(false);
-    const handleOpen = () => {
-        dispatch(fetchAllTypeGalleries());
-        setOpen(true);
-    };
+    const [image, setImage] = useState("");
 
     const initialValues = {
         imageURL: "",
@@ -66,15 +64,33 @@ function AddGallery() {
         handleInputChange,
         resetForm,
     } = useForm(initialValues, true, validate);
+    const handleFileChange = (files) => {
+        const formData = new FormData();
+        const file = files[0];
+        formData.append("file", file);
+        setValues({ ...values, imageURL: file })
+        formData.append("upload_preset", "rygave5s");
+        Axios.post("https://api.cloudinary.com/v1_1/di4tfql03/image/upload", formData)
+            .then((res) => {
+                setImage(res.data.url);
+            })
+            .catch((err) => console.log(err));
+    };
 
+    const handleOpen = () => {
+        dispatch(fetchAllTypeGalleries(accessToken));
+        setOpen(true);
+    };
     const handleClose = (childData) => {
+        setImage("");
+        resetForm();
         setOpen(!open);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
             const data = {
-                imageURL: values.imageURL,
+                imageURL: image,
                 link: values.link,
                 title: values.title,
                 typeGallery: {
@@ -84,12 +100,11 @@ function AddGallery() {
             dispatch(fetchCreateGallery({
                 data, accessToken
             }));
-            setOpen(!open);
             resetForm();
+            setImage("");
+            setOpen(!open);
         };
     }
-
-
     return (
         <Box className={cx("dialog-main")}>
             <Button variant="contained" onClick={handleOpen}>
@@ -127,11 +142,10 @@ function AddGallery() {
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                type="text"
+                                type="file"
                                 name="imageURL"
                                 id="imageURL"
-                                onChange={handleInputChange}
-                                value={values.imageURL}
+                                onChange={(event) => handleFileChange(event.target.files)}
                                 error={errorsEnable.imageURL}
                                 helperText={errors.imageURL}
                                 FormHelperTextProps={{ style: { fontSize: 12 } }}
@@ -140,6 +154,7 @@ function AddGallery() {
                                     style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                 }}
                             />
+                              <Image src={image} className={cx("img-demo")} alt="" height="100px" width="100px" fit="cover" easing="ease-in-out" showLoading={true}/>
                         </Box>
                         <Box className={cx("form-flex")} sx={{ marginBottom: "1rem" }}>
                             <Box>

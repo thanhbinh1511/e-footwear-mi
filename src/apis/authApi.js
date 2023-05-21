@@ -10,4 +10,14 @@ export const authApi = {
             .then((response) => response)
             .catch((error) => error.response.data);
     },
+    async requestAllAccount(accessToken) {
+        return await axios
+            .get("/accounts", {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
+            .then((response) => response)
+            .catch((error) => error.response.data);
+    },
 };

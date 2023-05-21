@@ -172,7 +172,6 @@ const gallerySlice = createSlice({
             }
             )
             .addCase(fetchCreateGallery.fulfilled, (state, action) => {
-                const data = action.payload;
                 state.galleryChanged = true;
                 state.isLoading = true;
                 MySwal.fire({
@@ -222,7 +221,6 @@ const gallerySlice = createSlice({
             }
             )
             .addCase(fetchUpdateGallery.fulfilled, (state, action) => {
-                const data = action.payload;
                 state.galleryChanged = true;
                 state.isLoading = true;
                 MySwal.fire({

@@ -12,7 +12,7 @@ function MyPieChart({data}) {
         responsive: true,
         plugins: {
             legend: {
-                position: 'top',
+                position: 'right',
                 labels: {
                     color: 'black',
                     font: {

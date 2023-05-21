@@ -171,7 +171,6 @@ const productDetailSlice = createSlice({
             }
             )
             .addCase(fetchCreateProductDetail.fulfilled, (state, action) => {
-                const data = action.payload;
                 state.productDetailChanged = true;
                 state.isLoading = true;
                 MySwal.fire({
@@ -220,8 +219,6 @@ const productDetailSlice = createSlice({
             }
             )
             .addCase(fetchUpdateProductDetailById.fulfilled, (state, action) => {
-                const data = action.payload.data;
-                const list = state.productDetails.filter((item) => item.id !== data.id);
                 state.productDetailChanged = true;
                 state.isLoading = true;
                 MySwal.fire({

@@ -3,7 +3,6 @@ import SideBar from "~/layouts/side-bar";
 import classNames from "classnames/bind";
 import style from "./DefaultLayout.module.scss";
 import { Box, Grid } from '@mui/material';
-
 const cx = classNames.bind(style);
 function DefaultLayout({ children }) {
   return (

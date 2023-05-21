@@ -171,7 +171,6 @@ const typeGallerySlice = createSlice({
             }
             )
             .addCase(fetchCreateTypeGallery.fulfilled, (state, action) => {
-                const data = action.payload;
                 state.typeGalleryChanged = true;
                 state.isLoading = true;
                 MySwal.fire({
@@ -220,8 +219,6 @@ const typeGallerySlice = createSlice({
             }
             )
             .addCase(fetchUpdateTypeGallery.fulfilled, (state, action) => {
-                const data = action.payload.data;
-                const list = state.typeGalleries.filter((item) => item.id !== data.id);
                 state.typeGalleryChanged = true;
                 state.isLoading = true;
                 MySwal.fire({

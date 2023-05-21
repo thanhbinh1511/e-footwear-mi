@@ -85,7 +85,6 @@ function Product() {
         }
     }
     )
-
     return (
         <Box className={cx("main")}>
             <Box className={cx("wrap-header")}>

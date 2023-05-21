@@ -31,7 +31,6 @@ export const galleriesApi = {
             .catch((error) => error.response.data);
     },
     async requestUpdateGallery(data, accessToken) {
-        console.log(data)
         return await axios
             .put(`/galleries/${data.id}`, { imageURL: data.imageURL, link: data.link, title: data.title, typeGallery: data.typeGallery }, {
                 headers: {

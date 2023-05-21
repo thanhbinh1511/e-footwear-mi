@@ -7,6 +7,8 @@ import { useForm } from "~/hooks/useForm";
 import { fetchUpdateProductDetailById } from "~/redux/product-detail/productDetailSlice";
 import style from "./Style.module.scss";
 import Select from 'react-select';
+import { fetchAllProducts } from '~/redux/product/productSlice';
+import { fetchAllSizes } from '~/redux/size/sizesSlice';
 const cx = classnames.bind(style);
 function UpdateDetail(props) {
     const dispatch = useDispatch();
@@ -16,6 +18,8 @@ function UpdateDetail(props) {
     const [open, setOpen] = useState(false);
     const [label, setLabel] = useState("");
     const handleOpen = () => {
+        dispatch(fetchAllProducts(accessToken));
+        dispatch(fetchAllSizes(accessToken));
         setLabel(props?.productName + " " + props?.colorName);
         setOpen(true);
     };
@@ -174,12 +178,11 @@ function UpdateDetail(props) {
                                     style: { fontSize: '1.2rem' }
                                 }} name="size"
                                 id="size"
-                                value={values?.size}
+                                value={values.size}
                                 error={errorsEnable.size}
                                 helperText={errors.size}
                                 onChange={handleInputChange}
                             >
-
                                 {
                                     sizes?.map((item, index) => (
                                         <Box component={"option"} sx={{ fontSize: '1.2rem' }} key={item?.id} value={item?.id}>
