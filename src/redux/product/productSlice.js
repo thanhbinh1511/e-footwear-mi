@@ -171,7 +171,6 @@ const productSlice = createSlice({
             }
             )
             .addCase(fetchCreateProduct.fulfilled, (state, action) => {
-                const data = action.payload;
                 state.productChanged = true;
                 state.isLoading = true;
                 MySwal.fire({
@@ -221,7 +220,6 @@ const productSlice = createSlice({
             }
             )
             .addCase(fetchUpdateProduct.fulfilled, (state, action) => {
-                const data = action.payload;
                 state.productChanged = true;
                 state.isLoading = true;
                 MySwal.fire({

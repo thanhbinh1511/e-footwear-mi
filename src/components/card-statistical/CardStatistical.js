@@ -29,7 +29,6 @@ function CardStatistical() {
         setDescription(descriptionTemp)
         setTotalOrder(totalOrderTemp)
     }, [countOrderStatus])
-    console.log(countOrderStatus);
     return (
         <Box className={cx("main")}>
             <Box className={cx("wrap-card")}>

@@ -7,6 +7,7 @@ import style from "./Style.module.scss";
 import { useForm } from "~/hooks/useForm";
 import { fetchUpdateGallery } from "~/redux/gallery/galleriesSlice";
 import { fetchAllTypeGalleries } from "~/redux/type-gallery/typeGalleriesSlice";
+import Image from "mui-image";
 import EditIcon from '@mui/icons-material/Edit';
 import Axios from "axios";
 const cx = classnames.bind(style);
@@ -15,7 +16,7 @@ function UpdateGallery(props) {
     const dispatch = useDispatch();
     const { typeGalleries } = useSelector((state) => state.typeGalleryReducer);
     const { accessToken } = useSelector((state) => state.authReducer);
-    const [image, setImage] = useState();
+    const [image, setImage] = useState("");
     const [open, setOpen] = useState(false);
 
     const handleFileChange = (files) => {
@@ -162,7 +163,7 @@ function UpdateGallery(props) {
                                     style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                 }}
                             />
-                            <img src={image} alt="gallery" className={cx("img-demo")} />
+                             <Image src={image} className={cx("img-demo")} alt="" height="100px" width="100px" fit="cover" easing="ease-in-out" showLoading={true}/>
                         </Box>
                         <Box className={cx("form-flex")} sx={{ marginBottom: "1rem" }}>
                             <Box>

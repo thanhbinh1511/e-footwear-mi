@@ -1,10 +1,10 @@
-import style from "./Style.module.scss";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import classnames from "classnames/bind";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "~/hooks/useForm";
 import { fetchCreateCoupon } from "~/redux/coupon/couponsSlice";
+import style from "./Style.module.scss";
 const cx = classnames.bind(style);
 
 function AddCoupon() {
@@ -80,6 +80,7 @@ function AddCoupon() {
         resetForm,
     } = useForm(initialValues, true, validate);
     const handleClose = (childData) => {
+        resetForm();
         setOpen(!open);
     };
     const handleSubmit = (e) => {

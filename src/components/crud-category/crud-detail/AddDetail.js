@@ -76,6 +76,7 @@ function AddDetail() {
     } = useForm(initialValues, true, validate);
 
     const handleClose = (childData) => {
+        resetForm();
         setOpen(!open);
     };
     const handleSubmit = (e) => {

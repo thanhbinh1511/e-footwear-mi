@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "~/hooks/useForm";
 import { fetchCreateGallery } from "~/redux/gallery/galleriesSlice";
 import { fetchAllTypeGalleries } from "~/redux/type-gallery/typeGalleriesSlice";
+import Image from "mui-image";
 import style from "./Style.module.scss";
 const cx = classnames.bind(style);
 
@@ -15,7 +16,7 @@ function AddGallery() {
     const { typeGalleries } = useSelector((state) => state.typeGalleryReducer);
     const { accessToken } = useSelector((state) => state.authReducer);
     const [open, setOpen] = useState(false);
-    const [image, setImage] = useState();
+    const [image, setImage] = useState("");
 
     const initialValues = {
         imageURL: "",
@@ -81,7 +82,7 @@ function AddGallery() {
         setOpen(true);
     };
     const handleClose = (childData) => {
-        setImage();
+        setImage("");
         resetForm();
         setOpen(!open);
     };
@@ -100,7 +101,7 @@ function AddGallery() {
                 data, accessToken
             }));
             resetForm();
-            setImage();
+            setImage("");
             setOpen(!open);
         };
     }
@@ -153,7 +154,7 @@ function AddGallery() {
                                     style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                 }}
                             />
-                            <img src={image} className={cx("img-demo")} />
+                              <Image src={image} className={cx("img-demo")} alt="" height="100px" width="100px" fit="cover" easing="ease-in-out" showLoading={true}/>
                         </Box>
                         <Box className={cx("form-flex")} sx={{ marginBottom: "1rem" }}>
                             <Box>

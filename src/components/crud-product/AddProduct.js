@@ -1,4 +1,5 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
+import Image from "mui-image";
 import classnames from "classnames/bind";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,17 +8,20 @@ import { useForm } from "~/hooks/useForm";
 import { fetchCreateProduct } from "~/redux/product/productSlice";
 import { fetchAllCategories } from "~/redux/category/categoriesSlice";
 import { fetchAllColors } from "~/redux/color/colorsSlice";
+import Axios from "axios";
 const cx = classnames.bind(style);
 function AddProduct() {
     const dispatch = useDispatch();
     const { categories } = useSelector((state) => state.categoryReducer);
     const { accessToken } = useSelector((state) => state.authReducer);
     const { colors } = useSelector((state) => state.colorReducer);
+    const [imageURLs, setImageURLs] = useState(["", "", "", ""]);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
-        dispatch(fetchAllCategories({ accessToken }));
-        dispatch(fetchAllColors({ accessToken }));
+        dispatch(fetchAllCategories(accessToken));
+        dispatch(fetchAllColors(accessToken));
         setOpen(true);
+
     };
 
     const initialValues = {
@@ -147,8 +151,39 @@ function AddProduct() {
     } = useForm(initialValues, true, validate);
 
     const handleClose = (childData) => {
+        resetForm();
+        setImageURLs(["", "", "", ""]);
         setOpen(!open);
     };
+    const handleFileChange = async (files, index) => {
+        const uploadPromises = [];
+
+        for (let i = 0; i < files.length; i++) {
+            const formData = new FormData();
+            formData.append("file", files[i]);
+            formData.append("upload_preset", "rygave5s");
+
+            const uploadPromise = Axios.post("https://api.cloudinary.com/v1_1/di4tfql03/image/upload", formData);
+            uploadPromises.push(uploadPromise);
+        }
+
+        await Axios.all(uploadPromises)
+            .then((responses) => {
+                responses.forEach((res) => {
+                    const imageURL = res.data.url;
+                    const updatedURLs = [...imageURLs];
+                    updatedURLs[index - 1] = imageURL;
+                    setImageURLs(updatedURLs);
+                    const updatedValues = {
+                        ...values,
+                        [`imageURL${index}`]: imageURL
+                    };
+                    setValues(updatedValues);
+                });
+            })
+            .catch((err) => console.log(err));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
@@ -165,16 +200,16 @@ function AddProduct() {
                 },
                 images: [
                     {
-                        imageURL: values?.imageURL1,
+                        imageURL: imageURLs[0],
                     },
                     {
-                        imageURL: values?.imageURL2,
+                        imageURL: imageURLs[1],
                     },
                     {
-                        imageURL: values?.imageURL3,
+                        imageURL: imageURLs[2],
                     },
                     {
-                        imageURL: values?.imageURL4,
+                        imageURL: imageURLs[3],
                     },
                 ]
             }
@@ -183,6 +218,7 @@ function AddProduct() {
             }));
             setOpen(!open);
             resetForm();
+            setImageURLs(["", "", "", ""]);
         }
     }
     return (
@@ -316,23 +352,23 @@ function AddProduct() {
                             />
                         </Box>
                         <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "1rem" }} >
-                            <Box className={cx("form-flex")} sx={{ marginRight: "1rem" }}>
+                            <Box className={cx("form-flex")}>
                                 <Box>
                                     <Box
                                         component={"label"}
                                         htmlFor="imageURL1"
                                         className={cx("form-label")}
                                     >
-                                        Thêm đường dẫn ảnh
+                                        Thêm ảnh
                                     </Box>
                                 </Box>
                                 <TextField
+                                    fullWidth
                                     variant="outlined"
-                                    type="text"
+                                    type="file"
                                     name="imageURL1"
                                     id="imageURL1"
-                                    onChange={handleInputChange}
-                                    value={values.imageURL1}
+                                    onChange={(event) => handleFileChange(event.target.files, 1)}
                                     error={errorsEnable.imageURL1}
                                     helperText={errors.imageURL1}
                                     FormHelperTextProps={{ style: { fontSize: 12 } }}
@@ -341,6 +377,7 @@ function AddProduct() {
                                         style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                     }}
                                 />
+                                <Image src={imageURLs[0]} className={cx("img-demo")} alt="" height="100px" width="100px" fit="cover" easing="ease-in-out" showLoading={true} />
                             </Box>
                             <Box className={cx("form-flex")}>
                                 <Box>
@@ -349,16 +386,16 @@ function AddProduct() {
                                         htmlFor="imageURL2"
                                         className={cx("form-label")}
                                     >
-                                        Thêm đường dẫn ảnh
+                                        Thêm ảnh
                                     </Box>
                                 </Box>
                                 <TextField
+                                    fullWidth
                                     variant="outlined"
-                                    type="text"
+                                    type="file"
                                     name="imageURL2"
                                     id="imageURL2"
-                                    onChange={handleInputChange}
-                                    value={values.imageURL2}
+                                    onChange={(event) => handleFileChange(event.target.files, 2)}
                                     error={errorsEnable.imageURL2}
                                     helperText={errors.imageURL2}
                                     FormHelperTextProps={{ style: { fontSize: 12 } }}
@@ -367,26 +404,27 @@ function AddProduct() {
                                         style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                     }}
                                 />
+                                <Image src={imageURLs[1]} className={cx("img-demo")} alt="" height="100px" width="100px" fit="cover" easing="ease-in-out" showLoading={true} />
                             </Box>
                         </Box>
                         <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "1rem" }} >
-                            <Box className={cx("form-flex")} sx={{ marginRight: "1rem" }}>
+                            <Box className={cx("form-flex")}>
                                 <Box>
                                     <Box
                                         component={"label"}
-                                        htmlFor="imageURL"
+                                        htmlFor="imageURL3"
                                         className={cx("form-label")}
                                     >
-                                        Thêm đường dẫn ảnh
+                                        Thêm ảnh
                                     </Box>
                                 </Box>
                                 <TextField
+                                    fullWidth
                                     variant="outlined"
-                                    type="text"
+                                    type="file"
                                     name="imageURL3"
                                     id="imageURL3"
-                                    onChange={handleInputChange}
-                                    value={values.imageURL3}
+                                    onChange={(event) => handleFileChange(event.target.files, 3)}
                                     error={errorsEnable.imageURL3}
                                     helperText={errors.imageURL3}
                                     FormHelperTextProps={{ style: { fontSize: 12 } }}
@@ -395,6 +433,7 @@ function AddProduct() {
                                         style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                     }}
                                 />
+                                <Image src={imageURLs[2]} className={cx("img-demo")} alt="" height="100px" width="100px" fit="cover" easing="ease-in-out" showLoading={true} />
                             </Box>
                             <Box className={cx("form-flex")}>
                                 <Box>
@@ -403,16 +442,16 @@ function AddProduct() {
                                         htmlFor="imageURL4"
                                         className={cx("form-label")}
                                     >
-                                        Thêm đường dẫn ảnh
+                                        Thêm ảnh
                                     </Box>
                                 </Box>
                                 <TextField
+                                    fullWidth
                                     variant="outlined"
-                                    type="text"
+                                    type="file"
                                     name="imageURL4"
                                     id="imageURL4"
-                                    onChange={handleInputChange}
-                                    value={values.imageURL4}
+                                    onChange={(event) => handleFileChange(event.target.files, 4)}
                                     error={errorsEnable.imageURL4}
                                     helperText={errors.imageURL4}
                                     FormHelperTextProps={{ style: { fontSize: 12 } }}
@@ -421,6 +460,7 @@ function AddProduct() {
                                         style: { fontSize: "1.1rem", padding: "1rem 1rem" },
                                     }}
                                 />
+                                <Image src={imageURLs[3]} className={cx("img-demo")} alt="" height="100px" width="100px" fit="cover" easing="ease-in-out" showLoading={true} />
                             </Box>
                         </Box>
                         <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "1rem" }} >
