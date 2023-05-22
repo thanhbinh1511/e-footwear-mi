@@ -1,8 +1,9 @@
-import Header from "~/layouts/header";
-import SideBar from "~/layouts/side-bar";
+
 import classNames from "classnames/bind";
 import style from "./DefaultLayout.module.scss";
 import { Box, Grid } from '@mui/material';
+import Header from "../header/Header";
+import SideBar from "../side-bar/SideBar";
 const cx = classNames.bind(style);
 function DefaultLayout({ children }) {
   return (
