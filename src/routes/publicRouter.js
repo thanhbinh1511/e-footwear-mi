@@ -69,5 +69,5 @@ export const publicRoutes = [
     {
         path: "/admin/coupons",
         component: Coupons,
-    }
+    },
 ];
