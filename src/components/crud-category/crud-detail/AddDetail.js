@@ -7,6 +7,7 @@ import { useForm } from "~/hooks/useForm";
 import { fetchCreateProductDetail } from "~/redux/product-detail/productDetailSlice";
 import style from "./Style.module.scss";
 import { fetchAllProducts } from "~/redux/product/productSlice";
+import { fetchAllSizes } from "~/redux/size/sizesSlice";
 const cx = classnames.bind(style);
 
 function AddDetail() {
@@ -18,6 +19,7 @@ function AddDetail() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         dispatch(fetchAllProducts(accessToken));
+        dispatch(fetchAllSizes(accessToken));
         setOpen(true);
     };
     const initialValues = {
