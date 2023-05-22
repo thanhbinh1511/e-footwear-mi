@@ -156,7 +156,7 @@ function UpdateProduct(props) {
             const formData = new FormData();
             formData.append("file", files[i]);
             formData.append("upload_preset", "rygave5s");
-
+            formData.append("transformation", "w_280,h_280,c_fill");
             const uploadPromise = Axios.post("https://api.cloudinary.com/v1_1/di4tfql03/image/upload", formData);
             uploadPromises.push(uploadPromise);
         }
