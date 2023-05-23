@@ -94,7 +94,7 @@ function AddTypeGallery() {
                         borderRadius: "10px",
                     },
                 }}>
-                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}>Thêm Loại Ảnhh</DialogTitle>
+                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}>Thêm Loại Ảnh</DialogTitle>
                 <DialogContent>
                     <Box
                         id="type_gallery-form"
