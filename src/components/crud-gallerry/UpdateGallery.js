@@ -130,7 +130,7 @@ function UpdateGallery(props) {
                         borderRadius: "10px",
                     },
                 }}>
-                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}> Thêm Ảnh</DialogTitle>
+                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}> Cập nhật ảnh</DialogTitle>
                 <DialogContent>
                     <Box
                         id="gallery-form"
