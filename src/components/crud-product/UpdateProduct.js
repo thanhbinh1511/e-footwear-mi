@@ -238,7 +238,7 @@ function UpdateProduct(props) {
                         borderRadius: "10px",
                     },
                 }}>
-                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}> Thêm Sản Phẩm</DialogTitle>
+                <DialogTitle className={cx("dialog-title")} sx={{ fontWeight: "bold" }}> Thay đổi thông tin sản phẩm</DialogTitle>
                 <DialogContent>
                     <Box
                         id="product-form"
