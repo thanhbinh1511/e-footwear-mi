@@ -23,7 +23,6 @@ function AddProduct() {
         setOpen(true);
 
     };
-
     const initialValues = {
         name: "",
         discountRate: "",
@@ -162,7 +161,7 @@ function AddProduct() {
             const formData = new FormData();
             formData.append("file", files[i]);
             formData.append("upload_preset", "rygave5s");
-            formData.append("transformation", "w_280,h_280,c_fill");
+            // formData.append("transformation", "w_280,h_280,c_fill");
             const uploadPromise = Axios.post("https://api.cloudinary.com/v1_1/di4tfql03/image/upload", formData);
             uploadPromises.push(uploadPromise);
         }
@@ -183,7 +182,6 @@ function AddProduct() {
             })
             .catch((err) => console.log(err));
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
